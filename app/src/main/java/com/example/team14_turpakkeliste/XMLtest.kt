@@ -12,8 +12,9 @@ import javax.net.ssl.HttpsURLConnection
 
 class XMLtest {
     @Throws(XmlPullParserException:: class, IOException::class)
-    suspend fun getData(): MutableList<Int>{
-        var dataList = mutableListOf<Int>()
+    suspend fun getData(): MutableList<DataXML>{
+        println("weoweeo")
+        var dataList = mutableListOf<DataXML>()
         withContext(Dispatchers.IO){
             val BASE_URL = URL("https://api.met.no/weatherapi/metalerts/1.1?lang=no")
             val connection = BASE_URL.openConnection() as HttpsURLConnection
@@ -28,12 +29,15 @@ class XMLtest {
             while(eventType != XmlPullParser.END_DOCUMENT){
                 when(eventType) {
                     XmlPullParser.START_TAG -> {
-                        if (parser.name == "party"){
+                        if (parser.name == "channel"){
                             parser.nextTag()
-                            val id = parser.nextText().toInt()
+                            val title = parser.nextText()
+                            println(title)
                             parser.nextTag()
-                            val votes = parser.nextText().toInt()
-                            dataList.add(id,votes)
+                            val link = parser.nextText()
+                            parser.nextTag()
+                            val description = parser.nextText()
+                            dataList.add(DataXML(title,link,description))
                         }
                     }
                 }
@@ -44,3 +48,9 @@ class XMLtest {
     }
 
 }
+
+data class DataXML(
+    var id: String? = null,
+    var link: String? = null,
+    var description: String? = null
+)
