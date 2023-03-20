@@ -1,4 +1,4 @@
-package com.example.team14_turpakkeliste
+package com.example.team14_turpakkeliste.data
 
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException

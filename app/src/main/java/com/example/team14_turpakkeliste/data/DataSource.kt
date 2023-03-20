@@ -1,4 +1,4 @@
-package com.example.team14_turpakkeliste
+package com.example.team14_turpakkeliste.data
 
 import android.util.Log
 import io.ktor.client.*

@@ -2,6 +2,7 @@ package com.example.team14_turpakkeliste
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.team14_turpakkeliste.data.DataSource
 import kotlinx.coroutines.launch
 import java.io.InputStream
 
