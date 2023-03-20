@@ -1,56 +1,117 @@
 package com.example.team14_turpakkeliste
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
-import org.xmlpull.v1.XmlPullParserFactory
-import java.io.BufferedReader
 import java.io.IOException
-import java.net.URL
-import javax.net.ssl.HttpsURLConnection
+import android.util.Xml
+import java.io.InputStream
 
-class XMLtest {
-    @Throws(XmlPullParserException:: class, IOException::class)
-    suspend fun getData(): MutableList<DataXML>{
-        println("weoweeo")
-        var dataList = mutableListOf<DataXML>()
-        withContext(Dispatchers.IO){
-            val BASE_URL = URL("https://api.met.no/weatherapi/metalerts/1.1?lang=no")
-            val connection = BASE_URL.openConnection() as HttpsURLConnection
-            val factory = XmlPullParserFactory.newInstance().newPullParser()
-            connection.requestMethod = "GET"
-            val inputStream = connection.inputStream
-            val xmlString = inputStream.bufferedReader().use(BufferedReader:: readText)
-            factory.setInput(xmlString.reader())
-            val parser = factory
-            var eventType = factory.eventType
+private val ns: String? = null
+class XmlParser {
+    @Throws(XmlPullParserException::class, IOException::class)
+    fun parse(inputStream: InputStream): List<DataXML> {
+        inputStream.use {
+            val parser: XmlPullParser = Xml.newPullParser()
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
+            parser.setInput(it, null)
+            parser.nextTag()
+            return readFeed(parser)
+        }
+    }
 
-            while(eventType != XmlPullParser.END_DOCUMENT){
-                when(eventType) {
-                    XmlPullParser.START_TAG -> {
-                        if (parser.name == "channel"){
-                            parser.nextTag()
-                            val title = parser.nextText()
-                            println(title)
-                            parser.nextTag()
-                            val link = parser.nextText()
-                            parser.nextTag()
-                            val description = parser.nextText()
-                            dataList.add(DataXML(title,link,description))
-                        }
-                    }
-                }
-                eventType = parser.next()
+    @Throws(XmlPullParserException::class, IOException::class)
+    private fun readFeed(parser: XmlPullParser): List<DataXML> {
+        val dataList = mutableListOf<DataXML>()
+        parser.require(XmlPullParser.START_TAG, ns, "rss")
+        while (parser.next() != XmlPullParser.END_TAG) {
+            if (parser.eventType != XmlPullParser.START_TAG) {
+                continue
+            }
+            // Starts by looking for the entry tag
+            if (parser.name == "item") {
+                dataList.add(readEntry(parser))
+            }
+            else if(parser.name == "channel"){
+                parser.require(XmlPullParser.START_TAG, ns, "channel")
+            }
+            else {
+                skip(parser)
             }
         }
         return dataList
     }
 
+    @Throws(XmlPullParserException::class, IOException::class)
+    private fun readEntry(parser: XmlPullParser): DataXML {
+        parser.require(XmlPullParser.START_TAG, ns, "item")
+        var title: String? = null
+        var description: String? = null
+        var link: String? = null
+        var author: String? = null
+        var category: String? = null
+        var guid: String? = null
+        var pubDate: String? = null
+
+        while (parser.next() != XmlPullParser.END_TAG) {
+            if (parser.eventType != XmlPullParser.START_TAG) {
+                continue
+            }
+            when (parser.name) {
+                "title" -> title = readText(parser)
+                "description" -> description = readText(parser)
+                "link" -> link = readAttribute(parser, parser.name)
+                "author" -> author = readAttribute(parser, parser.name)
+                "category" -> category = readAttribute(parser, parser.name)
+                "guid" -> guid = readAttribute(parser, parser.name)
+                "pubDate" -> pubDate = readAttribute(parser, parser.name)
+                else -> skip(parser)
+            }
+        }
+        return DataXML(title,description,link,author,category,guid,pubDate)
+    }
+
+    @Throws(IOException::class, XmlPullParserException::class)
+    private fun readAttribute(parser: XmlPullParser, tag: String): String {
+        parser.require(XmlPullParser.START_TAG, ns, tag)
+        val value = readText(parser)
+        parser.require(XmlPullParser.END_TAG, ns, tag)
+        return value
+    }
+
+
+    // For the tags title and summary, extracts their text values.
+    @Throws(IOException::class, XmlPullParserException::class)
+    private fun readText(parser: XmlPullParser): String {
+        var result = ""
+        if (parser.next() == XmlPullParser.TEXT) {
+            result = parser.text
+            parser.nextTag()
+        }
+        return result
+    }
+
+    @Throws(XmlPullParserException::class, IOException::class)
+    private fun skip(parser: XmlPullParser) {
+        if (parser.eventType != XmlPullParser.START_TAG) {
+            throw IllegalStateException()
+        }
+        var depth = 1
+        while (depth != 0) {
+            when (parser.next()) {
+                XmlPullParser.END_TAG -> depth--
+                XmlPullParser.START_TAG -> depth++
+            }
+        }
+    }
+
 }
 
 data class DataXML(
-    var id: String? = null,
+    var title: String? = null,
+    var description: String? = null,
     var link: String? = null,
-    var description: String? = null
+    var author: String? = null,
+    var category: String? = null,
+    var guid: String? = null,
+    var pubDate: String? = null
 )
