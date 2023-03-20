@@ -1,5 +1,6 @@
 package com.example.team14_turpakkeliste
 
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -9,14 +10,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.team14_turpakkeliste.ui.theme.ForestGreen
+import com.example.team14_turpakkeliste.ui.theme.Burgunder
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 
 
 
 @Composable
-fun MapScreen() {
-    
+fun SavedScreen() {
+
     Column() {
 
     }
@@ -24,21 +25,21 @@ fun MapScreen() {
         .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
-        BottomNavBar()
+        BottomNavBarSaved()
     }
 
 }
 
 
 @Composable
-fun BottomNavBar(
+fun BottomNavBarSaved(
 ) {
     var selectedItem by remember { mutableStateOf(0) }
 
     NavigationBar(
         modifier = Modifier
             .fillMaxWidth(),
-        containerColor = ForestGreen
+        containerColor = Burgunder
     ) {
         NavigationBarItem(
             icon = { Icon(Icons.Default.Search, contentDescription = "Search") },
@@ -63,11 +64,8 @@ fun BottomNavBar(
 
 @Preview(showBackground = true)
 @Composable
-fun Preview() {
+fun SavedPreview() {
     Team14TurPakkeListeTheme {
-        MapScreen()
+        SavedScreen()
     }
 }
-
-
-
