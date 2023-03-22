@@ -26,7 +26,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ClothingScreen(context = this)
+                
+                    Greeting("Hallaballa")
+                    val view = viewModel()
+
                 }
             }
         }
