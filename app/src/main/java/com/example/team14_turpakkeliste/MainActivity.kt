@@ -28,7 +28,9 @@ class MainActivity : ComponentActivity() {
                 ) {
                 
                     Greeting("Hallaballa")
+
                     val view = viewModel()
+
 
                 }
             }
