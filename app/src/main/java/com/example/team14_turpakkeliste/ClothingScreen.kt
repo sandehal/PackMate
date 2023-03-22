@@ -123,7 +123,6 @@ fun ExpandableCard(
     descriptionFontSize: TextUnit = MaterialTheme.typography.bodyMedium.fontSize,
     descriptionFontWeight: FontWeight = FontWeight.Normal,
     descriptionMaxLines: Int = 4,
-    shape: Shape = Shapes.Full,
     padding: Dp = 12.dp
 ) {
     var expandedState by remember { mutableStateOf(false) }
@@ -140,7 +139,7 @@ fun ExpandableCard(
                     easing = LinearOutSlowInEasing
                 )
             ),
-        shape = shape,
+
         onClick = {
             expandedState = !expandedState
         }
