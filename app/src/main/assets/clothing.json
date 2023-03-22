@@ -1,0 +1,65 @@
+[
+  {
+    "material": "Shell",
+    "type": "jacket",
+    "layer": "outer",
+    "warmth": 1,
+    "waterproof": 5,
+    "windproof": 5
+  },
+  {
+    "material": "Down",
+    "type": "jacket",
+    "layer": "outer",
+    "warmth": 5,
+    "waterproof": 2,
+    "windproof": 4
+  },
+  {
+    "material": "Softshell",
+    "type": "jacket",
+    "layer": "outer",
+    "warmth": 2,
+    "waterproof": 2,
+    "windproof": 5
+  },
+  {
+    "material": "Softshell",
+    "type": "pants",
+    "layer": "outer",
+    "warmth": 2,
+    "waterproof": 2,
+    "windproof": 5
+  },
+  {
+    "material": "Fleece",
+    "type": "jacket",
+    "layer": "middle",
+    "warmth": 4,
+    "waterproof": 1,
+    "windproof": 1
+  },
+  {"material": "Wool",
+    "type": "sweater",
+    "layer": "middle",
+    "warmth": 4,
+    "waterproof": 1,
+    "windproof": 2
+  },
+  {
+    "material": "Wool",
+    "type": "longs",
+    "layer": "inner",
+    "warmth": 3,
+    "waterproof": 1,
+    "windproof": 2
+  },
+  {
+    "material": "Wool",
+    "type": "sweater",
+    "layer": "inner",
+    "warmth": 3,
+    "waterproof": 1,
+    "windproof": 2
+  }
+]
