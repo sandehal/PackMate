@@ -24,7 +24,7 @@ class Datasource {
     }
 
     suspend fun getData(): ForecastData {
-        val forecast: ForecastData = client.get(apiUrl).body()
+        val forecast: ForecastData = client.get(apiUrl1).body()
         return forecast
     }
     suspend fun getMetAlerts(): String {
