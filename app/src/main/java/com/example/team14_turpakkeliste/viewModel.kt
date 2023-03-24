@@ -2,16 +2,21 @@ package com.example.team14_turpakkeliste
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+
+import com.example.team14_turpakkeliste.data.Datasource
+import com.example.team14_turpakkeliste.data.XmlParser
+
 import kotlinx.coroutines.launch
 import java.io.InputStream
 
 class viewModel(): ViewModel() {
 
-    private val source: DataSource = DataSource()
+    private val source: Datasource = Datasource()
 
 
     init {
         viewModelScope.launch {
+
             val response = source.getMetAlerts()
             val inputStream : InputStream = response.byteInputStream()
             var alerts = XmlParser().parse(inputStream)
@@ -25,6 +30,10 @@ class viewModel(): ViewModel() {
                 println(a.guid)
                 println(a.pubDate)
             }
+            val forecast = source.getData()
+
+            println(forecast.properties  )
+
         }
     }
 }
