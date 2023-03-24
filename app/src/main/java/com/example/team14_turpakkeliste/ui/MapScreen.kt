@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
+import com.example.team14_turpakkeliste.BottomNavBar
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
@@ -23,7 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 
 @Composable
-fun MapScreen(avController: NavController) {
+fun MapScreen(navController: NavController) {
 
     Column {
         DisplayMap()
@@ -32,7 +33,7 @@ fun MapScreen(avController: NavController) {
         .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
-        BottomNavBar()
+        BottomNavBar(navController)
     }
 
 }
@@ -54,36 +55,6 @@ fun DisplayMap() {
     }
 }
 
-@Composable
-fun BottomNavBar(
-) {
-    var selectedItem by remember { mutableStateOf(0) }
-
-    NavigationBar(
-        modifier = Modifier
-            .fillMaxWidth(),
-        containerColor = ForestGreen
-    ) {
-        NavigationBarItem(
-            icon = { Icon(Icons.Default.Search, contentDescription = "Search") },
-            label = { Text("Search") },
-            selected = selectedItem == 1,
-            onClick = { selectedItem = 0 }
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-            label = { Text("Home") },
-            selected = selectedItem == 1,
-            onClick = { selectedItem = 0 }
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Default.Star, contentDescription = "Saved") },
-            label = { Text("Saved") },
-            selected = selectedItem == 1,
-            onClick = { selectedItem = 0 }
-        )
-    }
-}
 
 
 
