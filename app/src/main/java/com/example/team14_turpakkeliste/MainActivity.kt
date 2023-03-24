@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
                     Greeting("Hallaballa")
                  
-                    MapScreen()
+                    val view = viewModel()
                 }
             }
         }
