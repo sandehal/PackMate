@@ -84,13 +84,7 @@ fun BottomNavBar(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun Preview() {
-    Team14TurPakkeListeTheme {
-        MapScreen()
-    }
-}
+
 
 
 

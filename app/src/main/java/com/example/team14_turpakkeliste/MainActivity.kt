@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.team14_turpakkeliste.data.showJsonAsList
+import com.example.team14_turpakkeliste.ui.MapScreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 
 //The activity needs to be a subclass of ComponentActivity; AppCompatActivity
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
                     Greeting("Hallaballa")
                  
                     val view = viewModel()
+                    MapScreen()
                 }
             }
         }

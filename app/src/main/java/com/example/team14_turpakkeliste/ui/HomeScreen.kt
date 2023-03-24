@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.team14_turpakkeliste.BottomNavBar
-import com.example.team14_turpakkeliste.MapScreen
+import com.example.team14_turpakkeliste.ui.BottomNavBar
+import com.example.team14_turpakkeliste.ui.MapScreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 
 @Composable
