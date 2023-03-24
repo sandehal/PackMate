@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.TextUnit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ClothingScreen(context: Context){
+fun ClothingScreen(context: Context, onNavigateToNext: () -> Unit){
     var expanded by remember {mutableStateOf(false)}
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(horizontal = 30.dp)){
