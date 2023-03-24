@@ -1,7 +1,5 @@
-package com.example.team14_turpakkeliste
+package com.example.team14_turpakkeliste.ui
 
-import android.view.View
-import android.widget.FrameLayout
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -14,11 +12,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.FragmentActivity
+import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -26,7 +23,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 @Composable
 fun MapScreen() {
-    
+
     Column {
         DisplayMap()
     }
@@ -94,6 +91,7 @@ fun Preview() {
         MapScreen()
     }
 }
+
 
 
 
