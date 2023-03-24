@@ -30,4 +30,8 @@ class Datasource {
     suspend fun getMetAlerts(): String {
         return client.get(apiUrl).bodyAsText()
     }
+
+    suspend fun getCurrentAlerts(link: String): String{
+        return client.get(link).bodyAsText()
+    }
 }
