@@ -2,9 +2,10 @@ package com.example.team14_turpakkeliste
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.team14_turpakkeliste.data.*
 
-import com.example.team14_turpakkeliste.data.Datasource
-import com.example.team14_turpakkeliste.data.XmlParser
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
 
 import kotlinx.coroutines.launch
 import java.io.InputStream
@@ -19,21 +20,15 @@ class viewModel(): ViewModel() {
 
             val response = source.getMetAlerts()
             val inputStream : InputStream = response.byteInputStream()
-            var alerts = XmlParser().parse(inputStream)
+            val alerts = XmlForMetAlerts().parse(inputStream)
+            val alertList= mutableListOf<List<Alert>>()
 
             for (a in alerts) {
-                println(a.title)
-                println(a.description)
-                println(a.link)
-                println(a.author)
-                println(a.category)
-                println(a.guid)
-                println(a.pubDate)
+                val responseForAlert = source.getCurrentAlerts(a.link!!)
+                val inputStreamForAlert : InputStream = responseForAlert.byteInputStream()
+                alertList.add(XmlCurrentAlert().parse(inputStreamForAlert))
             }
             val forecast = source.getData()
-
-            println(forecast.properties  )
-
         }
     }
 }
