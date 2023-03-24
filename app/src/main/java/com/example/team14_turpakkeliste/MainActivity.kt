@@ -27,8 +27,9 @@ class MainActivity : AppCompatActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 
-//                    Greeting("Hallaballa")
-                    MapScreen()
+
+                    Greeting("Hallaballa")
+                 
                     val view = viewModel()
                 }
             }

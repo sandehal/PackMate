@@ -16,7 +16,7 @@ class Datasource {
     var lon = 9.58
     private val apiUrl1 =
         "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}&lon=${lon}"
-    private val apiUrl2 = "https://api.met.no/weatherapi/metalerts/1.1?lang=no"
+    private val apiUrl = "https://api.met.no/weatherapi/metalerts/1.1?lang=no"
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
             gson()
@@ -24,10 +24,10 @@ class Datasource {
     }
 
     suspend fun getData(): ForecastData {
-        val forecast: ForecastData = client.get(apiUrl1).body()
+        val forecast: ForecastData = client.get(apiUrl).body()
         return forecast
     }
     suspend fun getMetAlerts(): String {
-        return client.get(apiUrl2).bodyAsText()
+        return client.get(apiUrl).bodyAsText()
     }
 }
