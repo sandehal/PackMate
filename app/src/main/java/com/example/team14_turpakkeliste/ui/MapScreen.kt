@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.NavController
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
@@ -22,7 +23,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 
 @Composable
-fun MapScreen() {
+fun MapScreen(avController: NavController) {
 
     Column {
         DisplayMap()

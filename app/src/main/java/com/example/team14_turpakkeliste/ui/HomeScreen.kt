@@ -8,13 +8,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.ui.BottomNavBar
 import com.example.team14_turpakkeliste.ui.MapScreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     val image = painterResource(R.drawable.autumn_telt_1)
     Column(modifier = Modifier
         .fillMaxSize()
@@ -36,6 +38,6 @@ fun HomeScreen() {
 @Composable
 fun Preview() {
     Team14TurPakkeListeTheme {
-        HomeScreen()
+        HomeScreen(rememberNavController())
     }
 }
