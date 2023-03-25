@@ -68,17 +68,17 @@ fun bootScreen(){
     }
 
 }
-sealed class Screen(val route: String,  val icon: ImageVector) {
-    object HomeScreen : Screen("HomeScreen", Icons.Default.Home)
-    object MapScreen : Screen("MapScreen", Icons.Default.Search)
-    object SavedScreen : Screen("SavedScreen", Icons.Default.Star)
+sealed class Screen(val route: String,  val icon: ImageVector, val description : String) {
+    object MapScreen : Screen("MapScreen", Icons.Default.Search, "Kart")
+    object HomeScreen : Screen("HomeScreen", Icons.Default.Home, "Hjem")
+    object SavedScreen : Screen("SavedScreen", Icons.Default.Star, "Lagret")
 }
 
 @Composable
 fun BottomNavBar(navController: NavController){
     val items = listOf(
-        Screen.HomeScreen,
         Screen.MapScreen,
+        Screen.HomeScreen,
         Screen.SavedScreen
     )
 
@@ -90,7 +90,7 @@ fun BottomNavBar(navController: NavController){
         items.forEachIndexed { index, item ->
             NavigationBarItem(
                 icon = { Icon(item.icon, contentDescription = item.route) },
-                label = { Text(item.route) },
+                label = { Text(item.description) },
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = {
                 navController.navigate(item.route)
