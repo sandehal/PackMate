@@ -23,23 +23,25 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import com.example.team14_turpakkeliste.data.Clothing
+import com.example.team14_turpakkeliste.data.MaxRequirementsClothes
+import com.example.team14_turpakkeliste.data.MinRequirementsClothes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ClothingScreen(context: Context, onNavigateToNext: () -> Unit){
+fun ClothingScreen(context: Context){
     var expanded by remember {mutableStateOf(false)}
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(horizontal = 30.dp)){
         val liste = showJsonAsList(context, "clothing.json")
-        items(liste){
-                liste ->
-            ExpandableCard(title = liste.material, description = liste.layer)
+        val recommendedList = sortClothing(liste)
+        items(recommendedList){
+                recommendedList ->
+            ExpandableCard(title = recommendedList.material, description = recommendedList.layer)
             Spacer(modifier = Modifier.height(10.dp))
         }
     }
@@ -120,13 +122,25 @@ fun ExpandableCard(
         }
     }
 }
-fun sortClothing(jsonClothesList: List<Clothing>,weatherinfo: List<Int>): List<Clothing>?{
-    var recomended_clothes: List<Clothing>
-    val outerRequirment: MutableMap<String, Int>
+fun sortClothing(jsonClothesList: List<Clothing>): List<Clothing>{
+    val outerReqMin: MinRequirementsClothes = MinRequirementsClothes(2,2,4)
+    val outerReqMax: MaxRequirementsClothes = MaxRequirementsClothes(3,3, 5)
+    val tempList: MutableList<Clothing> = mutableListOf()
+    //val innerRequirement: MinRequirementsClothes = MinRequirementsClothes(3,3,3)
     for(clothing in jsonClothesList){
-
+        if(clothing.warmth.toInt() >= outerReqMin.warmth
+            && clothing.warmth.toInt() <= outerReqMax.warmth
+            && clothing.layer == "jacket"){
+            tempList.add(1, clothing)
+            continue
+        }
+        if(clothing.warmth.toInt() >= outerReqMin.warmth
+            && clothing.warmth.toInt() <= outerReqMax.warmth
+            && clothing.layer == "pants"){
+            tempList.add(2, clothing)
+            continue
+        }
     }
-    return null
+    return tempList
 }
-
 

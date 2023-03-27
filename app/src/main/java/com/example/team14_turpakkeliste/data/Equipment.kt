@@ -15,3 +15,6 @@ data class SleepingSystem(val warmth: String, val type: String, val minTemp: Int
 }
 
 data class SunScreen(val factor: Int)
+
+data class MinRequirementsClothes(val warmth: Int, val waterproof: Int, val windproof: Int)
+data class MaxRequirementsClothes(val warmth: Int, val waterproof: Int, val windproof: Int)
