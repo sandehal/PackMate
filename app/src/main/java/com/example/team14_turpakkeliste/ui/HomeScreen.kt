@@ -10,7 +10,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.team14_turpakkeliste.BottomNavBar
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.ui.MapScreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme

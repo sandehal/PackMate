@@ -1,27 +1,22 @@
 package com.example.team14_turpakkeliste.ui
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
-import com.example.team14_turpakkeliste.BottomNavBar
 import com.example.team14_turpakkeliste.R
-import com.example.team14_turpakkeliste.ui.theme.ForestGreen
-import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 
 
 @Composable
@@ -34,6 +29,7 @@ fun MapScreen(navController: NavController) {
         .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
+        makeListButton()
         BottomNavBar(navController)
     }
 
@@ -62,6 +58,7 @@ fun DisplayMap() {
 //        }
     }
 }
+
 
 
 
