@@ -18,6 +18,7 @@ import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -40,18 +41,25 @@ fun MapScreen(navController: NavController) {
 
 @Composable
 fun DisplayMap() {
-    val activity = LocalContext.current as FragmentActivity
-    AndroidView(
-        factory = { activity.layoutInflater.inflate(R.layout.activity_main, null, false) }
-    ) { view ->
-        val mapFragment = activity.supportFragmentManager
-            .findFragmentById(R.id.map_fragment) as SupportMapFragment
-        //Controlling the map here at the moment. We should probably change this.
-        mapFragment.getMapAsync { googleMap ->
-            val norway = LatLng(62.943669,9.917546)
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(norway, 5f))
-            googleMap.addMarker(MarkerOptions().position(LatLng(59.297573,10.420644)))
+    val context = LocalContext.current
+    val mapView = remember {
+        MapView(context).apply {
+            id = R.id.map_view
         }
+    }
+
+    AndroidView({ mapView }) { view ->
+        val googleMap = view.getMapAsync { map ->
+            val norway = LatLng(62.943669,9.917546)
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(norway, 5f))
+            map.addMarker(MarkerOptions().position(LatLng(59.297573,10.420644)))
+        }
+        mapView.onCreate(null)
+        mapView.onResume()
+        //My location, enabled
+//        mapView.getMapAsync { googleMap ->
+//            googleMap.isMyLocationEnabled = true
+//        }
     }
 }
 
