@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 
-
                     Greeting("Hallaballa")
                  
                     val view = viewModel()

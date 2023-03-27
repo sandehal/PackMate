@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import com.example.team14_turpakkeliste.data.Clothing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -118,6 +119,14 @@ fun ExpandableCard(
             }
         }
     }
+}
+fun sortClothing(jsonClothesList: List<Clothing>,weatherinfo: List<Int>): List<Clothing>?{
+    var recomended_clothes: List<Clothing>
+    val outerRequirment: MutableMap<String, Int>
+    for(clothing in jsonClothesList){
+
+    }
+    return null
 }
 
 
