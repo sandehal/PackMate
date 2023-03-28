@@ -18,13 +18,23 @@ class viewModel(): ViewModel() {
             val response = source.getMetAlerts()
             val inputStream : InputStream = response.byteInputStream()
             val alerts = XmlForMetAlerts().parse(inputStream)
-            val alertList= mutableListOf<List<Alert>>()
+            val alertListOfList= mutableListOf<List<Alert>>()
+            val alertList = mutableListOf<Alert>()
 
             for (a in alerts) {
                 val responseForAlert = source.getCurrentAlerts(a.link!!)
                 val inputStreamForAlert : InputStream = responseForAlert.byteInputStream()
-                alertList.add(XmlCurrentAlert().parse(inputStreamForAlert))
+                alertListOfList.add(XmlCurrentAlert().parse(inputStreamForAlert))
             }
+            //Kun Alerts med relevant informasjon for oss
+            for (alertLists in alertListOfList){
+                for (b in alertLists){
+                    if (b.domain == "land" && b.language == "no"){
+                        alertList.add(b)    
+                    }
+                }
+            }
+            println(alertList.size)
             val forecast = source.getData()
         }
     }
