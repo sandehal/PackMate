@@ -28,11 +28,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import androidx.navigation.NavController
 import com.example.team14_turpakkeliste.data.Clothing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ClothingScreen(context: Context, onNavigateToNext: () -> Unit){
+fun ClothingScreen(context: Context, navController: NavController){
     var expanded by remember {mutableStateOf(false)}
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(horizontal = 30.dp)){
