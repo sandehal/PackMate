@@ -14,8 +14,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 
@@ -25,6 +27,20 @@ fun MapScreen(navController: NavController) {
     val location = remember {
         mutableStateOf("")
     }
+    val trailingIconView = @Composable {
+        IconButton(
+            onClick = {
+                location.value = ""
+            },
+        ) {
+            Icon(
+                Icons.Default.Clear,
+                contentDescription = "Clear",
+                tint = Color.Black
+            )
+        }
+    }
+
     Column {
 
         TextField(
@@ -40,17 +56,8 @@ fun MapScreen(navController: NavController) {
                 .height(60.dp),
 
             singleLine = true,
-            /*trailingIcon = {
-        IconButton(onClick = { passwordHidden = !passwordHidden }) {
-            val visibilityIcon =
-                if (passwordHidden) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
-            // Please provide localized description for accessibility services
-            val description = if (passwordHidden) "Show password" else "Hide password"
-            Icon(imageVector = visibilityIcon, contentDescription = description)
-        }
-*/
-
-                )
+            trailingIcon = if (location.value.isNotBlank()) trailingIconView else null,
+        )
         DisplayMap()
     }
     Column(modifier = Modifier
