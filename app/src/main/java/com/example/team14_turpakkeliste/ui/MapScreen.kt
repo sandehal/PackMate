@@ -1,6 +1,7 @@
 package com.example.team14_turpakkeliste.ui
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -19,6 +20,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.google.android.gms.maps.GoogleMap
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -80,23 +82,33 @@ fun DisplayMap() {
             id = R.id.map_view
         }
     }
+    // Remember the GoogleMap instance
+    val googleMap = remember {
+        mutableStateOf<GoogleMap?>(null)
+    }
+
+    val clickedLatLng = remember {
+        mutableStateOf<LatLng?>(null)
+    }
 
     AndroidView({ mapView }) { view ->
-        val googleMap = view.getMapAsync { map ->
-            val norway = LatLng(62.943669,9.917546)
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(norway, 5f))
-            map.addMarker(MarkerOptions().position(LatLng(59.297573,10.420644)))
-        }
         mapView.onCreate(null)
         mapView.onResume()
-        //My location, enabled
-//        mapView.getMapAsync { googleMap ->
-//            googleMap.isMyLocationEnabled = true
-//        }
+        // Get the GoogleMap instance if it's not already stored
+        if (googleMap.value == null) {
+            mapView.getMapAsync { map ->
+                val norway = LatLng(62.943669, 9.917546)
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(norway, 5f))
+                map.addMarker(MarkerOptions().position(LatLng(59.297573, 10.420644)))
+                map.setOnMapClickListener { latLng ->
+                    clickedLatLng.value = latLng
+                    // Call the API with the clicked LatLng here
+                    Log.d("", clickedLatLng.value.toString())
+                }
+            }
+        }
     }
 }
-
-
 fun getLocation(location: String, context: Context, mapView: MapView){
 
 
