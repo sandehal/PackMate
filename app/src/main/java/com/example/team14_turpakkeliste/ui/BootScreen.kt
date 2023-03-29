@@ -1,7 +1,10 @@
 package com.example.team14_turpakkeliste.ui
 
 import android.content.Context
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
@@ -11,8 +14,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -22,7 +28,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.ClothingScreen
 import com.example.team14_turpakkeliste.SavedScreen
+import com.example.team14_turpakkeliste.ui.theme.Burgunder
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
+import com.example.team14_turpakkeliste.ui.theme.Orange
 
 @Composable
 fun BootScreen(context: Context){
@@ -54,7 +62,9 @@ fun BottomNavBar(navController: NavController){
 
 
     NavigationBar(
-        containerColor = ForestGreen
+        containerColor = Orange,
+        modifier = Modifier
+            .border(BorderStroke(2.dp, Color.Black))
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination

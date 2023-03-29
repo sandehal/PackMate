@@ -17,7 +17,7 @@ import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 @Composable
 fun HomeScreen(navController: NavController) {
     val image = painterResource(R.drawable.autumn_telt_1)
-    Column(modifier = Modifier
+    Column(modifier = Modifier.fillMaxSize()
     ){
         Image(
             painter = image,
