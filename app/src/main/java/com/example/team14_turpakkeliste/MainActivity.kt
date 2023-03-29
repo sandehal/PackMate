@@ -10,7 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.ui.BootScreen
+import com.example.team14_turpakkeliste.ui.HomeScreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 
 //The activity needs to be a subclass of ComponentActivity; AppCompatActivity
@@ -38,5 +41,6 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun DefaultPreview() {
     Team14TurPakkeListeTheme {
+        HomeScreen(navController = rememberNavController())
     }
 }
