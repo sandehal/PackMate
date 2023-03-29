@@ -17,12 +17,15 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -34,14 +37,17 @@ import com.example.team14_turpakkeliste.data.MinRequirementsClothes
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClothingScreen(context: Context){
-    var expanded by remember {mutableStateOf(false)}
+    Spacer(modifier = Modifier.height(10.dp))
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(horizontal = 30.dp)){
         val liste = showJsonAsList(context, "clothing.json")
         val recommendedList = sortClothing(liste)
         items(recommendedList){
                 recommendedList ->
-            ExpandableCard(title = recommendedList.material, description = recommendedList.layer)
+            val title = "${recommendedList.material}${recommendedList.type}"
+            val description = "Varme: ${recommendedList.warmth}\nVindtetthet: ${recommendedList.windproof} \nVanntetthet: ${recommendedList.waterproof}"
+            val image= recommendedList.image
+            ExpandableCard(title = title, description = description, img = image)
             Spacer(modifier = Modifier.height(10.dp))
         }
     }
@@ -59,7 +65,8 @@ fun ExpandableCard(
     descriptionFontSize: TextUnit = MaterialTheme.typography.bodyMedium.fontSize,
     descriptionFontWeight: FontWeight = FontWeight.Normal,
     descriptionMaxLines: Int = 4,
-    padding: Dp = 12.dp
+    padding: Dp = 12.dp,
+    img: String
 ) {
     var expandedState by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(
@@ -111,6 +118,8 @@ fun ExpandableCard(
                 }
             }
             if (expandedState) {
+                val image = getImg(desc = img)
+                Image(painter = image, contentDescription = "picture of clothing-piece")
                 Text(
                     text = description,
                     fontSize = descriptionFontSize,
@@ -123,24 +132,78 @@ fun ExpandableCard(
     }
 }
 fun sortClothing(jsonClothesList: List<Clothing>): List<Clothing>{
-    val outerReqMin: MinRequirementsClothes = MinRequirementsClothes(2,2,4)
-    val outerReqMax: MaxRequirementsClothes = MaxRequirementsClothes(3,3, 5)
+    // Ta imot værdata og få som ouput outerReqMin, outerReqMax, innerReqMin og innerReqMax
+    // Legg ved en boolean f.eks som sier om det er nedbør, kan være viktig for valg av klær, dersom man trenger varme, men ikke fra ytterlag.
+    // Da verdsettes f.eks vannavstøtende kvaliteter, og et innerlag verdsetter høyere varme.
+
+    // evt ha en minimumsvarme som må nås med alle lag sin varme kombinert
+    val outerReqMin = MinRequirementsClothes(1,2,4)
+    // disse to verdiene kan også gjelde for sko/fottøy
+    val outerReqMax = MaxRequirementsClothes(2,3, 5)
+    val innerReqMin = MinRequirementsClothes(2,1,3)
     val tempList: MutableList<Clothing> = mutableListOf()
     //val innerRequirement: MinRequirementsClothes = MinRequirementsClothes(3,3,3)
     for(clothing in jsonClothesList){
-        if(clothing.warmth.toInt() >= outerReqMin.warmth
-            && clothing.warmth.toInt() <= outerReqMax.warmth
-            && clothing.layer == "jacket"){
-            tempList.add(1, clothing)
+        val warmth: Int = clothing.warmth.toInt()
+        if(warmth >= outerReqMin.warmth
+            && warmth <= outerReqMax.warmth
+            && clothing.type == "jacket"
+            && clothing.layer == "outer"){
+            tempList.add(clothing)
             continue
         }
-        if(clothing.warmth.toInt() >= outerReqMin.warmth
-            && clothing.warmth.toInt() <= outerReqMax.warmth
-            && clothing.layer == "pants"){
-            tempList.add(2, clothing)
+        if(warmth >= outerReqMin.warmth
+            && warmth <= outerReqMax.warmth
+            && clothing.type == "pants"
+            && clothing.layer == "outer"){
+            tempList.add(clothing)
             continue
         }
+        if(warmth >= outerReqMin.warmth
+            && warmth <= outerReqMax.warmth
+            && clothing.type == "jacket"
+            && clothing.layer == "inner"){
+            tempList.add(clothing)
+            continue
+        }
+        if(warmth >= outerReqMin.warmth
+            && warmth <= outerReqMax.warmth
+            && clothing.type == "pants"
+            && clothing.layer == "inner"
+            && tempList.add(clothing))
+            continue
     }
     return tempList
+}
+fun chooseReqs(temp: Int, wind: Int, water: Int){
+    var warmth: Int
+    var windproof: Int
+    var waterproof: Int
+    when(temp){
+        in -40..-21 -> warmth = 5
+        in -20..-11 -> warmth = 4
+        in -10..-1 -> warmth = 3
+        in 0..9 -> warmth = 2
+        in 10..19 -> warmth = 1
+        in 20..40 -> warmth = 0
+    }
+    when(wind){
+        //finne ut verdi for hvordan vær tolkes
+    }
+
+}
+@Composable
+fun getImg(desc: String): Painter{
+    val painter: Painter = when(desc){
+        "SoftJO"->painterResource(id = R.drawable.softshelljakke)
+        "SoftPO"->painterResource(id = R.drawable.softshellbukse)
+        "DownJO"-> painterResource(id = R.drawable.dunjakke)
+        "ShellJO"-> painterResource(id = R.drawable.skalljakke)
+        //"ShellPO" -> painterResource(id = R.drawable.skallbukse)
+        else -> {
+            painterResource(id = R.drawable.tursekk_1)
+        }
+    }
+    return painter
 }
 

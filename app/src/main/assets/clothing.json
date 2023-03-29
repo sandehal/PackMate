@@ -3,48 +3,54 @@
     "material": "Shell",
     "type": "jacket",
     "layer": "outer",
-    "warmth": 1,
+    "warmth": 0,
     "waterproof": 5,
-    "windproof": 5
+    "windproof": 5,
+    "image": "ShellJO"
   },
   {
     "material": "Down",
     "type": "jacket",
     "layer": "outer",
-    "warmth": 5,
+    "warmth": 4,
     "waterproof": 2,
-    "windproof": 4
+    "windproof": 4,
+    "image": "DownJO"
   },
   {
     "material": "Softshell",
     "type": "jacket",
     "layer": "outer",
-    "warmth": 2,
+    "warmth": 1,
     "waterproof": 2,
-    "windproof": 5
+    "windproof": 5,
+    "image": "SoftJO"
   },
   {
     "material": "Softshell",
     "type": "pants",
     "layer": "outer",
-    "warmth": 2,
+    "warmth": 1,
     "waterproof": 2,
-    "windproof": 5
+    "windproof": 5,
+    "image": "SoftPO"
   },
   {
     "material": "Fleece",
     "type": "jacket",
     "layer": "middle",
-    "warmth": 4,
+    "warmth": 2,
     "waterproof": 1,
-    "windproof": 1
+    "windproof": 2,
+    "image": "FleeceJM"
   },
   {"material": "Wool",
     "type": "sweater",
     "layer": "middle",
     "warmth": 4,
     "waterproof": 1,
-    "windproof": 2
+    "windproof": 2,
+    "image": "WoolSM"
   },
   {
     "material": "Wool",
@@ -52,7 +58,8 @@
     "layer": "inner",
     "warmth": 3,
     "waterproof": 1,
-    "windproof": 2
+    "windproof": 2,
+    "image": "WoolLI"
   },
   {
     "material": "Wool",
@@ -60,6 +67,7 @@
     "layer": "inner",
     "warmth": 3,
     "waterproof": 1,
-    "windproof": 2
+    "windproof": 2,
+    "image": "WoolSI"
   }
 ]
