@@ -30,13 +30,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import androidx.navigation.NavController
 import com.example.team14_turpakkeliste.data.Clothing
 import com.example.team14_turpakkeliste.data.MaxRequirementsClothes
 import com.example.team14_turpakkeliste.data.MinRequirementsClothes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ClothingScreen(context: Context){
+fun ClothingScreen(context: Context, navController: NavController){
     Spacer(modifier = Modifier.height(10.dp))
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(horizontal = 30.dp)){

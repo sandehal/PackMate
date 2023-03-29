@@ -25,7 +25,7 @@ import com.example.team14_turpakkeliste.SavedScreen
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 
 @Composable
-fun BootScreen(){
+fun BootScreen(context: Context){
     val navController = rememberNavController()
 
 
@@ -33,7 +33,7 @@ fun BootScreen(){
         composable(Screen.HomeScreen.route) { HomeScreen(navController) }
         composable(Screen.MapScreen.route) { MapScreen(navController) }
         composable(Screen.SavedScreen.route) { SavedScreen(navController) }
-        composable(Screen.ClothingScreen.route) { ClothingScreen(context = LocalContext.current, navController) }
+        composable(Screen.ClothingScreen.route) { ClothingScreen(context, navController) }
     }
 
 }

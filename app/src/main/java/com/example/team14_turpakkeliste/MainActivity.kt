@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val view = viewModel()
-                    BootScreen()
+                    BootScreen(this)
                 }
             }
         }
