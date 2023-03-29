@@ -21,8 +21,11 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
+import com.example.team14_turpakkeliste.ui.theme.ForestGreen
+import com.example.team14_turpakkeliste.ui.theme.Orange
 import com.google.android.gms.maps.GoogleMap
 import java.io.IOException
 
@@ -80,8 +83,13 @@ fun MapScreen(navController: NavController) {
                           getLocation(location.toString(),context,mapView)
                         focusManager.clearFocus()
                 },
+                shape = RectangleShape,
+                colors = ButtonDefaults.buttonColors(ForestGreen),
                 // on below line adding a modifier for our button.
-                modifier = Modifier.padding(3.dp)
+                modifier = Modifier
+                    .padding(3.dp)
+                    .height(60.dp)
+                    .fillMaxSize()
             )
             {
                 Text("Søk")
