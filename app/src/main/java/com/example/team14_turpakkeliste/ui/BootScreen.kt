@@ -1,5 +1,6 @@
 package com.example.team14_turpakkeliste.ui
 
+import ForecastData
 import android.content.Context
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
@@ -22,18 +23,33 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.ClothingScreen
 import com.example.team14_turpakkeliste.SavedScreen
+import com.example.team14_turpakkeliste.data.Alert
+import com.example.team14_turpakkeliste.data.Clothing
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
+import com.example.team14_turpakkeliste.viewModel
+import kotlinx.coroutines.runBlocking
+
 
 @Composable
-fun BootScreen(context: Context){
-    val navController = rememberNavController()
+fun setStateScreen(state: TurpakklisteUiState){
+    when(state){
+        // is TurpakklisteUiState.Error -> ErrorScreen
+        // is TurpakklisteUiState.Loading -> LoadingScreen
+        is TurpakklisteUiState.Success -> BootScreen(state.alerts,state.forecastData,state.clothing)
+        else -> println(state)
+    }
+}
 
+@Composable
+fun BootScreen(alerts:List<Alert>,forecastData: ForecastData,clothing:List<Clothing>){
+    val navController = rememberNavController()
+    println("tiss")
 
     NavHost(navController = navController, startDestination = "HomeScreen") {
         composable(Screen.HomeScreen.route) { HomeScreen(navController) }
         composable(Screen.MapScreen.route) { MapScreen(navController) }
         composable(Screen.SavedScreen.route) { SavedScreen(navController) }
-        composable(Screen.ClothingScreen.route) { ClothingScreen(context, navController) }
+        composable(Screen.ClothingScreen.route) { ClothingScreen(clothing,navController) }
     }
 
 }
@@ -97,7 +113,7 @@ fun makeListButton(navController: NavController){
             // Restore state when reselecting a previously selected item
             restoreState = true
         }
-                  },
+        },
         modifier = Modifier.fillMaxWidth()
     )
 }

@@ -1,10 +1,12 @@
 package com.example.team14_turpakkeliste.ui
 
 import ForecastData
+import androidx.compose.runtime.Recomposer
 import com.example.team14_turpakkeliste.data.Alert
+import com.example.team14_turpakkeliste.data.Clothing
 
 sealed interface TurpakklisteUiState {
-    data class Success(val alerts: List<Alert>, val forecastData: ForecastData) : TurpakklisteUiState
+    data class Success(val alerts: List<Alert>, val forecastData: ForecastData, val clothing: List<Clothing>) : TurpakklisteUiState
     object Error : TurpakklisteUiState
     object Loading : TurpakklisteUiState
 }
