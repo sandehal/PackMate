@@ -37,10 +37,3 @@ class MainActivity : AppCompatActivity() {
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    Team14TurPakkeListeTheme {
-        HomeScreen(navController = rememberNavController())
-    }
-}
