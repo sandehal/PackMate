@@ -25,8 +25,6 @@ class MainActivity : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Hallaballa")
-                    
                     val view = viewModel()
                     BootScreen()
                 }

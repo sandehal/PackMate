@@ -1,5 +1,6 @@
 package com.example.team14_turpakkeliste.ui
 
+import android.content.Context
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -18,6 +20,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.team14_turpakkeliste.ClothingScreen
 import com.example.team14_turpakkeliste.SavedScreen
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 
@@ -30,7 +33,7 @@ fun BootScreen(){
         composable(Screen.HomeScreen.route) { HomeScreen(navController) }
         composable(Screen.MapScreen.route) { MapScreen(navController) }
         composable(Screen.SavedScreen.route) { SavedScreen(navController) }
-
+        composable(Screen.ClothingScreen.route) { ClothingScreen(context = LocalContext.current, navController) }
     }
 
 }
@@ -79,11 +82,22 @@ fun BottomNavBar(navController: NavController){
 }
 
 @Composable
-fun makeListButton(){
+fun makeListButton(navController: NavController){
     ExtendedFloatingActionButton(
         icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
         text = { Text("Make the list!") },
-        onClick = { /*do something*/ },
+        onClick = {  navController.navigate("ClothingScreen")
+        {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            // Avoid multiple copies of the same destination when
+            // reselecting the same item
+            launchSingleTop = true
+            // Restore state when reselecting a previously selected item
+            restoreState = true
+        }
+                  },
         modifier = Modifier.fillMaxWidth()
     )
 }

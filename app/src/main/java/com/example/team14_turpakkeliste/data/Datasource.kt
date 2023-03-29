@@ -1,6 +1,5 @@
 package com.example.team14_turpakkeliste.data
 import ForecastData
-import android.util.Log
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
@@ -23,9 +22,8 @@ class Datasource {
         }
     }
 
-    suspend fun getData(): ForecastData {
-        val forecast: ForecastData = client.get(apiUrl1).body()
-        return forecast
+    suspend fun getForecastData(): ForecastData {
+        return client.get(apiUrl1).body()
     }
     suspend fun getMetAlerts(): String {
         return client.get(apiUrl).bodyAsText()

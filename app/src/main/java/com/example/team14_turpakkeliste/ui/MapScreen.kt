@@ -1,5 +1,6 @@
 package com.example.team14_turpakkeliste.ui
 
+import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -14,26 +15,55 @@ import com.google.android.gms.maps.model.MarkerOptions
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
+import androidx.compose.ui.unit.dp
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MapScreen(navController: NavController) {
-
+    val location = remember {
+        mutableStateOf("")
+    }
     Column {
+
+        TextField(
+            value = location.value,
+
+            onValueChange = { location.value = it },
+
+            placeholder = { Text(text = "Søk på området") },
+
+            modifier = Modifier
+                .padding(3.dp)
+                .width(400.dp) //endre tilbake til 300 når vi bruker trailing
+                .height(60.dp),
+
+            singleLine = true,
+            /*trailingIcon = {
+        IconButton(onClick = { passwordHidden = !passwordHidden }) {
+            val visibilityIcon =
+                if (passwordHidden) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+            // Please provide localized description for accessibility services
+            val description = if (passwordHidden) "Show password" else "Hide password"
+            Icon(imageVector = visibilityIcon, contentDescription = description)
+        }
+*/
+
+                )
         DisplayMap()
     }
     Column(modifier = Modifier
         .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
-        makeListButton()
+        makeListButton(navController)
         BottomNavBar(navController)
     }
 
 }
+
+
 
 @Composable
 fun DisplayMap() {
@@ -59,6 +89,11 @@ fun DisplayMap() {
     }
 }
 
+
+fun getLocation(location: String, context: Context, mapView: MapView){
+
+
+}
 
 
 
