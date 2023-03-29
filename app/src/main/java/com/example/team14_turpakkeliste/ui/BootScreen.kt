@@ -6,10 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,11 +34,12 @@ fun BootScreen(context: Context){
     val navController = rememberNavController()
 
 
-    NavHost(navController = navController, startDestination = "HomeScreen") {
+    NavHost(navController = navController, startDestination = "LoadingScreen") {
         composable(Screen.HomeScreen.route) { HomeScreen(navController) }
         composable(Screen.MapScreen.route) { MapScreen(navController) }
         composable(Screen.SavedScreen.route) { SavedScreen(navController) }
         composable(Screen.ClothingScreen.route) { ClothingScreen(context, navController) }
+        composable(Screen.LoadingScreen.route) { LoadingScreen(navController) }
     }
 
 }
@@ -50,6 +48,7 @@ sealed class Screen(val route: String, val icon: ImageVector, val description : 
     object HomeScreen : Screen("HomeScreen", Icons.Default.Home, "Home")
     object SavedScreen : Screen("SavedScreen", Icons.Default.Star, "Saved")
     object ClothingScreen : Screen("ClothingScreen", Icons.Default.Favorite, "Clothing")
+    object LoadingScreen : Screen("LoadingScreen", Icons.Default.Refresh, "Loading")
 }
 
 @Composable
