@@ -12,7 +12,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.team14_turpakkeliste.data.showJsonAsList
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -37,11 +36,11 @@ import com.example.team14_turpakkeliste.data.MinRequirementsClothes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ClothingScreen(context: Context, navController: NavController){
+fun ClothingScreen(clothing: List<Clothing>, navController: NavController){
     Spacer(modifier = Modifier.height(10.dp))
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(horizontal = 30.dp)){
-        val liste = showJsonAsList(context, "clothing.json")
+        val liste = clothing
         val recommendedList = sortClothing(liste)
         items(recommendedList){
                 recommendedList ->
