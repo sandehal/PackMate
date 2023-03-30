@@ -15,7 +15,7 @@ import java.io.InputStream
 
 class TurViewModel(): ViewModel() {
 
-    var turUiState: TurpakklisteUiState by mutableStateOf(TurpakklisteUiState.Loading)
+    var turUiState: TurpakklisteUiState by mutableStateOf(TurpakklisteUiState.Booting)
         private set
 
     private val source: Datasource = Datasource()

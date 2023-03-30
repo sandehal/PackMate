@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
+import com.example.team14_turpakkeliste.ui.SplashScreen
 
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 
@@ -22,7 +24,8 @@ class MainActivity : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SetStateScreen()
+                    val navController = rememberNavController()
+                    SetStateScreen(navController)
                 }
             }
         }

@@ -1,18 +1,16 @@
 package com.example.team14_turpakkeliste
 
 import ForecastData
-import android.content.Context
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
@@ -20,31 +18,28 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.team14_turpakkeliste.SavedScreen
 import com.example.team14_turpakkeliste.data.Alert
-import com.example.team14_turpakkeliste.ui.HomeScreen
-import com.example.team14_turpakkeliste.ui.MapScreen
-import com.example.team14_turpakkeliste.ui.TurViewModel
-import com.example.team14_turpakkeliste.ui.TurpakklisteUiState
+import com.example.team14_turpakkeliste.ui.*
 import com.example.team14_turpakkeliste.ui.theme.Orange
 
 @Composable
-fun SetStateScreen(viewModel: TurViewModel = viewModel()){
+fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = viewModel()){
+
     when(val state = viewModel.turUiState){
+        is TurpakklisteUiState.Booting -> SplashScreen(navController)
         is TurpakklisteUiState.Error -> ErrorScreen()
         is TurpakklisteUiState.Loading -> LoadingScreen()
-        is TurpakklisteUiState.Success -> BootScreen(state.alerts,state.forecastData)
+        is TurpakklisteUiState.Success -> BootScreen(navController,state.alerts,state.forecastData)
     }
 }
 
 @Composable
-fun BootScreen(alerts:List<Alert>, forecastData: ForecastData){
-    val navController = rememberNavController()
-
+fun BootScreen(navController: NavHostController,alerts:List<Alert>, forecastData: ForecastData){
     NavHost(navController = navController, startDestination = "HomeScreen") {
         composable(Screen.HomeScreen.route) { HomeScreen(navController) }
         composable(Screen.MapScreen.route) { MapScreen(navController) }
@@ -55,14 +50,17 @@ fun BootScreen(alerts:List<Alert>, forecastData: ForecastData){
 
 }
 
-@Composable
-fun LoadingScreen(){
-    Text("zaza!")
-}
+
 
 @Composable
 fun ErrorScreen(){
     Text("zaza error!")
+
+}
+@Composable
+fun LoadingScreen(){
+    Text("zaza error!")
+
 }
 sealed class Screen(val route: String, val icon: ImageVector, val description : String) {
     object MapScreen : Screen("MapScreen", Icons.Default.Search, "Map")

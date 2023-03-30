@@ -25,12 +25,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.BuildConfig
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.ui.theme.Burgunder
-import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 import kotlinx.coroutines.delay
 
 @Composable
-fun LoadingScreen(navController: NavController) {
+fun SplashScreen(navController: NavController) {
     Box(
         Modifier
             .fillMaxSize()
@@ -45,22 +44,12 @@ fun LoadingScreen(navController: NavController) {
         LaunchedEffect(key1 = true) {
             scale.animateTo(
                 targetValue = 0.7f,
-                animationSpec = tween(800, easing = {
+                animationSpec = tween(700, easing = {
                     OvershootInterpolator(4f).getInterpolation(it)
                 })
             )
-            delay(1000)
-            navController.navigate("HomeScreen")
-            {
-                popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
-                }
-                // Avoid multiple copies of the same destination when
-                // reselecting the same item
-                launchSingleTop = true
-                // Restore state when reselecting a previously selected item
-                restoreState = true
-            }
+
+
         }
 
         Image(
@@ -87,6 +76,6 @@ fun LoadingScreen(navController: NavController) {
 @Composable
 fun DefaultPreview() {
     Team14TurPakkeListeTheme {
-        LoadingScreen(navController = rememberNavController())
+        SplashScreen(navController = rememberNavController())
     }
 }

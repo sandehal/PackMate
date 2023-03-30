@@ -7,4 +7,6 @@ sealed interface TurpakklisteUiState {
     data class Success(val alerts: List<Alert>, val forecastData: ForecastData) : TurpakklisteUiState
     object Error : TurpakklisteUiState
     object Loading : TurpakklisteUiState
+
+    object Booting : TurpakklisteUiState
 }
