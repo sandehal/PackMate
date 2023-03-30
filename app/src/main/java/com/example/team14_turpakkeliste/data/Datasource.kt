@@ -1,5 +1,8 @@
 package com.example.team14_turpakkeliste.data
 import ForecastData
+import android.content.Context
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
@@ -7,6 +10,7 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.serialization.gson.*
+import java.io.IOException
 
 class Datasource {
 
@@ -32,4 +36,25 @@ class Datasource {
     suspend fun getCurrentAlerts(link: String): String{
         return client.get(link).bodyAsText()
     }
+
+    fun getJsonDataFromAsset(context: Context, fileName: String): String?{
+        val jsonString: String
+        try {
+            jsonString = context.assets.open(fileName).bufferedReader().use {it.readText() }
+        }catch (ioException: IOException){
+            ioException.printStackTrace()
+            return null
+        }
+        return jsonString
+    }
+    fun showJsonAsList(context: Context, fileName: String): List<Clothing> {
+        val jsonFileString = getJsonDataFromAsset(context, fileName)
+        val gson = Gson()
+        val listClothingType = object : TypeToken<List<Clothing>>() {}.type
+
+        val clothes: List<Clothing> =  gson.fromJson(jsonFileString, listClothingType)
+        return clothes
+    }
+
+
 }

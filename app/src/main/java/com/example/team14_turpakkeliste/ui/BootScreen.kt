@@ -1,5 +1,6 @@
 package com.example.team14_turpakkeliste.ui
 
+import ForecastData
 import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
@@ -14,8 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -23,25 +22,38 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.team14_turpakkeliste.ClothingScreen
 import com.example.team14_turpakkeliste.SavedScreen
-import com.example.team14_turpakkeliste.ui.theme.Burgunder
-import com.example.team14_turpakkeliste.ui.theme.ForestGreen
-import com.example.team14_turpakkeliste.ui.theme.Orange
 
 @Composable
-fun BootScreen(context: Context){
-    val navController = rememberNavController()
+fun SetStateScreen(viewModel: TurViewModel = viewModel()){
+    when(val state = viewModel.turUiState){
+        is TurpakklisteUiState.Error -> ErrorScreen()
+        is TurpakklisteUiState.Loading -> LoadingScreen()
+        is TurpakklisteUiState.Success -> BootScreen(state.alerts,state.forecastData)
+    }
+}
 
+@Composable
+fun BootScreen(alerts:List<Alert>,forecastData: ForecastData){
+    val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "LoadingScreen") {
         composable(Screen.HomeScreen.route) { HomeScreen(navController) }
         composable(Screen.MapScreen.route) { MapScreen(navController) }
         composable(Screen.SavedScreen.route) { SavedScreen(navController) }
-        composable(Screen.ClothingScreen.route) { ClothingScreen(context, navController) }
-        composable(Screen.LoadingScreen.route) { LoadingScreen(navController) }
+        //composable(Screen.ClothingScreen.route) { ClothingScreen(clothing,navController) }
     }
 
+}
+
+@Composable
+fun LoadingScreen(){
+    Text("zaza!")
+}
+
+@Composable
+fun ErrorScreen(){
+    Text("zaza error!")
 }
 sealed class Screen(val route: String, val icon: ImageVector, val description : String) {
     object MapScreen : Screen("MapScreen", Icons.Default.Search, "Map")
@@ -91,7 +103,7 @@ fun BottomNavBar(navController: NavController){
 }
 
 @Composable
-fun makeListButton(navController: NavController){
+fun MakeListButton(navController: NavController){
     ExtendedFloatingActionButton(
         icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
         text = { Text("Make the list!") },
