@@ -67,7 +67,7 @@ fun MapScreen(navController: NavController) {
 
                 onValueChange = { location.value = it },
 
-                placeholder = { Text(text = "Søk på området") },
+                placeholder = { Text(text = "Søk på område") },
 
                 modifier = Modifier
                     .padding(3.dp)
@@ -116,15 +116,12 @@ fun MapScreen(navController: NavController) {
 
                     val norway = LatLng(62.943669, 9.917546)
                     map.moveCamera(CameraUpdateFactory.newLatLngZoom(norway, 5f))
-                    map.addMarker(MarkerOptions().position(LatLng(59.297573, 10.420644)))
                     map.setOnMapClickListener { latLng ->
                         clickedLatLng.value = latLng
                         // Call the API with the clicked LatLng here
                         Log.d("", clickedLatLng.value.toString())
                     }
                 }
-
-
             }
 
         }
