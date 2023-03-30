@@ -1,10 +1,6 @@
 package com.example.team14_turpakkeliste
 
 import android.content.Context
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
@@ -17,8 +13,7 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -33,6 +28,8 @@ import androidx.navigation.NavController
 import com.example.team14_turpakkeliste.data.Clothing
 import com.example.team14_turpakkeliste.data.MaxRequirementsClothes
 import com.example.team14_turpakkeliste.data.MinRequirementsClothes
+import com.example.team14_turpakkeliste.ui.BottomNavBar
+import com.example.team14_turpakkeliste.ui.makeListButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,6 +47,12 @@ fun ClothingScreen(clothing: List<Clothing>, navController: NavController){
             ExpandableCard(title = title, description = description, img = image)
             Spacer(modifier = Modifier.height(10.dp))
         }
+    }
+    Column(modifier = Modifier
+        .fillMaxSize(),
+        verticalArrangement = Arrangement.Bottom
+    ){
+        BottomNavBar(navController)
     }
 }
 
