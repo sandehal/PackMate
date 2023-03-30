@@ -1,9 +1,7 @@
 package com.example.team14_turpakkeliste
 
 
-import android.annotation.SuppressLint
 import android.content.Context
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,23 +10,20 @@ import androidx.lifecycle.viewModelScope
 import com.example.team14_turpakkeliste.data.*
 import com.example.team14_turpakkeliste.ui.TurpakklisteUiState
 import io.ktor.client.plugins.*
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.SerializationException
-import java.io.IOException
 import java.io.InputStream
 
-class viewModel(val context: Context): ViewModel() {
+class TurViewModel(): ViewModel() {
 
     var turUiState: TurpakklisteUiState by mutableStateOf(TurpakklisteUiState.Loading)
         private set
 
     private val source: Datasource = Datasource()
 
-
     init {
-        viewModelScope.launch {
-            getData()
-        }
+        getData()
     }
 
     private fun getData() {
@@ -56,9 +51,7 @@ class viewModel(val context: Context): ViewModel() {
                 println(alertList.size)
                 val forecast = source.getForecastData()
 
-                val clothingList = source.showJsonAsList(context, "clothing.json")
-
-                TurpakklisteUiState.Success(alertList,forecast,clothingList)
+                TurpakklisteUiState.Success(alertList, forecast)
             } catch (ex: ResponseException) {
                 TurpakklisteUiState.Error
             } catch (ex: SerializationException) {

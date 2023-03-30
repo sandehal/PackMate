@@ -57,7 +57,7 @@ fun MapScreen(navController: NavController) {
         .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
-        makeListButton(navController)
+        MakeListButton(navController)
         BottomNavBar(navController)
     }
 

@@ -10,9 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.team14_turpakkeliste.ui.BootScreen
-import com.example.team14_turpakkeliste.ui.TurpakklisteUiState
-import com.example.team14_turpakkeliste.ui.setStateScreen
+import com.example.team14_turpakkeliste.ui.SetStateScreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 
 //The activity needs to be a subclass of ComponentActivity; AppCompatActivity
@@ -27,8 +25,7 @@ class MainActivity : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val view = viewModel(this)
-                    setStateScreen(view.turUiState)
+                    SetStateScreen()
                 }
             }
         }
