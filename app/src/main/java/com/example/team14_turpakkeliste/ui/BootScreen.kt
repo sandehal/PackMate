@@ -1,4 +1,4 @@
-package com.example.team14_turpakkeliste.ui
+package com.example.team14_turpakkeliste
 
 import ForecastData
 import android.content.Context
@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -23,6 +25,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.SavedScreen
+import com.example.team14_turpakkeliste.data.Alert
+import com.example.team14_turpakkeliste.ui.HomeScreen
+import com.example.team14_turpakkeliste.ui.MapScreen
+import com.example.team14_turpakkeliste.ui.TurViewModel
+import com.example.team14_turpakkeliste.ui.TurpakklisteUiState
+import com.example.team14_turpakkeliste.ui.theme.Orange
 
 @Composable
 fun SetStateScreen(viewModel: TurViewModel = viewModel()){
@@ -34,13 +42,14 @@ fun SetStateScreen(viewModel: TurViewModel = viewModel()){
 }
 
 @Composable
-fun BootScreen(alerts:List<Alert>,forecastData: ForecastData){
+fun BootScreen(alerts:List<Alert>, forecastData: ForecastData){
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "LoadingScreen") {
+    NavHost(navController = navController, startDestination = "HomeScreen") {
         composable(Screen.HomeScreen.route) { HomeScreen(navController) }
         composable(Screen.MapScreen.route) { MapScreen(navController) }
         composable(Screen.SavedScreen.route) { SavedScreen(navController) }
+        composable(Screen.LoadingScreen.route) { LoadingScreen() }
         //composable(Screen.ClothingScreen.route) { ClothingScreen(clothing,navController) }
     }
 
