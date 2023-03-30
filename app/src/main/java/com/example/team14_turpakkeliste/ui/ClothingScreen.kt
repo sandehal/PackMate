@@ -28,8 +28,6 @@ import androidx.navigation.NavController
 import com.example.team14_turpakkeliste.data.Clothing
 import com.example.team14_turpakkeliste.data.MaxRequirementsClothes
 import com.example.team14_turpakkeliste.data.MinRequirementsClothes
-import com.example.team14_turpakkeliste.ui.BottomNavBar
-import com.example.team14_turpakkeliste.ui.makeListButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

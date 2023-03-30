@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.team14_turpakkeliste.ui.BottomNavBar
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 
 

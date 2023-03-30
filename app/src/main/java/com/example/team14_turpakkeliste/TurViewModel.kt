@@ -1,4 +1,4 @@
-package com.example.team14_turpakkeliste
+package com.example.team14_turpakkeliste.ui
 
 
 import android.content.Context
