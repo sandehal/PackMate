@@ -1,6 +1,5 @@
 package com.example.team14_turpakkeliste
 
-import android.content.Context
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
@@ -28,15 +27,15 @@ import androidx.navigation.NavController
 import com.example.team14_turpakkeliste.data.Clothing
 import com.example.team14_turpakkeliste.data.MaxRequirementsClothes
 import com.example.team14_turpakkeliste.data.MinRequirementsClothes
+import com.example.team14_turpakkeliste.data.getClothes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ClothingScreen(clothing: List<Clothing>, navController: NavController){
+fun ClothingScreen(navController: NavController){
     Spacer(modifier = Modifier.height(10.dp))
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(horizontal = 30.dp)){
-        val liste = clothing
-        val recommendedList = sortClothing(liste)
+        val recommendedList = sortClothing(getClothes())
         items(recommendedList){
                 recommendedList ->
             val title = "${recommendedList.material}${recommendedList.type}"
@@ -45,12 +44,6 @@ fun ClothingScreen(clothing: List<Clothing>, navController: NavController){
             ExpandableCard(title = title, description = description, img = image)
             Spacer(modifier = Modifier.height(10.dp))
         }
-    }
-    Column(modifier = Modifier
-        .fillMaxSize(),
-        verticalArrangement = Arrangement.Bottom
-    ){
-        BottomNavBar(navController)
     }
 }
 
@@ -141,7 +134,6 @@ fun sortClothing(jsonClothesList: List<Clothing>): List<Clothing>{
     val outerReqMin = MinRequirementsClothes(1,2,4)
     // disse to verdiene kan også gjelde for sko/fottøy
     val outerReqMax = MaxRequirementsClothes(2,3, 5)
-    val innerReqMin = MinRequirementsClothes(2,1,3)
     val tempList: MutableList<Clothing> = mutableListOf()
     //val innerRequirement: MinRequirementsClothes = MinRequirementsClothes(3,3,3)
     for(clothing in jsonClothesList){

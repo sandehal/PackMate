@@ -18,7 +18,7 @@ class Datasource {
     var lat = 60.12
     var lon = 9.58
     private val apiUrl1 =
-        "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}&lon=${lon}"
+        "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=60.12&lon=9.58"
     private val apiUrl = "https://api.met.no/weatherapi/metalerts/1.1?lang=no"
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
@@ -37,6 +37,7 @@ class Datasource {
         return client.get(link).bodyAsText()
     }
 
+    //reads JSON locally from asset and returns it as a string
     fun getJsonDataFromAsset(context: Context, fileName: String): String?{
         val jsonString: String
         try {
