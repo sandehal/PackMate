@@ -35,7 +35,7 @@ import java.io.IOException
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MapScreen(navController: NavController) {
+fun MapScreen(navController: NavController, viewModel: TurViewModel) {
     val focusManager = LocalFocusManager.current
     val location = remember {
         mutableStateOf("")
@@ -137,7 +137,7 @@ fun MapScreen(navController: NavController) {
         .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
-        WeatherCard()
+        WeatherCard(viewModel)
         MakeListButton(navController)
         BottomNavBar(navController)
     }
@@ -185,15 +185,14 @@ fun getLocation(location: String, context: Context, mapView: MapView){
 }
 
 @Composable
-fun WeatherCard() {
-    val viewModel = TurViewModel()
+fun WeatherCard(viewModel: TurViewModel) {
 
     when (val uiState = viewModel.turUiState) {
         is TurpakklisteUiState.Success -> {
             val alerts = uiState.alerts
             val forecastData = uiState.forecastData
 
-            Box (modifier = Modifier.fillMaxWidth().fillMaxHeight()){
+            Box(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
                 // Display the alerts
                 // ...
 
@@ -216,7 +215,6 @@ fun WeatherCard() {
             Text(text = "Booting...")
         }
     }
-
 }
 
 
