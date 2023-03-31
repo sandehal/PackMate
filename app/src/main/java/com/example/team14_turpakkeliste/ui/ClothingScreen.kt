@@ -32,18 +32,26 @@ import com.example.team14_turpakkeliste.data.getClothes
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClothingScreen(navController: NavController){
-    Spacer(modifier = Modifier.height(10.dp))
-    LazyColumn(horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(horizontal = 30.dp)){
-        val recommendedList = sortClothing(getClothes())
-        items(recommendedList){
-                recommendedList ->
-            val title = "${recommendedList.material}${recommendedList.type}"
-            val description = "Varme: ${recommendedList.warmth}\nVindtetthet: ${recommendedList.windproof} \nVanntetthet: ${recommendedList.waterproof}"
-            val image= recommendedList.image
-            ExpandableCard(title = title, description = description, img = image)
-            Spacer(modifier = Modifier.height(10.dp))
+    Column(modifier = Modifier
+        .fillMaxSize()) {
+        Spacer(modifier = Modifier.height(10.dp))
+        LazyColumn(horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(horizontal = 30.dp)){
+            val recommendedList = sortClothing(getClothes())
+            items(recommendedList){
+                    recommendedList ->
+                val title = "${recommendedList.material}${recommendedList.type}"
+                val description = "Varme: ${recommendedList.warmth}\nVindtetthet: ${recommendedList.windproof} \nVanntetthet: ${recommendedList.waterproof}"
+                val image= recommendedList.image
+                ExpandableCard(title = title, description = description, img = image)
+                Spacer(modifier = Modifier.height(10.dp))
+            }
         }
+    }
+    Column(modifier = Modifier
+        .fillMaxSize(),
+        verticalArrangement = Arrangement.Bottom) {
+        BottomNavBar(navController)
     }
 }
 
