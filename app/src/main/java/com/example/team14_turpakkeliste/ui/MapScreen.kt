@@ -129,7 +129,8 @@ fun MapScreen(navController: NavController, viewModel: TurViewModel) {
                 }
             }
         }
-        if (true) {
+        if (locationSelected) {
+            WeatherCard(viewModel)
             Log.d("", "A location has been selected")
         }
     }
@@ -137,7 +138,7 @@ fun MapScreen(navController: NavController, viewModel: TurViewModel) {
         .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
-        WeatherCard(viewModel)
+        //WeatherCard(viewModel)
         MakeListButton(navController)
         BottomNavBar(navController)
     }
