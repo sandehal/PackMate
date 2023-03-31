@@ -92,3 +92,13 @@ fun chooseReqsOuter(temp: Double, wind: Double, water: Double?): MinRequirements
     println(water)
     return MinRequirementsClothes(warmth,waterproof, windproof)
 }
+fun getWeather(forecastData: ForecastData): String{
+    val temp: String = forecastData.properties.timeseries.get(0).data.instant.details.air_temperature.toString()
+    val wind: String = forecastData.properties.timeseries.get(0).data.instant.details.wind_speed.toString()
+    var water: String = "0.0"
+    forecastData.properties.timeseries.get(0).data.instant.details.precipitation_amount ?.let {
+        water = forecastData.properties.timeseries.get(0).data.instant.details.precipitation_amount.toString()
+    }
+    val returnString = "Det er meldt ${temp} grader \nog vind på ${wind} m/s \nDu kan forvente ${water} mm nedbør"
+    return returnString
+}

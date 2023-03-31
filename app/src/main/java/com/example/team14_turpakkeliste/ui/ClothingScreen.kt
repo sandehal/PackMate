@@ -55,8 +55,8 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
             }
         }
         Spacer(modifier = Modifier.height(100.dp))
-        //val descriptionWeather = getWeatherInfo()
-        ExpandableCard(title = "Vis Været", description = "været er dritt", img = "hei")
+        val descriptionWeather = getWeather(forecastData)
+        ExpandableCard(title = "Vis Været", description = descriptionWeather, img = "hei")
         Column(modifier = Modifier
             .fillMaxSize(),
             verticalArrangement = Arrangement.Bottom
