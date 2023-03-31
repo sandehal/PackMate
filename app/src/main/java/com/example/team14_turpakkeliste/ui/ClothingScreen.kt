@@ -47,7 +47,8 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData){
             }
         }
         Spacer(modifier = Modifier.height(100.dp))
-        ExpandableCard(title = "Værdata", description = "været er dritt", img = "hei")
+        //val descriptionWeather = getWeatherInfo()
+        ExpandableCard(title = "Vis Været", description = "været er dritt", img = "hei")
     }
 }
 @OptIn(ExperimentalMaterial3Api::class)
