@@ -19,14 +19,17 @@ class Datasource {
     var lat = 60.12
     var lon = 9.58
     private val apiUrl1 =
-        "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=60.12&lon=9.58"
+        "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}&lon=${lon}"
     private val apiUrl = "https://api.met.no/weatherapi/metalerts/1.1?lang=no"
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
             gson()
         }
     }
-
+    fun setlatlon(newlat: Double, newlon: Double){
+        lat = newlat
+        lon = newlon
+    }
     suspend fun getForecastData(): ForecastData {
         return client.get(apiUrl1).body()
     }
@@ -36,26 +39,6 @@ class Datasource {
 
     suspend fun getCurrentAlerts(link: String): String{
         return client.get(link).bodyAsText()
-    }
-
-    //reads JSON locally from asset and returns it as a string
-    fun getJsonDataFromAsset(context: Context, fileName: String): String?{
-        val jsonString: String
-        try {
-            jsonString = context.assets.open(fileName).bufferedReader().use {it.readText() }
-        }catch (ioException: IOException){
-            ioException.printStackTrace()
-            return null
-        }
-        return jsonString
-    }
-    fun showJsonAsList(context: Context, fileName: String): List<Clothing> {
-        val jsonFileString = getJsonDataFromAsset(context, fileName)
-        val gson = Gson()
-        val listClothingType = object : TypeToken<List<Clothing>>() {}.type
-
-        val clothes: List<Clothing> =  gson.fromJson(jsonFileString, listClothingType)
-        return clothes
     }
 
 

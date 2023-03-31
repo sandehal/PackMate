@@ -45,7 +45,7 @@ fun BootScreen(navController: NavHostController,alerts:List<Alert>, forecastData
         composable(Screen.MapScreen.route) { MapScreen(navController) }
         composable(Screen.SavedScreen.route) { SavedScreen(navController) }
         composable(Screen.LoadingScreen.route) { LoadingScreen() }
-        composable(Screen.ClothingScreen.route) { ClothingScreen(navController) }
+        composable(Screen.ClothingScreen.route) { ClothingScreen(navController,forecastData) }
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.team14_turpakkeliste
 
+import ForecastData
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
@@ -24,31 +25,31 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.navigation.NavController
-import com.example.team14_turpakkeliste.data.Clothing
-import com.example.team14_turpakkeliste.data.MaxRequirementsClothes
-import com.example.team14_turpakkeliste.data.MinRequirementsClothes
-import com.example.team14_turpakkeliste.data.getClothes
+import com.example.team14_turpakkeliste.data.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ClothingScreen(navController: NavController){
-    Spacer(modifier = Modifier.height(10.dp))
-    LazyColumn(horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(horizontal = 30.dp)){
-        val recommendedList = sortClothing(getClothes())
-        items(recommendedList){
-                recommendedList ->
-            val title = "${recommendedList.material}${recommendedList.type}"
-            val description = "Varme: ${recommendedList.warmth}\nVindtetthet: ${recommendedList.windproof} \nVanntetthet: ${recommendedList.waterproof}"
-            val image= recommendedList.image
-            ExpandableCard(title = title, description = description, img = image)
-            Spacer(modifier = Modifier.height(10.dp))
+fun ClothingScreen(navController: NavController, forecastData: ForecastData){
+    Column() {
+        Spacer(modifier = Modifier.height(10.dp))
+        LazyColumn(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(horizontal = 30.dp)
+        ) {
+            val recommendedList = sortClothing(getClothes(), forecastData)
+            items(recommendedList) { recommendedList ->
+                val title = "${recommendedList.material}${recommendedList.type}"
+                val description =
+                    "Varme: ${recommendedList.warmth}\nVindtetthet: ${recommendedList.windproof} \nVanntetthet: ${recommendedList.waterproof}"
+                val image = recommendedList.image
+                ExpandableCard(title = title, description = description, img = image)
+                Spacer(modifier = Modifier.height(10.dp))
+            }
         }
+        Spacer(modifier = Modifier.height(100.dp))
+        ExpandableCard(title = "Værdata", description = "været er dritt", img = "hei")
     }
 }
-
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExpandableCard(
@@ -125,66 +126,7 @@ fun ExpandableCard(
         }
     }
 }
-fun sortClothing(jsonClothesList: List<Clothing>): List<Clothing>{
-    // Ta imot værdata og få som ouput outerReqMin, outerReqMax, innerReqMin og innerReqMax
-    // Legg ved en boolean f.eks som sier om det er nedbør, kan være viktig for valg av klær, dersom man trenger varme, men ikke fra ytterlag.
-    // Da verdsettes f.eks vannavstøtende kvaliteter, og et innerlag verdsetter høyere varme.
 
-    // evt ha en minimumsvarme som må nås med alle lag sin varme kombinert
-    val outerReqMin = MinRequirementsClothes(1,2,4)
-    // disse to verdiene kan også gjelde for sko/fottøy
-    val outerReqMax = MaxRequirementsClothes(2,3, 5)
-    val tempList: MutableList<Clothing> = mutableListOf()
-    //val innerRequirement: MinRequirementsClothes = MinRequirementsClothes(3,3,3)
-    for(clothing in jsonClothesList){
-        val warmth: Int = clothing.warmth.toInt()
-        if(warmth >= outerReqMin.warmth
-            && warmth <= outerReqMax.warmth
-            && clothing.type == "jacket"
-            && clothing.layer == "outer"){
-            tempList.add(clothing)
-            continue
-        }
-        if(warmth >= outerReqMin.warmth
-            && warmth <= outerReqMax.warmth
-            && clothing.type == "pants"
-            && clothing.layer == "outer"){
-            tempList.add(clothing)
-            continue
-        }
-        if(warmth >= outerReqMin.warmth
-            && warmth <= outerReqMax.warmth
-            && clothing.type == "jacket"
-            && clothing.layer == "inner"){
-            tempList.add(clothing)
-            continue
-        }
-        if(warmth >= outerReqMin.warmth
-            && warmth <= outerReqMax.warmth
-            && clothing.type == "pants"
-            && clothing.layer == "inner"
-            && tempList.add(clothing))
-            continue
-    }
-    return tempList
-}
-fun chooseReqs(temp: Int, wind: Int, water: Int){
-    var warmth: Int
-    var windproof: Int
-    var waterproof: Int
-    when(temp){
-        in -40..-21 -> warmth = 5
-        in -20..-11 -> warmth = 4
-        in -10..-1 -> warmth = 3
-        in 0..9 -> warmth = 2
-        in 10..19 -> warmth = 1
-        in 20..40 -> warmth = 0
-    }
-    when(wind){
-        //finne ut verdi for hvordan vær tolkes
-    }
-
-}
 @Composable
 fun getImg(desc: String): Painter{
     val painter: Painter = when(desc){
