@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.navigation.NavController
 import com.example.team14_turpakkeliste.data.*
+import com.example.team14_turpakkeliste.ui.TurViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +37,7 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData){
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(horizontal = 30.dp)
         ) {
-            val recommendedList = sortClothing(getClothes(), forecastData)
+            val recommendedList = sortClothing(getClothes(),forecastData)
             items(recommendedList) { recommendedList ->
                 val title = "${recommendedList.material}${recommendedList.type}"
                 val description =

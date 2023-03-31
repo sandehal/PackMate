@@ -20,7 +20,6 @@ class TurViewModel(): ViewModel() {
 
     var turUiState: TurpakklisteUiState by mutableStateOf(TurpakklisteUiState.Booting)
         private set
-
     private val source: Datasource = Datasource()
 
     init {
@@ -49,9 +48,7 @@ class TurViewModel(): ViewModel() {
                         }
                     }
                 }
-                println(alertList.size)
-                val forecast = source.getForecastData()
-
+                val forecast = source.getForecastData(currentLatitude,currentLongitude)
                 TurpakklisteUiState.Success(alertList, forecast)
             } catch (ex: ResponseException) {
                 TurpakklisteUiState.Error

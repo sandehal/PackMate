@@ -16,22 +16,17 @@ class Datasource {
 
     //https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=60.12&lon=9.58
     //"https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}lon=${lon}"
-    var lat = 60.12
-    var lon = 9.58
-    private val apiUrl1 =
-        "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}&lon=${lon}"
+
     private val apiUrl = "https://api.met.no/weatherapi/metalerts/1.1?lang=no"
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
             gson()
         }
     }
-    fun setlatlon(newlat: Double, newlon: Double){
-        lat = newlat
-        lon = newlon
-    }
-    suspend fun getForecastData(): ForecastData {
-        return client.get(apiUrl1).body()
+    suspend fun getForecastData(newlat: Double, newlon: Double): ForecastData {
+        val lat = newlat
+        val lon = newlon
+        return client.get("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}&lon=${lon}").body()
     }
     suspend fun getMetAlerts(): String {
         return client.get(apiUrl).bodyAsText()
