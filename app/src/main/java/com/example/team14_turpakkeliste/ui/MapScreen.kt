@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
 import com.example.team14_turpakkeliste.BottomNavBar
 import com.example.team14_turpakkeliste.MakeListButton
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
@@ -107,6 +108,8 @@ fun MapScreen(navController: NavController) {
             mutableStateOf<LatLng?>(null)
         }
 
+        var locationSelected = location.value.isNotBlank() && clickedLatLng.value != null
+
         AndroidView({ mapView }) { view ->
             mapView.onCreate(null)
             mapView.onResume()
@@ -119,21 +122,42 @@ fun MapScreen(navController: NavController) {
                     map.setOnMapClickListener { latLng ->
                         clickedLatLng.value = latLng
                         // Call the API with the clicked LatLng here
-                        Log.d("", clickedLatLng.value.toString())
+                        locationSelected = location.value.isNotBlank() && clickedLatLng.value != null
+                        map.clear()
+                        moveToLocation(latLng.latitude, latLng.longitude, map)
                     }
                 }
             }
-
+        }
+        if (true) {
+            Log.d("", "A location has been selected")
         }
     }
     Column(modifier = Modifier
         .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
+        WeatherCard()
         MakeListButton(navController)
         BottomNavBar(navController)
     }
 
+}
+
+//Moves camera and marker to chosen location
+fun moveToLocation(lat: Double, lon: Double, map: GoogleMap) {
+    val latLng = LatLng(lat, lon)
+    map.addMarker(
+        MarkerOptions().position(
+            latLng
+        ).title("Marker in $lat, $lon")
+    )
+
+    map.moveCamera(
+        CameraUpdateFactory.newLatLngZoom(
+            latLng, 10f
+        )
+    )
 }
 
 
@@ -154,26 +178,47 @@ fun getLocation(location: String, context: Context, mapView: MapView){
 
             if (addressList!!.isNotEmpty()) {
                 val address = addressList!![0]
-
-                val latLng = LatLng(address.getLatitude(), address.getLongitude())
-
-                map.addMarker(
-                    MarkerOptions().position(
-                        latLng
-                    ).title("Marker in " + location)
-                )
-
-                //beveger kamera til posisjon
-                map.moveCamera(
-                    CameraUpdateFactory.newLatLngZoom(
-                        latLng, 10f
-                    )
-                )
+                moveToLocation(address.latitude, address.longitude, map)
             }
         }
-       
     }
 }
+
+@Composable
+fun WeatherCard() {
+    val viewModel = TurViewModel()
+
+    when (val uiState = viewModel.turUiState) {
+        is TurpakklisteUiState.Success -> {
+            val alerts = uiState.alerts
+            val forecastData = uiState.forecastData
+
+            Box (modifier = Modifier.fillMaxWidth().fillMaxHeight()){
+                // Display the alerts
+                // ...
+
+                // Display the forecast data
+                Text(text = "Forecast: ${forecastData.properties.meta.units.air_temperature}")
+                // Add more UI elements to display the forecast data as needed
+            }
+        }
+
+        TurpakklisteUiState.Error -> {
+            // Display an error message
+            Text(text = "Error")
+        }
+        TurpakklisteUiState.Loading -> {
+            // Display a loading indicator
+            Text(text = "Loading...")
+        }
+        TurpakklisteUiState.Booting -> {
+            // Display a booting indicator or placeholder content
+            Text(text = "Booting...")
+        }
+    }
+
+}
+
 
 
 
