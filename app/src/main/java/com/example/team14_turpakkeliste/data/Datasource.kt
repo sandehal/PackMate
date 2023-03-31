@@ -15,6 +15,7 @@ import java.io.IOException
 class Datasource {
 
     //https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=60.12&lon=9.58
+    //"https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}lon=${lon}"
     var lat = 60.12
     var lon = 9.58
     private val apiUrl1 =
