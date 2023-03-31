@@ -71,7 +71,6 @@ fun SplashScreen(navController: NavController) {
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = 20.dp)
-                .scale(scale.value)
         )
 
         Text(
