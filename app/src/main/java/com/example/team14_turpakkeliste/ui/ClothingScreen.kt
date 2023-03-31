@@ -26,10 +26,19 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.navigation.NavController
 import com.example.team14_turpakkeliste.data.*
+import com.example.team14_turpakkeliste.ui.TurViewModel
 
 
 @Composable
-fun ClothingScreen(navController: NavController, forecastData: ForecastData){
+fun ClothingScreen(navController: NavController, forecastData: ForecastData, alerts: List<Alert>,viewModel: TurViewModel){
+
+    for(alert in alerts){
+        if(pinpointLocation(viewModel.currentLatitude,viewModel.currentLongitude,alert.areaPolygon!!)){
+            println(alert.headline)
+            println(alert.severity)
+        }
+    }
+
     Column() {
         Spacer(modifier = Modifier.height(10.dp))
         LazyColumn(
