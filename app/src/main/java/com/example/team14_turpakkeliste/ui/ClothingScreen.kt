@@ -31,7 +31,7 @@ import com.example.team14_turpakkeliste.ui.TurViewModel
 
 @Composable
 fun ClothingScreen(navController: NavController, forecastData: ForecastData, alerts: List<Alert>,viewModel: TurViewModel){
-
+    val recommendedList = sortClothing(forecastData)
     for(alert in alerts){
         if(pinpointLocation(viewModel.currentLatitude,viewModel.currentLongitude,alert.areaPolygon!!)){
             println(alert.headline)
@@ -45,7 +45,6 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(horizontal = 30.dp)
         ) {
-            val recommendedList = sortClothing(getClothes(),forecastData)
             items(recommendedList) { recommendedList ->
                 val title = "${recommendedList.material}${recommendedList.type}"
                 val description =

@@ -11,6 +11,7 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.serialization.gson.*
 import java.io.IOException
+import java.io.InputStream
 
 class Datasource {
 
@@ -34,6 +35,28 @@ class Datasource {
 
     suspend fun getCurrentAlerts(link: String): String{
         return client.get(link).bodyAsText()
+    }
+    suspend fun getAllAlerts(): List<Alert>{
+        val response = getMetAlerts()
+        val inputStream : InputStream = response.byteInputStream()
+        val alerts = XmlForMetAlerts().parse(inputStream)
+        val alertListOfList= mutableListOf<List<Alert>>()
+        val alertList = mutableListOf<Alert>()
+
+        for (a in alerts) {
+            val responseForAlert = getCurrentAlerts(a.link!!)
+            val inputStreamForAlert : InputStream = responseForAlert.byteInputStream()
+            alertListOfList.add(XmlCurrentAlert().parse(inputStreamForAlert))
+        }
+        //Kun Alerts med relevant informasjon for oss
+        for (alertLists in alertListOfList){
+            for (b in alertLists){
+                if (b.domain == "land" && b.language == "no"){
+                    alertList.add(b)
+                }
+            }
+        }
+        return alertList
     }
 
 

@@ -129,6 +129,7 @@ fun MapScreen(navController: NavController, viewModel: TurViewModel) {
                         viewModel.currentLatitude = latLng.latitude
                         viewModel.currentLongitude = latLng.longitude
                         moveToLocation(latLng.latitude, latLng.longitude, map)
+                        viewModel.getForecast()
                     }
                 }
             }
@@ -146,6 +147,7 @@ fun MapScreen(navController: NavController, viewModel: TurViewModel) {
         MakeListButton(navController)
         BottomNavBar(navController)
     }
+
 
 }
 

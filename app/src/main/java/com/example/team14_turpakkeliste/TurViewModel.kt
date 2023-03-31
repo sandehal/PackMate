@@ -25,29 +25,18 @@ class TurViewModel(): ViewModel() {
     init {
         getData()
     }
+    fun getForecast(){
+        viewModelScope.launch {
+            val alertList = source.getAllAlerts()
+            val forecast = source.getForecastData(currentLatitude, currentLongitude)
+            turUiState = TurpakklisteUiState.Success(alertList, forecast)
+        }
+    }
 
     private fun getData() {
         viewModelScope.launch {
             turUiState = try {
-                val response = source.getMetAlerts()
-                val inputStream : InputStream = response.byteInputStream()
-                val alerts = XmlForMetAlerts().parse(inputStream)
-                val alertListOfList= mutableListOf<List<Alert>>()
-                val alertList = mutableListOf<Alert>()
-
-                for (a in alerts) {
-                    val responseForAlert = source.getCurrentAlerts(a.link!!)
-                    val inputStreamForAlert : InputStream = responseForAlert.byteInputStream()
-                    alertListOfList.add(XmlCurrentAlert().parse(inputStreamForAlert))
-                }
-                //Kun Alerts med relevant informasjon for oss
-                for (alertLists in alertListOfList){
-                    for (b in alertLists){
-                        if (b.domain == "land" && b.language == "no"){
-                            alertList.add(b)
-                        }
-                    }
-                }
+                val alertList = source.getAllAlerts()
                 val forecast = source.getForecastData(currentLatitude,currentLongitude)
                 TurpakklisteUiState.Success(alertList, forecast)
             } catch (ex: ResponseException) {

@@ -12,12 +12,12 @@ fun getClothes(): List<Clothing>{
     Clothing("Softshell", "pants", "outer", 2,1,2, "SoftPO"))
     return  clothingList
 }
-fun sortClothing(jsonClothesList: List<Clothing>, forecastData: ForecastData): List<Clothing>{
+fun sortClothing(forecastData: ForecastData): List<Clothing>{
     // Ta imot værdata og få som ouput outerReqMin, outerReqMax, innerReqMin og innerReqMax
     // Legg ved en boolean f.eks som sier om det er nedbør, kan være viktig for valg av klær, dersom man trenger varme, men ikke fra ytterlag.
     // Da verdsettes f.eks vannavstøtende kvaliteter, og et innerlag verdsetter høyere varme.
-    println(forecastData.properties.timeseries.get(0).data.instant.details.air_temperature)
     //iterere gjennom og samle vann for hver time :D
+    val jsonClothesList: List<Clothing> = getClothes()
     val temp: Double = forecastData.properties.timeseries.get(0).data.instant.details.air_temperature.toDouble()
     val wind: Double = forecastData.properties.timeseries.get(0).data.instant.details.wind_speed.toDouble()
     var water: Double = 0.0
