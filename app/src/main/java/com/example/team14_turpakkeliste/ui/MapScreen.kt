@@ -127,7 +127,7 @@ fun MapScreen(navController: NavController, viewModel: TurViewModel) {
                         locationSelected = location.value.isNotBlank() && clickedLatLng.value != null
                         map.clear()
                         viewModel.currentLatitude = latLng.latitude
-                        viewModel.currentLongitude = latLng.latitude
+                        viewModel.currentLongitude = latLng.longitude
                         moveToLocation(latLng.latitude, latLng.longitude, map)
                     }
                 }
