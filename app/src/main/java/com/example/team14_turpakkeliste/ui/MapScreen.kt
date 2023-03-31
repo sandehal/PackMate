@@ -4,6 +4,7 @@ import android.content.Context
 import android.location.Address
 import android.location.Geocoder
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -27,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewModelScope
 import com.example.team14_turpakkeliste.BottomNavBar
 import com.example.team14_turpakkeliste.MakeListButton
+import com.example.team14_turpakkeliste.pinpointLocation
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.Orange
 import com.google.android.gms.maps.GoogleMap
@@ -124,6 +126,8 @@ fun MapScreen(navController: NavController, viewModel: TurViewModel) {
                         // Call the API with the clicked LatLng here
                         locationSelected = location.value.isNotBlank() && clickedLatLng.value != null
                         map.clear()
+                        viewModel.currentLatitude = latLng.latitude
+                        viewModel.currentLongitude = latLng.latitude
                         moveToLocation(latLng.latitude, latLng.longitude, map)
                     }
                 }

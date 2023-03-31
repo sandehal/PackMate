@@ -15,6 +15,9 @@ import java.io.InputStream
 
 class TurViewModel(): ViewModel() {
 
+    var currentLatitude : Double = 0.0
+    var currentLongitude : Double = 0.0
+
     var turUiState: TurpakklisteUiState by mutableStateOf(TurpakklisteUiState.Booting)
         private set
 
