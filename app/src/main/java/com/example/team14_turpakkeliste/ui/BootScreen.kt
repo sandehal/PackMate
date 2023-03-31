@@ -34,15 +34,15 @@ fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = vi
         is TurpakklisteUiState.Booting -> SplashScreen(navController)
         is TurpakklisteUiState.Error -> ErrorScreen()
         is TurpakklisteUiState.Loading -> LoadingScreen()
-        is TurpakklisteUiState.Success -> BootScreen(navController,state.alerts,state.forecastData)
+        is TurpakklisteUiState.Success -> BootScreen(navController,state.alerts,state.forecastData, viewModel)
     }
 }
 
 @Composable
-fun BootScreen(navController: NavHostController,alerts:List<Alert>, forecastData: ForecastData){
+fun BootScreen(navController: NavHostController,alerts:List<Alert>, forecastData: ForecastData,viewModel: TurViewModel){
     NavHost(navController = navController, startDestination = "HomeScreen") {
         composable(Screen.HomeScreen.route) { HomeScreen(navController) }
-        composable(Screen.MapScreen.route) { MapScreen(navController) }
+        composable(Screen.MapScreen.route) { MapScreen(navController,viewModel) }
         composable(Screen.SavedScreen.route) { SavedScreen(navController) }
         composable(Screen.LoadingScreen.route) { LoadingScreen() }
         composable(Screen.ClothingScreen.route) { ClothingScreen(navController,forecastData) }

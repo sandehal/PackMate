@@ -4,6 +4,7 @@ import android.content.Context
 import android.location.Address
 import android.location.Geocoder
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -27,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewModelScope
 import com.example.team14_turpakkeliste.BottomNavBar
 import com.example.team14_turpakkeliste.MakeListButton
-import com.example.team14_turpakkeliste.data.Datasource
+import com.example.team14_turpakkeliste.pinpointLocation
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.Orange
 import com.google.android.gms.maps.GoogleMap
@@ -36,7 +37,7 @@ import java.io.IOException
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MapScreen(navController: NavController) {
+fun MapScreen(navController: NavController, viewModel: TurViewModel) {
     val focusManager = LocalFocusManager.current
     val location = remember {
         mutableStateOf("")
@@ -125,12 +126,15 @@ fun MapScreen(navController: NavController) {
                         // Call the API with the clicked LatLng here
                         locationSelected = location.value.isNotBlank() && clickedLatLng.value != null
                         map.clear()
+                        viewModel.currentLatitude = latLng.latitude
+                        viewModel.currentLongitude = latLng.latitude
                         moveToLocation(latLng.latitude, latLng.longitude, map)
                     }
                 }
             }
         }
-        if (true) {
+        if (locationSelected) {
+            WeatherCard(viewModel)
             Log.d("", "A location has been selected")
         }
     }
@@ -138,7 +142,7 @@ fun MapScreen(navController: NavController) {
         .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
-        WeatherCard()
+        //WeatherCard(viewModel)
         MakeListButton(navController)
         BottomNavBar(navController)
     }
@@ -186,15 +190,14 @@ fun getLocation(location: String, context: Context, mapView: MapView){
 }
 
 @Composable
-fun WeatherCard() {
-    val viewModel = TurViewModel()
+fun WeatherCard(viewModel: TurViewModel) {
 
     when (val uiState = viewModel.turUiState) {
         is TurpakklisteUiState.Success -> {
             val alerts = uiState.alerts
             val forecastData = uiState.forecastData
 
-            Box (modifier = Modifier.fillMaxWidth().fillMaxHeight()){
+            Box(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
                 // Display the alerts
                 // ...
 
@@ -217,7 +220,6 @@ fun WeatherCard() {
             Text(text = "Booting...")
         }
     }
-
 }
 
 
