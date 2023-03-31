@@ -1,18 +1,29 @@
 package com.example.team14_turpakkeliste
 
 import ForecastData
+import android.view.animation.OvershootInterpolator
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -59,7 +70,35 @@ fun ErrorScreen(){
 }
 @Composable
 fun LoadingScreen(){
-    Text("zaza error!")
+
+    val image = painterResource(R.drawable.autumn_telt_1)
+    Column(modifier = Modifier.fillMaxSize()
+    ){
+        val scale = remember {
+            Animatable(0.0f)
+        }
+
+        LaunchedEffect(key1 = true) {
+            scale.animateTo(
+                targetValue = 0.7f,
+                animationSpec = tween(700, easing = {
+                    OvershootInterpolator(4f).getInterpolation(it)
+                })
+            )
+
+
+        }
+        Image(
+            painter = image,
+            contentDescription = "Telt",
+            contentScale = ContentScale.FillHeight,
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f)
+                .scale(scale.value)
+
+        )
+    }
 
 }
 sealed class Screen(val route: String, val icon: ImageVector, val description : String) {
