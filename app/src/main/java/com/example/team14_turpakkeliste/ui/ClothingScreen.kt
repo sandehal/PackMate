@@ -26,9 +26,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.navigation.NavController
 import com.example.team14_turpakkeliste.data.*
-import com.example.team14_turpakkeliste.ui.TurViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun ClothingScreen(navController: NavController, forecastData: ForecastData){
     Column() {
@@ -50,6 +49,12 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData){
         Spacer(modifier = Modifier.height(100.dp))
         //val descriptionWeather = getWeatherInfo()
         ExpandableCard(title = "Vis Været", description = "været er dritt", img = "hei")
+        Column(modifier = Modifier
+            .fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom
+        ){
+            BottomNavBar(navController)
+        }
     }
 }
 @OptIn(ExperimentalMaterial3Api::class)
