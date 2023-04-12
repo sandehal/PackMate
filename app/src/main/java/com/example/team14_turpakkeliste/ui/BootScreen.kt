@@ -51,7 +51,7 @@ fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = vi
 
 @Composable
 fun BootScreen(navController: NavHostController,alerts:List<Alert>, forecastData: ForecastData,viewModel: TurViewModel){
-    NavHost(navController = navController, startDestination = "HomeScreen") {
+    NavHost(navController = navController, startDestination = "SavedScreen") {
         composable(Screen.HomeScreen.route) { HomeScreen(navController) }
         composable(Screen.MapScreen.route) { MapScreen(navController,viewModel) }
         composable(Screen.SavedScreen.route) { SavedScreen(navController) }
@@ -113,8 +113,7 @@ sealed class Screen(val route: String, val icon: ImageVector, val description : 
 fun BottomNavBar(navController: NavController){
     val items = listOf(
         Screen.MapScreen,
-        Screen.HomeScreen,
-        Screen.SavedScreen,
+        Screen.SavedScreen
     )
 
 
