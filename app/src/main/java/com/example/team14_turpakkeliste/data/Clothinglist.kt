@@ -5,11 +5,13 @@ import kotlin.text.toDoubleOrNull
 
 fun getClothes(): List<Clothing>{
     var clothingList: List<Clothing> = listOf(
-    Clothing("Shell", "jacket","outer", 0, 2, 2, "ShellJO"),
-    Clothing("Shell", "pants", "outer", 0,2, 2,"ShellPO" ),
-    Clothing("Down", "jacket", "outer", 4,1,2, "DownJO"),
-    Clothing("Softshell", "jacket", "outer", 2, 1,2,"SoftJO"),
-    Clothing("Softshell", "pants", "outer", 2,1,2, "SoftPO"))
+        Clothing("Shell", "jacket","outer", 0, 2, 2, "ShellJO"),
+        Clothing("Shell", "pants", "outer", 0,2, 2,"ShellPO" ),
+        Clothing("Down", "jacket", "outer", 4,1,2, "DownJO"),
+        Clothing("Softshell", "jacket", "outer", 2, 1,2,"SoftJO"),
+        Clothing("Softshell", "pants", "outer", 2,1,2, "SoftPO"),
+        Clothing("Primaloft", "jacket", "outer",3, 1,2, "PrimaJO")
+    )
     return  clothingList
 }
 fun sortClothing(forecastData: ForecastData): List<Clothing>{
@@ -30,10 +32,17 @@ fun sortClothing(forecastData: ForecastData): List<Clothing>{
     val outerReqMax = MaxRequirementsClothes(outerReqMin.warmth+1, outerReqMin.waterproof+1, outerReqMin.windproof+1)
     val tempList: MutableList<Clothing> = mutableListOf()
     for(clothing in jsonClothesList){
-        val warmth: Int = clothing.warmth.toInt()
+        val warmth: Int = clothing.warmth
+        val wind: Int = clothing.windproof
+        val water: Int = clothing.waterproof
         //ikke glem å sjekke for vind og vann
+        if(outerReqMin.waterproof > water){
+            continue
+        }
         if(warmth >= outerReqMin.warmth
             && warmth <= outerReqMax.warmth
+            && wind >= outerReqMin.windproof
+            && wind <= outerReqMax.windproof
             && clothing.type == "jacket"
             && clothing.layer == "outer"){
             tempList.add(clothing)
@@ -41,6 +50,8 @@ fun sortClothing(forecastData: ForecastData): List<Clothing>{
         }
         if(warmth >= outerReqMin.warmth
             && warmth <= outerReqMax.warmth
+            && wind >= outerReqMin.windproof
+            && wind <= outerReqMax.windproof
             && clothing.type == "pants"
             && clothing.layer == "outer"){
             tempList.add(clothing)
@@ -48,6 +59,8 @@ fun sortClothing(forecastData: ForecastData): List<Clothing>{
         }
         if(warmth >= outerReqMin.warmth
             && warmth <= outerReqMax.warmth
+            && wind >= outerReqMin.windproof
+            && wind <= outerReqMax.windproof
             && clothing.type == "jacket"
             && clothing.layer == "inner"){
             tempList.add(clothing)
@@ -55,6 +68,8 @@ fun sortClothing(forecastData: ForecastData): List<Clothing>{
         }
         if(warmth >= outerReqMin.warmth
             && warmth <= outerReqMax.warmth
+            && wind >= outerReqMin.windproof
+            && wind <= outerReqMax.windproof
             && clothing.type == "pants"
             && clothing.layer == "inner"
             && tempList.add(clothing))
@@ -78,10 +93,9 @@ fun chooseReqsOuter(temp: Double, wind: Double, water: Double?): MinRequirements
     println(warmth)
     when(wind){
         //finne ut verdi for hvordan vær tolkes
-        in 0.0..1.0 -> windproof = 0
-        in 1.1..3.3 -> windproof = 1
-        in 3.4..10.8 -> windproof = 2
-        in 10.9..32.7 -> windproof = 3
+        in 0.0..3.3 -> windproof = 0
+        in 3.4..10.8 -> windproof = 1
+        in 10.9..32.7 -> windproof = 2
     }
     println(wind)
     when(water!!){

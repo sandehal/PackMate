@@ -18,6 +18,7 @@ class Datasource {
     //https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=60.12&lon=9.58
     //"https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}lon=${lon}"
 
+    //endre til proxy
     private val apiUrl = "https://api.met.no/weatherapi/metalerts/1.1?lang=no"
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
