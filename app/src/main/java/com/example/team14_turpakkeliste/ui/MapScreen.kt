@@ -85,7 +85,7 @@ fun MapScreen(navController: NavController, viewModel: TurViewModel) {
             // on below line adding a button.
             Button(
                 onClick = {
-                          getLocation(location.toString(),context,mapView)
+                          getLocation(location.toString(),context,mapView, viewModel)
                         focusManager.clearFocus()
                 },
                 shape = RectangleShape,
@@ -110,8 +110,6 @@ fun MapScreen(navController: NavController, viewModel: TurViewModel) {
             mutableStateOf<LatLng?>(null)
         }
 
-        var locationSelected = location.value.isNotBlank() && clickedLatLng.value != null
-
         AndroidView({ mapView }) { view ->
             mapView.onCreate(null)
             mapView.onResume()
@@ -124,26 +122,22 @@ fun MapScreen(navController: NavController, viewModel: TurViewModel) {
                     map.setOnMapClickListener { latLng ->
                         clickedLatLng.value = latLng
                         // Call the API with the clicked LatLng here
-                        locationSelected = location.value.isNotBlank() && clickedLatLng.value != null
                         map.clear()
                         viewModel.currentLatitude = latLng.latitude
                         viewModel.currentLongitude = latLng.longitude
+                        Log.d("Latitude: ", viewModel.currentLatitude.toString())
+                        Log.d("Longitude: ", viewModel.currentLongitude.toString())
                         moveToLocation(latLng.latitude, latLng.longitude, map)
-                        viewModel.getForecast()
                     }
                 }
             }
         }
-        if (locationSelected) {
-            WeatherCard(viewModel)
-            Log.d("", "A location has been selected")
-        }
+
     }
     Column(modifier = Modifier
         .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
-        //WeatherCard(viewModel)
         MakeListButton(navController)
         BottomNavBar(navController)
     }
@@ -162,7 +156,7 @@ fun moveToLocation(lat: Double, lon: Double, map: GoogleMap) {
 
     map.moveCamera(
         CameraUpdateFactory.newLatLngZoom(
-            latLng, 10f
+            latLng, 7f
         )
     )
 }
@@ -170,7 +164,7 @@ fun moveToLocation(lat: Double, lon: Double, map: GoogleMap) {
 
 
 
-fun getLocation(location: String, context: Context, mapView: MapView){
+fun getLocation(location: String, context: Context, mapView: MapView, viewModel: TurViewModel){
     var addressList: List<Address>? = null
     mapView.getMapAsync { map->
         if (location != null || location == "") {
@@ -186,6 +180,8 @@ fun getLocation(location: String, context: Context, mapView: MapView){
             if (addressList!!.isNotEmpty()) {
                 val address = addressList!![0]
                 moveToLocation(address.latitude, address.longitude, map)
+                viewModel.currentLatitude = address.latitude
+                viewModel.currentLongitude = address.longitude
             }
         }
     }
@@ -199,7 +195,9 @@ fun WeatherCard(viewModel: TurViewModel) {
             val alerts = uiState.alerts
             val forecastData = uiState.forecastData
 
-            Box(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()) {
                 // Display the alerts
                 // ...
 
