@@ -130,17 +130,19 @@ fun BottomNavBar(navController: NavController){
                 icon = { Icon(item.icon, contentDescription = item.route) },
                 label = { Text(item.description) },
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
-                onClick = {
-                    navController.navigate(item.route)
-                    {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+                onClick = { if (currentDestination?.hierarchy?.any { it.route == item.route} == true) {
+                    } else {
+                        navController.navigate(item.route)
+                        {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            // Avoid multiple copies of the same destination when
+                            // reselecting the same item
+                            launchSingleTop = true
+                            // Restore state when reselecting a previously selected item
+                            restoreState = true
                         }
-                        // Avoid multiple copies of the same destination when
-                        // reselecting the same item
-                        launchSingleTop = true
-                        // Restore state when reselecting a previously selected item
-                        restoreState = true
                     }
                 }
             )
