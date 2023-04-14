@@ -18,24 +18,39 @@ class Datasource {
     //https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=60.12&lon=9.58
     //"https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}lon=${lon}"
 
+    //https://gw-uio.intark.uh-it.no/in2000/weatherapi/locationforecast/2.0/compact?lat=60.12&lon=9.58
+
     //endre til proxy
-    private val apiUrl = "https://api.met.no/weatherapi/metalerts/1.1?lang=no"
+    private val apiUrl = "https://gw-uio.intark.uh-it.no/in2000/weatherapi/metalerts/1.1?lang=no"
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
             gson()
         }
     }
     suspend fun getForecastData(newlat: Double, newlon: Double): ForecastData {
-        val lat = newlat
-        val lon = newlon
-        return client.get("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}&lon=${lon}").body()
+        val client = client.get("https://gw-uio.intark.uh-it.no/in2000/weatherapi/locationforecast/2.0/compact?lat=${newlat}&lon=${newlon}"){
+            headers{
+                append("X-Gravitee-API-Key","f1163555-9b8d-49bd-b24f-49e1c756b215")
+            }
+        }
+        return client.body()
     }
     suspend fun getMetAlerts(): String {
-        return client.get(apiUrl).bodyAsText()
+        val client = client.get("https://gw-uio.intark.uh-it.no/in2000/weatherapi/metalerts/1.1?lang=no"){
+            headers{
+                append("X-Gravitee-API-Key","f1163555-9b8d-49bd-b24f-49e1c756b215")
+            }
+        }
+        return client.bodyAsText()
     }
 
     suspend fun getCurrentAlerts(link: String): String{
-        return client.get(link).bodyAsText()
+        val client = client.get(link){
+            headers{
+                append("X-Gravitee-API-Key","f1163555-9b8d-49bd-b24f-49e1c756b215")
+            }
+        }
+        return client.bodyAsText()
     }
     suspend fun getAllAlerts(): List<Alert>{
         val response = getMetAlerts()

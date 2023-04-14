@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.team14_turpakkeliste.data.*
 import com.example.team14_turpakkeliste.ui.TurViewModel
 
@@ -62,6 +64,7 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
             .fillMaxSize(),
             verticalArrangement = Arrangement.Bottom
         ){
+            SaveButton()
             BottomNavBar(navController)
         }
     }
@@ -239,4 +242,16 @@ fun getImg(desc: String): Painter{
         }
     }
     return painter
+}
+
+@Composable
+fun SaveButton(){
+    ExtendedFloatingActionButton(
+        icon = { Icon(Icons.Filled.Favorite, contentDescription = "Save list") },
+        text = { Text("Save list") },
+        onClick = {
+
+        },
+        modifier = Modifier.fillMaxWidth()
+    )
 }
