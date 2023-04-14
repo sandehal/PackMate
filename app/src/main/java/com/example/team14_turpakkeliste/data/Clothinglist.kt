@@ -15,7 +15,6 @@ fun getClothes(): List<Clothing>{
         Clothing("Wool", "pants", "innter", 3, 0, 1, "UllPI"),
         Clothing("LightWool", "sweater", "inner", 2,0,1,"LUllSI"),
         Clothing("LightWool", "pants", "inner", 2,0,1,"LUllPI")
-
     )
     return  clothingList
 }
@@ -35,17 +34,16 @@ fun sortClothing(forecastData: ForecastData): List<Clothing>{
     val outerReqMin = chooseReqsOuter(temp, wind, water)
     val innerReqMin = chooseReqsInner(temp)
     // disse to verdiene kan også gjelde for sko/fottøy
-    val outerReqMax = MaxRequirementsClothes(outerReqMin.warmth+1, outerReqMin.waterproof+1, outerReqMin.windproof+1)
     val tempList: MutableList<Clothing> = mutableListOf()
-    var index = 0
     //evt sjekk muligheter for when/while
     for(clothing in jsonClothesList){
         val warmth: Int = clothing.warmth
         val wind: Int = clothing.windproof
         val water: Int = clothing.waterproof
-        //ikke glem å sjekke for vind og vann
-        if(outerReqMin.waterproof > water){
-            continue
+
+        //trumfer varme dersom det regner
+        if(outerReqMin.waterproof == water){
+            tempList.add(clothing)
         }
         //sjekk også for vann her
         //metoden er treig og bør derfor byttes ut med indeksering der vi hopper videre til neste object
@@ -55,19 +53,18 @@ fun sortClothing(forecastData: ForecastData): List<Clothing>{
         //bestemme om den skal legges på
 
         //drite i varme for skalljakke og softshelljakke da disse er beskyttende lag
+
+        //beskyttende lag
         if(warmth >= outerReqMin.warmth
-            && warmth <= outerReqMax.warmth
             && wind >= outerReqMin.windproof
-            && wind <= outerReqMax.windproof
             && clothing.type == "jacket"
             && clothing.layer == "outer"){
             tempList.add(clothing)
             continue
         }
+        //beskyttende lag
         if(warmth >= outerReqMin.warmth
-            && warmth <= outerReqMax.warmth
             && wind >= outerReqMin.windproof
-            && wind <= outerReqMax.windproof
             && clothing.type == "pants"
             && clothing.layer == "outer"){
             tempList.add(clothing)
@@ -87,7 +84,6 @@ fun sortClothing(forecastData: ForecastData): List<Clothing>{
                 tempList.add(clothing)
                 continue
             }
-
     }
     return tempList
 }
