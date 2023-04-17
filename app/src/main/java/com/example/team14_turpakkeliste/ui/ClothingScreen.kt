@@ -26,7 +26,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.team14_turpakkeliste.data.*
 import com.example.team14_turpakkeliste.ui.TurViewModel
 
@@ -42,32 +41,31 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
         }
     }
 
-    Column() {
-        Spacer(modifier = Modifier.height(10.dp))
-        LazyColumn(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(horizontal = 30.dp)
-        ) {
-            items(recommendedList) { recommendedList ->
-                val title = "${recommendedList.material}${recommendedList.type}"
-                val description =
-                    "Varme: ${recommendedList.warmth}\nVindtetthet: ${recommendedList.windproof} \nVanntetthet: ${recommendedList.waterproof}"
-                val image = recommendedList.image
-                ExpandableCard(title = title, description = description, img = image)
-                Spacer(modifier = Modifier.height(10.dp))
+        Column() {
+            Spacer(modifier = Modifier.height(10.dp))
+            LazyColumn(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(horizontal = 30.dp)
+            ) {
+                items(recommendedList) { recommendedList ->
+                    val title = "${recommendedList.material}${recommendedList.type}"
+                    val description =
+                        "Varme: ${recommendedList.warmth}\nVindtetthet: ${recommendedList.windproof} \nVanntetthet: ${recommendedList.waterproof}"
+                    val image = recommendedList.image
+                    ExpandableCard(title = title, description = description, img = image)
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
             }
         }
-        Spacer(modifier = Modifier.height(100.dp))
-        val descriptionWeather = getWeather(forecastData)
-        ExpandableCard(title = "Vis Været", description = descriptionWeather, img = forecastData.properties.timeseries.get(0).data.next_1_hours.summary.symbol_code)
         Column(modifier = Modifier
             .fillMaxSize(),
             verticalArrangement = Arrangement.Bottom
         ){
+            ExpandableCard(title = "Vis Været", description = getWeather(forecastData), img = forecastData.properties.timeseries.get(0).data.next_1_hours.summary.symbol_code)
             SaveButton()
             BottomNavBar(navController)
         }
-    }
+
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -158,7 +156,7 @@ fun getImg(desc: String): Painter{
         "clearsky_night" -> painterResource(id = R.drawable.clearsky_night)
         //"clearsky_polartwilight" -> painterResource(id = R.drawable.clear)
         "cloudy" -> painterResource(id = R.drawable.cloudy)
-        "fair_day" -> painterResource(id = R.drawable.fair_day)n
+        "fair_day" -> painterResource(id = R.drawable.fair_day)
         "fair_night" -> painterResource(id = R.drawable.fair_night)
         "fair_polartwilight" -> painterResource(id = R.drawable.fair_polartwilight)
         "fog" -> painterResource(id = R.drawable.fog)
