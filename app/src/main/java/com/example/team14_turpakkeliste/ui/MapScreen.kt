@@ -55,7 +55,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
 
     val Norway = LatLng(59.911491, 10.757933)
 
-    val cameraPositionState = rememberCameraPositionState {
+    var cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(Norway, 6f)
     }
 
@@ -108,7 +108,6 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
     }
 
 
-
     Column(modifier = Modifier.fillMaxSize()) {
         Row() {
             TextField(
@@ -136,6 +135,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
                                 clickedLatLng.value = locCords
                                 visible = true
                                 scope.launch {
+                                    cameraPositionState.position = CameraPosition.fromLatLngZoom(locCords, 9f)
                                     sheetState.show()
                                 }
                             }
@@ -181,6 +181,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
                             "Oppdatert",
                             "${viewModel.currentLatitude}, ${viewModel.currentLongitude}"
                         )
+                        cameraPositionState.position = CameraPosition.fromLatLngZoom(LatLng(viewModel.currentLatitude, viewModel.currentLongitude), 9f)
                         scope.launch {
                             sheetState.show()
                         }
