@@ -1,7 +1,6 @@
 package com.example.team14_turpakkeliste
 
 import ForecastData
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -44,11 +43,10 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
     }
 
         Column(modifier = Modifier
-            .fillMaxSize()) {
+            .fillMaxHeight()) {
             Text(text = "Ytterlag")
             LazyRow(
-               //horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 items(outerlist) { outerlist ->
                     val title = "${outerlist.material}${outerlist.type}"
@@ -66,7 +64,7 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
             Spacer(modifier = Modifier.height(30.dp))
             Text(text = "Innerlag")
             LazyRow(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 //husk å endre navn!!!!!!
                 items(recommendedList) { recommendedList ->
@@ -75,10 +73,11 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
                             " ${recommendedList.windproof} \nVanntetthet:" +
                             " ${recommendedList.waterproof}"
                     val image = recommendedList.image
+                    Spacer(modifier = Modifier.width(60.dp))
                     NonExpandableCard(title = title,
                         description = description,
                         img = image)
-                    Spacer(modifier = Modifier.width(10.dp))
+                    Spacer(modifier = Modifier.width(30.dp))
                 }
             }
         }
