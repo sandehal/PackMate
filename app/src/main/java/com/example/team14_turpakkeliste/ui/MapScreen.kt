@@ -59,22 +59,27 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
         position = CameraPosition.fromLatLngZoom(Norway, 6f)
     }
 
-    val clickedLatLng = remember {
+    var clickedLatLng = remember {
         mutableStateOf<LatLng?>(null)
     }
 
-    val markerState = clickedLatLng.value?.let { rememberMarkerState(position = it) }
+    var markerState = clickedLatLng.value?.let { rememberMarkerState(position = it) }
 
     //Relatert til bottomSheet
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
 
     val markerClick: (Marker) -> Boolean = {
+        if (markerState != null) {
+            Log.d("pos", "${markerState.position.latitude}, ${markerState.position.longitude} ")
+        }
         scope.launch {
             sheetState.show()
         }
         false
     }
+
+    val baseLatLng = LatLng(60.47202399999999, 8.468945999999999)
 
     //Hentet fra Sander
     val location = remember {
@@ -82,6 +87,11 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
     }
 
     val context = LocalContext.current
+
+    var visible = remember {
+        (true)
+    }
+
 
     val trailingIconView = @Composable {
         IconButton(
@@ -115,38 +125,25 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
                 singleLine = true,
                 trailingIcon = if (location.value.isNotBlank()) trailingIconView else null,
             )
-
-            val showMarker = remember {
-                mutableStateOf(true)
-            }
             // on below line adding a button.
             Button(
                 onClick = {
 
-                    if(clickedLatLng.value != null){
-                        clickedLatLng.value = null
-                        //Endre en true false verdi
-                    } else {
-                        clickedLatLng.value = null
-                    }
-
-                    //Sett inn en sjekk som ser at det faktisk er noe i searchbar
-                    //Legg inn en snackbar error for searchbar.
-
-                    var locCords = getLocationCompose(location.toString(), viewModel, context)
-                    focusManager.clearFocus()
-                    Log.d("Kordinat",
-                        "${viewModel.currentLatitude}, ${viewModel.currentLongitude}")
-                    if(locCords != null){
-                        clickedLatLng.value = locCords
-                        Log.d(
-                            "Oppdatert",
-                            "${viewModel.currentLatitude}, ${viewModel.currentLongitude}"
-                        )
-                        scope.launch {
-                            sheetState.show()
+                        var locCords = getLocationCompose(location.toString().plus(", Norway"), viewModel, context)
+                        if(markerState == null) {
+                            if (location.value != "") {
+                            if (locCords != null && locCords != baseLatLng) {
+                                clickedLatLng.value = locCords
+                                visible = true
+                                scope.launch {
+                                    sheetState.show()
+                                }
+                            }
                         }
-                    }
+                        } else {
+                            clickedLatLng.value = null
+                            visible = false
+                        }
                 },
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(ForestGreen),
@@ -176,6 +173,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
                 onMapClick = { latLng ->
 
                     if (markerState == null) {
+                        visible = true
                         clickedLatLng.value = latLng
                         viewModel.currentLatitude = latLng.latitude
                         viewModel.currentLongitude = latLng.longitude
@@ -188,14 +186,16 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
                         }
                     } else if (markerState != null) {
                         clickedLatLng.value = null
+                        visible = false
                         //potensiell bug er at man ikke fjerner de gamle lat long verdiene fra view.
                         //Men de oppdateres for hver gang man plasserer en ny.
                     }
                 },
             )
             {
+
                 if (markerState != null) {
-                    Marker(state = markerState, onClick = markerClick)
+                    Marker(state = markerState, onClick = markerClick, visible = visible)
                 }
             }
 
@@ -213,6 +213,38 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
         verticalArrangement = Arrangement.Bottom) {
         BottomNavBar(navController)
     }
+}
+
+fun getLocationCompose(location: String, viewModel: TurViewModel, context: Context): LatLng? {
+
+    var latLng : LatLng?
+    latLng = null
+    var addressList : List<Address>? = null
+    Log.d("Location",
+        "${location}")
+    if(location != null || location == "") {
+        val geocoder = Geocoder(context)
+        try {
+            addressList = geocoder.getFromLocationName(location, 1)
+            println("Resultat")
+        } catch (e: IOException) {
+            e.printStackTrace()
+            println("FEIL")
+
+        }
+
+        if (addressList!!.isNotEmpty()) {
+            val address = addressList!![0]
+            viewModel.currentLatitude = address.latitude
+            viewModel.currentLongitude = address.longitude
+            latLng = LatLng(address.latitude,address.longitude)
+            Log.d("adressekord",
+                "${viewModel.currentLatitude}, ${viewModel.currentLongitude}")
+
+            return latLng
+        }
+    }
+    return latLng
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -417,38 +449,6 @@ fun getLocation(location: String, context: Context, mapView: MapView, viewModel:
             }
         }
     }
-}
-
-fun getLocationCompose(location: String, viewModel: TurViewModel, context: Context): LatLng? {
-
-    var latLng : LatLng?
-    latLng = null
-    var addressList : List<Address>? = null
-    Log.d("Location",
-        "${location}")
-    if(location != null || location == "") {
-        val geocoder = Geocoder(context)
-        try {
-            addressList = geocoder.getFromLocationName(location, 1)
-            println("Resultat")
-        } catch (e: IOException) {
-            e.printStackTrace()
-            println("FEIL")
-
-        }
-
-        if (addressList!!.isNotEmpty()) {
-            val address = addressList!![0]
-            viewModel.currentLatitude = address.latitude
-            viewModel.currentLongitude = address.longitude
-            latLng = LatLng(address.latitude,address.longitude)
-            Log.d("adressekord",
-                "${viewModel.currentLatitude}, ${viewModel.currentLongitude}")
-
-            return latLng
-        }
-    }
-    return latLng
 }
 
 
