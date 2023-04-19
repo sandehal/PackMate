@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.team14_turpakkeliste.BottomNavBar
 import com.example.team14_turpakkeliste.MakeListButton
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
@@ -218,6 +219,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun bottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineScope, navController: NavController, turViewModel: TurViewModel){
+
 
     if (sheetState.isVisible){
         ModalBottomSheet(
