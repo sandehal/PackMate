@@ -225,12 +225,14 @@ fun getLocationCompose(location: String, viewModel: TurViewModel, context: Conte
     if(location != null || location == "") {
         val geocoder = Geocoder(context)
         try {
-            addressList = geocoder.getFromLocationName(location, 1)
+
+            //Lønnet seg for større treffsikkerhet å legge til "Norway" hele to ganger.
+
+            addressList = geocoder.getFromLocationName(location.plus(", Norway"), 1)
             println("Resultat")
         } catch (e: IOException) {
             e.printStackTrace()
             println("FEIL")
-
         }
 
         if (addressList!!.isNotEmpty()) {
