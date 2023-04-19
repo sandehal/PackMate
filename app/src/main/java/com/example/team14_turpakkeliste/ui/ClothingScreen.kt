@@ -14,6 +14,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -33,7 +34,8 @@ import com.example.team14_turpakkeliste.ui.TurViewModel
 @Composable
 fun ClothingScreen(navController: NavController, forecastData: ForecastData, alerts: List<Alert>,viewModel: TurViewModel){
     viewModel.getForecast(alerts)
-    val recommendedList = sortClothing(forecastData)
+    val outerlist = sortClothing(forecastData, 0, "outer")
+    val recommendedList = sortClothing(forecastData, 0, "inner")
     for(alert in alerts){
         if(pinpointLocation(viewModel.currentLatitude,viewModel.currentLongitude,alert.areaPolygon!!)){
             println(alert.headline)
@@ -41,19 +43,42 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
         }
     }
 
-        Column() {
-            Spacer(modifier = Modifier.height(10.dp))
-            LazyColumn(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(horizontal = 30.dp)
+        Column(modifier = Modifier
+            .fillMaxSize()) {
+            Text(text = "Ytterlag")
+            LazyRow(
+               //horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize()
             ) {
+                items(outerlist) { outerlist ->
+                    val title = "${outerlist.material}${outerlist.type}"
+                    val description = "Varme: ${outerlist.warmth}\nVindtetthet:" +
+                            " ${outerlist.windproof} \nVanntetthet:" +
+                            " ${outerlist.waterproof}"
+                    val image = outerlist.image
+                    Spacer(modifier = Modifier.width(60.dp))
+                    NonExpandableCard(title = title,
+                        description = description,
+                        img = image)
+                    Spacer(modifier = Modifier.width(30.dp))
+                }
+            }
+            Spacer(modifier = Modifier.height(30.dp))
+            Text(text = "Innerlag")
+            LazyRow(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                //husk å endre navn!!!!!!
                 items(recommendedList) { recommendedList ->
                     val title = "${recommendedList.material}${recommendedList.type}"
-                    val description =
-                        "Varme: ${recommendedList.warmth}\nVindtetthet: ${recommendedList.windproof} \nVanntetthet: ${recommendedList.waterproof}"
+                    val description = "Varme: ${recommendedList.warmth}\nVindtetthet:" +
+                            " ${recommendedList.windproof} \nVanntetthet:" +
+                            " ${recommendedList.waterproof}"
                     val image = recommendedList.image
-                    ExpandableCard(title = title, description = description, img = image)
-                    Spacer(modifier = Modifier.height(10.dp))
+                    NonExpandableCard(title = title,
+                        description = description,
+                        img = image)
+                    Spacer(modifier = Modifier.width(10.dp))
                 }
             }
         }
@@ -61,12 +86,64 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
             .fillMaxSize(),
             verticalArrangement = Arrangement.Bottom
         ){
-            ExpandableCard(title = "Vis Været", description = getWeather(forecastData), img = forecastData.properties.timeseries.get(0).data.next_1_hours.summary.symbol_code)
+            ExpandableCard(title = "Vis Været",
+                description = getWeather(forecastData),
+                img = forecastData.properties.timeseries.get(0).data.next_1_hours.summary.symbol_code)
             SaveButton()
             BottomNavBar(navController)
         }
 
 }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun NonExpandableCard(
+    title: String,
+    titleFontSize: TextUnit = MaterialTheme.typography.titleMedium.fontSize,
+    titleFontWeight: FontWeight = FontWeight.Bold,
+    description: String,
+    descriptionFontSize: TextUnit = MaterialTheme.typography.bodyMedium.fontSize,
+    descriptionFontWeight: FontWeight = FontWeight.Normal,
+    descriptionMaxLines: Int = 4,
+    padding: Dp = 12.dp,
+    img: String,
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(padding),
+            verticalArrangement = Arrangement.Top
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                val image = getImg(desc = img)
+                Image(painter = image, contentDescription = "picture of clothing-piece")
+                Text(
+                    modifier = Modifier
+                        .weight(6f),
+                    text = title,
+                    fontSize = titleFontSize,
+                    fontWeight = titleFontWeight,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    text = description,
+                    fontSize = descriptionFontSize,
+                    fontWeight = descriptionFontWeight,
+                    maxLines = descriptionMaxLines,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+
+        }
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExpandableCard(
@@ -84,7 +161,6 @@ fun ExpandableCard(
     val rotationState by animateFloatAsState(
         targetValue = if (expandedState) 180f else 0f
     )
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -94,7 +170,6 @@ fun ExpandableCard(
                     easing = LinearOutSlowInEasing
                 )
             ),
-
         onClick = {
             expandedState = !expandedState
         }
@@ -102,10 +177,11 @@ fun ExpandableCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(padding)
+                .padding(padding),
+            verticalArrangement = Arrangement.Top
         ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     modifier = Modifier
@@ -147,11 +223,16 @@ fun ExpandableCard(
 @Composable
 fun getImg(desc: String): Painter{
     val painter: Painter = when(desc){
-        "SoftJO"->painterResource(id = R.drawable.softshelljakke)
-        "SoftPO"->painterResource(id = R.drawable.softshellbukse)
-        "DownJO"-> painterResource(id = R.drawable.dunjakke)
-        "ShellJO"-> painterResource(id = R.drawable.skalljakke)
-        //"ShellPO" -> painterResource(id = R.drawable.skallbukse)
+        "cottonjacket"->painterResource(id = R.drawable.cottonjacket)
+        "cottonpants"->painterResource(id = R.drawable.cottonpants)
+        "downjacket"-> painterResource(id = R.drawable.downjacket)
+        "goretextjacket"-> painterResource(id = R.drawable.goretexjacket)
+        "goretextpants" -> painterResource(id = R.drawable.goretexpants)
+        "primaloft" -> painterResource(id = R.drawable.primaloft)
+        "ravgenser" -> painterResource(id = R.drawable.ravgenser)
+        "ravbukse" -> painterResource(id = R.drawable.ravbukse)
+        "sommerull" -> painterResource(id = R.drawable.sommerull)
+
         "clearsky_day" -> painterResource(id = R.drawable.clearsky_day)
         "clearsky_night" -> painterResource(id = R.drawable.clearsky_night)
         //"clearsky_polartwilight" -> painterResource(id = R.drawable.clear)
