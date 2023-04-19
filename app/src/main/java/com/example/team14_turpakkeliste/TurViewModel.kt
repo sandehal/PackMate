@@ -8,17 +8,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.team14_turpakkeliste.data.*
-import com.example.team14_turpakkeliste.ui.TurpakklisteUiState
-import io.ktor.client.network.sockets.*
 import io.ktor.client.plugins.*
 import kotlinx.coroutines.launch
 import kotlinx.serialization.SerializationException
-import java.io.InputStream
 
 class TurViewModel(): ViewModel() {
 
     var currentLatitude : Double = 0.0
     var currentLongitude : Double = 0.0
+    var antDager : Int = 0
 
     var currentLatitudeLongitude = MutableLiveData<Pair<Double, Double>>()
 

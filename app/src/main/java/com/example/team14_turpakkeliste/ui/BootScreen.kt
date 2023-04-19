@@ -1,7 +1,9 @@
 package com.example.team14_turpakkeliste
 
 import ForecastData
+import android.os.Build
 import android.view.animation.OvershootInterpolator
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
@@ -11,6 +13,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -33,11 +36,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.data.Alert
 import com.example.team14_turpakkeliste.ui.*
-import com.example.team14_turpakkeliste.ui.theme.Orange
+import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = viewModel()){
 
@@ -49,11 +52,12 @@ fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = vi
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BootScreen(navController: NavHostController,alerts:List<Alert>, forecastData: ForecastData,viewModel: TurViewModel){
     NavHost(navController = navController, startDestination = "SavedScreen") {
         composable(Screen.HomeScreen.route) { HomeScreen(navController) }
-        composable(Screen.MapScreen.route) { MapScreen(navController,viewModel) }
+        composable(Screen.MapScreen.route) { MapsComposeScreen(navController,viewModel) }
         composable(Screen.SavedScreen.route) { SavedScreen(navController) }
         composable(Screen.LoadingScreen.route) { LoadingScreen() }
         composable(Screen.ClothingScreen.route) { ClothingScreen(navController,forecastData,alerts,viewModel) }
@@ -118,7 +122,7 @@ fun BottomNavBar(navController: NavController){
 
 
     NavigationBar(
-        containerColor = Orange,
+        containerColor = ForestGreen,
         modifier = Modifier
             .border(BorderStroke(2.dp, Color.Black))
     ) {
@@ -130,19 +134,19 @@ fun BottomNavBar(navController: NavController){
                 label = { Text(item.description) },
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = { if (currentDestination?.hierarchy?.any { it.route == item.route} == true) {
-                    } else {
-                        navController.navigate(item.route)
-                        {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            // Avoid multiple copies of the same destination when
-                            // reselecting the same item
-                            launchSingleTop = true
-                            // Restore state when reselecting a previously selected item
-                            restoreState = true
+                } else {
+                    navController.navigate(item.route)
+                    {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
                         }
+                        // Avoid multiple copies of the same destination when
+                        // reselecting the same item
+                        launchSingleTop = true
+                        // Restore state when reselecting a previously selected item
+                        restoreState = true
                     }
+                }
                 }
             )
         }
@@ -152,20 +156,23 @@ fun BottomNavBar(navController: NavController){
 @Composable
 fun MakeListButton(navController: NavController){
     ExtendedFloatingActionButton(
-        icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
-        text = { Text("Make the list!") },
+        containerColor = ForestGreen,
+        contentColor = Color.White,
+        icon = { Icon(Icons.Filled.Email, contentDescription = null) },
+        text = { Text("Motta pakkeliste for valgt lokasjon.") },
         onClick = {  navController.navigate("ClothingScreen")
         {
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
             }
+
             // Avoid multiple copies of the same destination when
             // reselecting the same item
             launchSingleTop = true
             // Restore state when reselecting a previously selected item
             restoreState = true
         }
-                  },
-        modifier = Modifier.fillMaxWidth()
+        },
+        modifier = Modifier.fillMaxWidth().padding(start = 10.dp, end = 10.dp)
     )
 }
