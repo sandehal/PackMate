@@ -56,7 +56,7 @@ fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = vi
 @Composable
 fun BootScreen(navController: NavHostController,alerts:List<Alert>, forecastData: ForecastData,viewModel: TurViewModel){
     NavHost(navController = navController, startDestination = "SavedScreen") {
-        composable(Screen.HomeScreen.route) { HomeScreen(navController) }
+        composable(Screen.ListScreen.route) { ListScreen(navController) }
         composable(Screen.MapScreen.route) { MapsComposeScreen(navController,viewModel) }
         composable(Screen.SavedScreen.route) { SavedScreen(navController) }
         composable(Screen.LoadingScreen.route) { LoadingScreen() }
@@ -107,7 +107,7 @@ fun LoadingScreen(){
 }
 sealed class Screen(val route: String, val icon: ImageVector, val description : String) {
     object MapScreen : Screen("MapScreen", Icons.Default.Search, "Map")
-    object HomeScreen : Screen("HomeScreen", Icons.Default.Home, "Home")
+    object ListScreen : Screen("ListScreen", Icons.Default.Home, "List")
     object SavedScreen : Screen("SavedScreen", Icons.Default.Star, "Saved")
     object ClothingScreen : Screen("ClothingScreen", Icons.Default.Favorite, "Clothing")
     object LoadingScreen : Screen("LoadingScreen", Icons.Default.Refresh, "Loading")
