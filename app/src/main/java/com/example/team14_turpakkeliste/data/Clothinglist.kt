@@ -23,7 +23,7 @@ fun getClothes(): List<Clothing>{
     )
     return  clothingList
 }
-fun sortClothing(forecastData: ForecastData, numDays: Int, layer: String): List<Clothing>{
+fun sortClothing(forecastData: ForecastData, dayNum: Int, layer: String): List<Clothing>{
     // Ta imot værdata og få som ouput outerReqMin, outerReqMax, innerReqMin og innerReqMax
     // Legg ved en boolean f.eks som sier om det er nedbør, kan være viktig for valg av klær, dersom man trenger varme, men ikke fra ytterlag.
     // Da verdsettes f.eks vannavstøtende kvaliteter, og et innerlag verdsetter høyere varme.
