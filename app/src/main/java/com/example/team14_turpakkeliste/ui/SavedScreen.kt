@@ -17,10 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
-import androidx.room.Room
 import com.example.team14_turpakkeliste.EntityClass.AppDatabase
 import com.example.team14_turpakkeliste.EntityClass.Pakkliste
-import com.example.team14_turpakkeliste.databinding.ActivityMainBinding
 import com.example.team14_turpakkeliste.ui.theme.Burgunder
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 import kotlinx.coroutines.Dispatchers
@@ -62,7 +60,7 @@ fun SavedButton(navController: NavController){
     ExtendedFloatingActionButton(
         icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
         text = { Text("Hent siste pakkeliste") },
-        onClick = {  navController.navigate("ClothingScreen")
+        onClick = {  navController.navigate("ListScreen")
         {
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true

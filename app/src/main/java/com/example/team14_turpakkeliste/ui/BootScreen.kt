@@ -160,7 +160,7 @@ fun MakeListButton(navController: NavController){
         contentColor = Color.White,
         icon = { Icon(Icons.Filled.Email, contentDescription = null) },
         text = { Text("Motta pakkeliste for valgt lokasjon.") },
-        onClick = {  navController.navigate("ClothingScreen")
+        onClick = {  navController.navigate("ListScreen")
         {
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
