@@ -7,19 +7,36 @@ import ForecastData
 fun getClothes(): List<Clothing>{
     var clothingList: List<Clothing> = listOf(
         //klær inspirert av stat-system fra ulvang på ullklær andre klær hentet fra Norrøna
+
+        //ytterlagjakker
         Clothing("Shell", "jacket","outer", 1, 6, 6, "goretexjacket"),
-        Clothing("Shell", "pants", "outer", 1,6, 6,"goretextpants" ),
-        Clothing("Down", "jacket", "outer", 4,1,2, "downjacket"),
+        Clothing("Shell", "pants", "outer", 1,6, 6,"goretexpants" ),
+        Clothing("Down", "jacket", "outer", 5,1,5, "downjacket"),
+        Clothing("HeavyDown", "jacket", "outer", 6, 2, 5, "heavydownjacket"),
         Clothing("Cotton", "jacket", "outer", 2, 3,5,"cottonjacket"),
         Clothing("Primaloft", "jacket", "outer",3, 3,5, "primaloft"),
+        Clothing("Softshell", "jacket", "outer", 1, 2, 4, "windjacket"),
+
+        //ytterlag bukser
         Clothing("Softshell", "pants", "outer", 2,3,5, "cottonpants"),
         Clothing("Softshell", "pants", "outer", 2, 4, 5, "heavypants"),
-        Clothing("Softshell", "jacket", "outer", 1, 2, 4, "windjacket"),
+        //ikke lagt til ennå
+        Clothing("Softshell", "pants", "outer", 1, 3, 4, "trekkingpants"),
+        Clothing("Softshell", "shorts", "outer", 1, 2, 4, "flexshorts"),
+
+        //jakker som kan fungere som ytterlag og mellomlag (her skal det være mulig å ha et mellomlag som varme dersom det er nedbør)
+        //disse skal da anbefales som underlag husk å lage ny liste da som er lang nok
+        Clothing("thickFleece", "jacket", "outer", 5,1,1,"thermalfleece"),
+        Clothing("thinFleece", "jacket", "outer", 3,1,1, "thinfleece"),
+
+        //innerlag
         Clothing("Wool", "sweater", "inner", 3,1,1,"ravgenser"),
         Clothing("Wool", "pants", "inner", 3, 1, 1, "ravbukse"),
         Clothing("LightWool", "sweater", "inner", 2,1,1,"s"),
         Clothing("LightWool", "pants", "inner", 2,1,1,"LUllPI"),
-        Clothing("LightWool", "tshirt", "inner", 1, 1,1, "sommerull")
+        Clothing("LightWool", "tshirt", "inner", 1, 1,1, "sommerull"),
+
+        Clothing("Kan ikke anbefale", "none", "none", 0, 0 ,0, "none")
     )
     return  clothingList
 }
@@ -30,23 +47,24 @@ fun sortClothing(forecastData: ForecastData, dayNum: Int, layer: String): List<C
     //iterere gjennom og samle vann for hver time :D
     val temp: Double = forecastData.properties.timeseries.get(0).data.instant.details.air_temperature.toDouble()
     val wind: Double = forecastData.properties.timeseries.get(0).data.instant.details.wind_speed.toDouble()
-    var water: Double = 0.0
-    //Bør samle vann for alle tider i døgnet altså instant + next1 + next6 + next12
-    forecastData.properties.timeseries.get(0).data.next_1_hours.details?.precipitation_amount?.let {
-        water = forecastData.properties.timeseries.get(0).data.next_1_hours.details!!.precipitation_amount.toDouble()
+    var water = 0.0
+    for(i in 0..12){
+        forecastData.properties.timeseries.get(i).data.next_1_hours.details?.precipitation_amount?.let {
+            water += forecastData.properties.timeseries.get(i).data.next_1_hours.details!!.precipitation_amount.toDouble()
+        }
     }
     // evt ha en minimumsvarme som må nås med alle lag sin varme kombinert
     val outerReqMin = chooseReqsOuter(temp, wind, water)
     val innerReqMin = chooseReqsInner(temp)
-    // disse to verdiene kan også gjelde for sko/fottøy
-    val tempList: MutableList<Clothing> = mutableListOf()
+
+    //fyller liste med tomme kleselementer som informerer om at dert evt ikke finnes noen riktige plass dersom disse overskrives
+    val tempList: MutableList<Clothing> = MutableList(2){ getClothes().get(getClothes().size) }
     for(clothing in getClothes()){
         val warmth: Int = clothing.warmth
         val wind: Int = clothing.windproof
         val water: Int = clothing.waterproof
 
-        //trumfer varme dersom det regner
-        if(outerReqMin.waterproof == water){
+        if(outerReqMin.waterproof == 6){
 
         }
         //sjekk også for vann her
@@ -58,50 +76,52 @@ fun sortClothing(forecastData: ForecastData, dayNum: Int, layer: String): List<C
         //beskyttende lag
         if(warmth == outerReqMin.warmth
             && wind >= outerReqMin.windproof
+            && (water == outerReqMin.waterproof || water == outerReqMin.waterproof+1)
             && clothing.type == "jacket"
             && clothing.layer == layer){
-                tempList.add(clothing)
+                tempList.add(0,clothing)
                 continue
         }
         //beskyttende lag
         if(warmth == outerReqMin.warmth
             && wind >= outerReqMin.windproof
+            && (water == outerReqMin.waterproof || water == outerReqMin.waterproof+1)
             && clothing.type == "pants"
             && clothing.layer == layer){
-                tempList.add(clothing)
+                tempList.add(1,clothing)
                 continue
         }
         if(warmth == innerReqMin.warmth
             && clothing.type == "sweater"
             && clothing.layer == layer){
-                tempList.add(clothing)
+                tempList.add(0,clothing)
                 continue
         }
         if(warmth == innerReqMin.warmth
             && clothing.type == "pants"
             && clothing.layer == layer){
-                tempList.add(clothing)
+                tempList.add(1,clothing)
                 continue
             }
     }
     return tempList
 }
-//precipicationamount forteller om nedbør
+//bør  begrenses til -30 ettersom dette er ambefaling for uerfarne tugåere!
 fun chooseReqsOuter(temp: Double, wind: Double, water: Double?): MinRequirementsClothes{
     var warmth = 0
     var windproof = 0
     var waterproof = 0
     when(temp){
-        in -40.0..-21.0 -> warmth = 6
-        in -20.9..-11.0 -> warmth = 5
-        in -10.9..-1.0 -> warmth = 4
-        in 0.9..9.9-> warmth = 3
-        in 10.0..19.9-> warmth = 2
-        in 20.0..40.9 -> warmth = 1
+        //endre litt i disse til senere
+        in -30.0..-20.0 -> warmth = 6
+        in -19.9..-10.0 -> warmth = 5
+        in -9.9..-0.1 -> warmth = 4
+        in 0.0..9.9-> warmth = 3
+        in 10.0..15.9-> warmth = 2
+        in 16.0..40.9 -> warmth = 1
     }
     println(warmth)
     when(wind){
-        //finne ut verdi for hvordan vær tolkes
         in 0.0..2.5 -> windproof = 1
         in 2.6..5.0 -> windproof = 2
         in 5.1..7.5 -> windproof = 3
@@ -124,12 +144,12 @@ fun chooseReqsOuter(temp: Double, wind: Double, water: Double?): MinRequirements
 fun chooseReqsInner(temp: Double): MinRequirementsClothes{
     var warmth = 0
     when(temp){
-        in -40.0..-21.0 -> warmth = 6
-        in -20.9..-11.0 -> warmth = 5
-        in -10.9..-1.0 -> warmth = 4
-        in 0.9..9.9-> warmth = 3
-        in 10.0..19.9-> warmth = 2
-        in 20.0..40.9 -> warmth = 1
+        in -50.0..-30.0 -> warmth = 6
+        in -29.9..-15.0 -> warmth = 5
+        in -14.9..-5.0 -> warmth = 4
+        in -4.9..5.0-> warmth = 3
+        in 5.0..10.9-> warmth = 2
+        in 11.0..40.9 -> warmth = 1
     }
     return MinRequirementsClothes(warmth,1,1)
 }
@@ -142,7 +162,4 @@ fun getWeather(forecastData: ForecastData): String{
     }
     val returnString = "Det er meldt ${temp} grader \nog vind på ${wind} m/s \nDu kan forvente ${water} mm nedbør"
     return returnString
-}
-fun savePacklist(){
-
 }
