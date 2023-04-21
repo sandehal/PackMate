@@ -34,6 +34,15 @@ private lateinit var appDB : AppDatabase
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun SavedScreen(navController: NavController) {
+    val context = LocalContext.current
+    appDB = AppDatabase.getDatabase(context)
+    GlobalScope.launch(Dispatchers.IO) {
+        appDB.UserDao().deleteAll()
+        val user = Pakkliste(null,"haakon","zazamann")
+        appDB.UserDao().insert(user)
+        val all = appDB.UserDao().getAll()
+        println(all)
+    }
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -63,15 +72,6 @@ fun SavedScreen(navController: NavController) {
             fontSize = 18.sp
         )
         BottomNavBar(navController)
-    }
-    val context = LocalContext.current
-    appDB = AppDatabase.getDatabase(context)
-    GlobalScope.launch(Dispatchers.IO) {
-        appDB.UserDao().deleteAll()
-        val user = Pakkliste(null,"haakon","zazamann")
-        appDB.UserDao().insert(user)
-        val all = appDB.UserDao().getAll()
-        println(all)
     }
 
 }
