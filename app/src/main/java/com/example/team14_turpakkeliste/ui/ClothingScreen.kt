@@ -76,11 +76,11 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
                             "Vindtetthet: ${recommendedList.windproof} \n" +
                             "Vanntetthet: ${recommendedList.waterproof}"
                     val image = recommendedList.image
-                    Spacer(modifier = Modifier.width(60.dp))
+                    Spacer(modifier = Modifier.width(50.dp))
                     NonExpandableCard(title = title,
                         description = description,
                         img = image)
-                    Spacer(modifier = Modifier.width(30.dp))
+                    Spacer(modifier = Modifier.width(40.dp))
                 }
             }
         }
@@ -89,7 +89,7 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
             verticalArrangement = Arrangement.Bottom
         ){
             ExpandableCard(title = "Vis Været",
-                description = getWeather(forecastData),
+                description = getWeather(forecastData, viewModel.chosenDay),
                 img = forecastData.properties.timeseries.get(0).data.next_1_hours.summary.symbol_code)
 
             BottomNavBar(navController)
