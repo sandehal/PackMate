@@ -1,5 +1,8 @@
 package com.example.team14_turpakkeliste.ui
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.widget.Button
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,16 +22,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.team14_turpakkeliste.BottomNavBar
+import com.example.team14_turpakkeliste.EntityClass.AppDatabase
+import com.example.team14_turpakkeliste.EntityClass.Pakkliste
+import com.example.team14_turpakkeliste.MainActivity
+import com.example.team14_turpakkeliste.databinding.ActivityMainBinding
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun ListScreen(navController: NavController){
-
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -41,6 +52,7 @@ fun ListScreen(navController: NavController){
                 .padding(20.dp)
         )
         ExtendedFloatingActionButton(
+
             containerColor = ForestGreen,
             contentColor = Color.White,
             icon = { Icon(Icons.Filled.Email, contentDescription = null) },
@@ -58,7 +70,8 @@ fun ListScreen(navController: NavController){
                 restoreState = true
             }
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .height(200.dp)
                 .padding(20.dp)
         )
@@ -73,13 +86,20 @@ fun ListScreen(navController: NavController){
     }
 }
 
+private lateinit var appDB : AppDatabase
+@OptIn(DelicateCoroutinesApi::class)
 @Composable
 fun SaveButton(){
+    val context: Context = LocalContext.current
     ExtendedFloatingActionButton(
         icon = { Icon(Icons.Filled.Favorite, contentDescription = "Save list") },
         text = { Text("Save list") },
         onClick = {
-
+            appDB = AppDatabase.getDatabase(context)
+            GlobalScope.launch(Dispatchers.IO) {
+                val user = Pakkliste(null,"haakon","zazamann")
+                appDB.UserDao().insert(user)
+            }
         },
         modifier = Modifier.fillMaxWidth()
     )
