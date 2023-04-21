@@ -39,7 +39,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun ListScreen(navController: NavController){
+fun ListScreen(navController: NavController, viewModel: TurViewModel){
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -51,30 +51,32 @@ fun ListScreen(navController: NavController){
                 .wrapContentWidth(Alignment.CenterHorizontally)
                 .padding(20.dp)
         )
-        ExtendedFloatingActionButton(
+        for(i in 0..viewModel.numberOfDays){ExtendedFloatingActionButton(
 
             containerColor = ForestGreen,
             contentColor = Color.White,
             icon = { Icon(Icons.Filled.Email, contentDescription = null) },
-            text = { Text("Dag 1") },
-            onClick = {  navController.navigate("ClothingScreen")
-            {
-                popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
-                }
+            text = { Text("Dag ${i+1}") },
+                //send med beskjed her om for å sortere klær som skal til clothingscreen henter ut infor om riktig dag
+                onClick = { viewModel.chosenDay = i; navController.navigate("ClothingScreen")
+                {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
 
-                // Avoid multiple copies of the same destination when
-                // reselecting the same item
-                launchSingleTop = true
-                // Restore state when reselecting a previously selected item
-                restoreState = true
-            }
-            },
-            modifier = Modifier
+                    // Avoid multiple copies of the same destination when
+                    // reselecting the same item
+                    launchSingleTop = true
+                    // Restore state when reselecting a previously selected item
+                    restoreState = true
+                }
+                },
+                modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
-                .padding(20.dp)
-        )
+                    .height(200.dp)
+                    .padding(20.dp)
+            )
+        }
 
     }
     Column(
