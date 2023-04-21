@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     val navController = rememberNavController()
                     SetStateScreen(navController)
-
                 }
             }
         }
