@@ -92,7 +92,7 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
             ExpandableCard(title = "Vis Været",
                 description = getWeather(forecastData),
                 img = forecastData.properties.timeseries.get(0).data.next_1_hours.summary.symbol_code)
-            SaveButton()
+
             BottomNavBar(navController)
         }
 
