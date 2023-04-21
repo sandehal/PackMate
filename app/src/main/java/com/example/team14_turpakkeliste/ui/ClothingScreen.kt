@@ -318,14 +318,3 @@ fun getImg(desc: String): Painter{
     return painter
 }
 
-@Composable
-fun SaveButton(){
-    ExtendedFloatingActionButton(
-        icon = { Icon(Icons.Filled.Favorite, contentDescription = "Save list") },
-        text = { Text("Save list") },
-        onClick = {
-
-        },
-        modifier = Modifier.fillMaxWidth()
-    )
-}
