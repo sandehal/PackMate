@@ -33,10 +33,9 @@ import com.example.team14_turpakkeliste.ui.TurViewModel
 @Composable
 fun ClothingScreen(navController: NavController, forecastData: ForecastData, alerts: List<Alert>,viewModel: TurViewModel){
     //gjør dette kallet tidligere
-
     //og gjør henting av data osv før skjermen lastest
-    val outerlist = sortClothing(forecastData, 1, "outer")
-    val recommendedList = sortClothing(forecastData, 1, "inner")
+    val outerlist = sortClothing(forecastData, viewModel.chosenDay, "outer")
+    val recommendedList = sortClothing(forecastData, viewModel.chosenDay, "inner")
     for(alert in alerts){
         if(pinpointLocation(viewModel.currentLatitude,viewModel.currentLongitude,alert.areaPolygon!!)){
             println(alert.headline)
@@ -227,6 +226,13 @@ fun getImg(desc: String): Painter{
         "ravgenser" -> painterResource(id = R.drawable.ravgenser)
         "ravbukse" -> painterResource(id = R.drawable.ravbukse)
         "sommerull" -> painterResource(id = R.drawable.sommerull)
+        "windjacket" -> painterResource(id = R.drawable.windjacket)
+        "flexshorts" -> painterResource(id = R.drawable.flexshorts)
+        "flexpants" -> painterResource(id = R.drawable.flexpants)
+        "thermalfleece"-> painterResource(id = R.drawable.thermalfleece)
+        "thinfleece" -> painterResource(id = R.drawable.thinfleece)
+        "heavywool" -> painterResource(id = R.drawable.heavywool)
+        "trekkingpants" -> painterResource(id = R.drawable.trekkingpants)
 
         "clearsky_day" -> painterResource(id = R.drawable.clearsky_day)
         "clearsky_night" -> painterResource(id = R.drawable.clearsky_night)

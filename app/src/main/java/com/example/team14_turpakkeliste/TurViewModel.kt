@@ -16,7 +16,8 @@ class TurViewModel(): ViewModel() {
 
     var currentLatitude : Double = 0.0
     var currentLongitude : Double = 0.0
-    var antDager : Int = 0
+    var numberOfDays : Int = 2
+    var chosenDay: Int = 0
 
     var currentLatitudeLongitude = MutableLiveData<Pair<Double, Double>>()
 
