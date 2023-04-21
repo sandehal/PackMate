@@ -5,15 +5,19 @@ import android.annotation.SuppressLint
 import android.app.Application
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
@@ -31,16 +35,33 @@ private lateinit var appDB : AppDatabase
 @Composable
 fun SavedScreen(navController: NavController) {
 
-    Column(modifier = Modifier.fillMaxSize()
-    ) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(color = Burgunder)) {
+        Text( modifier = Modifier
+            .fillMaxSize()
+            .wrapContentWidth(Alignment.CenterHorizontally)
+            .padding(20.dp),
+            text = "Lagrede pakkelister:",
+            fontSize = 30.sp
+        )
+    }
+    LazyColumn(modifier = Modifier
+        .fillMaxSize()
+        .wrapContentWidth(Alignment.CenterHorizontally)
+        .background(color = Burgunder)) {
 
     }
     Column(modifier = Modifier
-        .fillMaxSize()
-        .background(color = Burgunder),
+        .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
-        SavedButton(navController)
+        Text(modifier = Modifier
+            .wrapContentWidth(Alignment.CenterHorizontally)
+            .padding(20.dp),
+            text = "Klikk på Map for å lage en ny pakkeliste!",
+            fontSize = 18.sp
+        )
         BottomNavBar(navController)
     }
     val context = LocalContext.current
@@ -75,6 +96,8 @@ fun SavedButton(navController: NavController){
         modifier = Modifier.fillMaxWidth()
     )
 }
+
+
 
 
 @Preview(showBackground = true)
