@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -23,7 +24,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.team14_turpakkeliste.BottomNavBar
-import com.example.team14_turpakkeliste.SaveButton
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 
 @Composable
@@ -75,4 +75,16 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel){
         SaveButton()
         BottomNavBar(navController)
     }
+}
+
+@Composable
+fun SaveButton(){
+    ExtendedFloatingActionButton(
+        icon = { Icon(Icons.Filled.Favorite, contentDescription = "Save list") },
+        text = { Text("Save list") },
+        onClick = {
+
+        },
+        modifier = Modifier.fillMaxWidth()
+    )
 }

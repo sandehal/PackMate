@@ -91,7 +91,7 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
             ExpandableCard(title = "Vis Været",
                 description = getWeather(forecastData),
                 img = forecastData.properties.timeseries.get(0).data.next_1_hours.summary.symbol_code)
-            SaveButton()
+
             BottomNavBar(navController)
         }
 
@@ -324,14 +324,3 @@ fun getImg(desc: String): Painter{
     return painter
 }
 
-@Composable
-fun SaveButton(){
-    ExtendedFloatingActionButton(
-        icon = { Icon(Icons.Filled.Favorite, contentDescription = "Save list") },
-        text = { Text("Save list") },
-        onClick = {
-
-        },
-        modifier = Modifier.fillMaxWidth()
-    )
-}
