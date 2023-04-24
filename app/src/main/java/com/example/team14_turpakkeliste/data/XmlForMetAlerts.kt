@@ -153,6 +153,7 @@ class XmlCurrentAlert {
         var awarenessSeriousness: String? = null
         var awareness_type: String? = null
         var areaPolygon: String? = null
+        var eventCode: String? = null
         val parameters: MutableList<Pair<String?, String?>> = mutableListOf()
 
 
@@ -170,6 +171,7 @@ class XmlCurrentAlert {
                 "instruction" -> instruction = readAttribute(parser, parser.name)
                 "parameter" -> parameters.add(readParameter(parser))
                 "area" -> areaPolygon = readArea(parser)!!.trim()
+                "eventCode" -> eventCode = readEventCode(parser)!!.trim()
                 else -> skip(parser)
             }
         }
@@ -196,7 +198,8 @@ class XmlCurrentAlert {
             awarenessSeriousness,
             awareness_type,
             domain,
-            areaPolygon
+            areaPolygon,
+            eventCode
         )
     }
 
@@ -218,6 +221,24 @@ class XmlCurrentAlert {
             }
         }
         return Pair(valueName, value)
+    }
+    @Throws(XmlPullParserException::class, IOException::class)
+    private fun readEventCode(parser: XmlPullParser): String? {
+        parser.require(XmlPullParser.START_TAG, ns, "eventCode")
+        var valueName: String? = null
+        var value: String? = null
+
+        while (parser.next() != XmlPullParser.END_TAG) {
+            if (parser.eventType != XmlPullParser.START_TAG) {
+                continue
+            }
+            when (parser.name) {
+                "valueName" -> valueName = readText(parser)
+                "value" -> value = readText(parser)
+                else -> skip(parser)
+            }
+        }
+        return value
     }
 
     @Throws(XmlPullParserException::class, IOException::class)

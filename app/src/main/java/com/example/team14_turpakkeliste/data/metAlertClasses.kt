@@ -23,5 +23,6 @@ data class Alert(
     var awarenessSeriousness: String? = null,
     var awareness_type: String? = null,
     var domain: String? = null,
-    var areaPolygon: String? = null
+    var areaPolygon: String? = null,
+    var eventCode: String? = null
 )
