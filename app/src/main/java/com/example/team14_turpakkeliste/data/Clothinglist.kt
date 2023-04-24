@@ -10,16 +10,17 @@ fun getClothes(): List<Clothing>{
 
         //ytterlagjakker
         Clothing("Shell", "jacket","outer", 1, 6, 6, "goretexjacket"),
-        Clothing("Shell", "pants", "outer", 1,6, 6,"goretexpants" ),
+        Clothing("LightShell", "jacket", "outer", 1, 5, 6, "lightgoretextjacket"),
         Clothing("Down", "jacket", "outer", 5,1,5, "downjacket"),
-        //fjern jakka under
-        Clothing("HeavyDown", "jacket", "outer", 6, 3, 5, "heavydownjacket"),
         Clothing("Cotton", "jacket", "outer", 2, 3,5,"cottonjacket"),
         Clothing("Primaloft", "jacket", "outer",3, 3,5, "primaloft"),
         Clothing("Softshell", "jacket", "outer", 1, 2, 4, "windjacket"),
         Clothing("HeavyDown", "jacket", "outer", 6, 3, 6, "heavydown"),
+        //mangler jakke og bukse for vann 4 og 5, men kan bare anbefale goretex her egt
 
         //ytterlag bukser
+        Clothing("Shell", "pants", "outer", 1,6, 6,"goretexpants"),
+        Clothing("LightShell", "pants", "outer", 1, 5, 6, "lightgoretextpants"),
         Clothing("Softshell", "pants", "outer", 2,3,5, "cottonpants"),
         Clothing("Softshell", "pants", "outer", 2, 4, 5, "heavypants"),
         Clothing("Softshell", "pants", "outer", 1, 3, 4, "trekkingpants"),
@@ -31,7 +32,8 @@ fun getClothes(): List<Clothing>{
         Clothing("thinFleece", "jacket", "outer", 2,1,3, "thinfleece"),
         Clothing("heavyWool", "jacket", "outer", 6, 1, 6, "heavywool"),
         Clothing("thinnestFleece", "jacket", "outer", 3,1,1, "thinnestFleece"),
-        Clothing("wool", "jacket", "outer", 4, 1, 3, "wooljacket"),
+        //hvilken er denne?
+        Clothing("Wool", "jacket", "outer", 4, 1, 3, "wooljacket"),
 
         //innerlag
         Clothing("Wool", "sweater", "inner" ,6, 1,1, "expeditionsweater"),
@@ -42,13 +44,16 @@ fun getClothes(): List<Clothing>{
         Clothing("Wool", "pants", "inner", 4,1,1, "warmpants"),
         Clothing("Wool", "sweater", "inner", 3,1,1,"ravgenser"),
         Clothing("Wool", "pants", "inner", 3, 1, 1, "ravbukse"),
-        Clothing("LightWool", "sweater", "inner", 2,1,1,"lightsweater"),
-        Clothing("LightWool", "pants", "inner", 2,1,1,"lightpants"),
+        Clothing("LightWool", "sweater", "inner", 2,1,1,"lightwoolsweater"),
+        Clothing("LightWool", "pants", "inner", 2,1,1,"lightwoolpants"),
         Clothing("LightWool", "tshirt", "inner", 1, 1,1, "sommerull"),
 
-        Clothing("Kan ikke anbefale", "none", "none", 0, 0 ,0, "none")
+        Clothing("Kan ikke anbefale noe her", "none", "none", 0, 0 ,0, "none")
     )
     return  clothingList
+}
+fun getEquipment(){
+
 }
 fun sortClothing(forecastData: ForecastData, dayNum: Int, layer: String): List<Clothing>{
     // Ta imot værdata og få som ouput outerReqMin, outerReqMax, innerReqMin og innerReqMax
@@ -76,6 +81,10 @@ fun sortClothing(forecastData: ForecastData, dayNum: Int, layer: String): List<C
     if(outerReqMin.waterproof ==6 && temp >= -5.0){
         outerReqMin.warmth = 1
         innerReqMin.warmth += 2
+    }
+    if(outerReqMin.waterproof ==5 && temp >= -5.0){
+        outerReqMin.warmth = 2
+        innerReqMin.warmth += 1
     }
     //fyller liste med tomme kleselementer som informerer om at dert evt ikke finnes noen riktige plass dersom disse overskrives
     val tempList: MutableList<Clothing> = MutableList(2){ getClothes().get(getClothes().size-1) }
@@ -114,7 +123,6 @@ fun sortClothing(forecastData: ForecastData, dayNum: Int, layer: String): List<C
     }
     return tempList
 }
-//bør  begrenses til -30 ettersom dette er ambefaling for uerfarne tugåere!
 fun chooseReqsOuter(temp: Double, wind: Double, water: Double?): MinRequirementsClothes{
     var warmth = 0
     var windproof = 0
@@ -139,12 +147,12 @@ fun chooseReqsOuter(temp: Double, wind: Double, water: Double?): MinRequirements
     }
     println(wind)
     when(water!!){
-        in 0.0..0.2 -> waterproof = 1
-        in 0.3..0.5 -> waterproof = 2
-        in 0.6..0.8 -> waterproof = 3
-        in 0.9..1.1 -> waterproof = 4
-        in 1.2..1.4 -> waterproof = 5
-        in 1.5..50.0-> waterproof = 6
+        in 0.0..0.1 -> waterproof = 1
+        in 0.2..0.3 -> waterproof = 2
+        in 0.4..0.6 -> waterproof = 3
+        in 0.7..0.9 -> waterproof = 4
+        in 0.9..1.1 -> waterproof = 5
+        in 1.2..50.0-> waterproof = 6
     }
     println(water)
     return MinRequirementsClothes(warmth,waterproof, windproof)
