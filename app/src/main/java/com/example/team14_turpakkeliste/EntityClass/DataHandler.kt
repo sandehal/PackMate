@@ -16,7 +16,21 @@ data class Pakkliste (
     @ColumnInfo(name = "First_name") val firstName: String?,
     @ColumnInfo(name= "last_name") val lastName: String?
     )
-
+data class ClothingObject(
+    @ColumnInfo(name = "material") val material: String?,
+    @ColumnInfo(name = "type") val type: String?,
+    @ColumnInfo(name = "layer") val layer: String?,
+    @ColumnInfo(name = "warmth") val warmth: Int?,
+    @ColumnInfo(name = "windproof") val windproof: Int?,
+    @ColumnInfo(name = "waterproof") val waterproof: Int?,
+    @ColumnInfo(name = "imageCode") val image: String?
+)
+data class WeatherInfo(
+    @ColumnInfo(name = "temperature") val temperature: Double?,
+    @ColumnInfo(name = "windspeed") val windspeed: Double?,
+    @ColumnInfo(name = "watermilimeter") val watermilimeter: Double?,
+    @ColumnInfo(name = "imageCode") val image: String?
+)
 @Dao
 interface UserDao {
     @Query("SELECT * FROM pakklister")
