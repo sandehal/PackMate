@@ -49,6 +49,7 @@ fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = vi
         is TurpakklisteUiState.Error -> ErrorScreen()
         is TurpakklisteUiState.Loading -> LoadingScreen()
         is TurpakklisteUiState.Success -> BootScreen(navController,state.alerts,state.forecastData, viewModel)
+        is TurpakklisteUiState.DataBase -> SavedScreen(navController)
     }
 }
 
@@ -173,6 +174,8 @@ fun MakeListButton(navController: NavController){
             restoreState = true
         }
         },
-        modifier = Modifier.fillMaxWidth().padding(start = 10.dp, end = 10.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 10.dp, end = 10.dp)
     )
 }

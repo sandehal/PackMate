@@ -99,7 +99,6 @@ fun SaveButton(){
             GlobalScope.launch(Dispatchers.IO) {
                 val user = Pakkliste(null,"haakon","zazamann")
                 appDB.UserDao().insert(user)
-
             }
         },
         modifier = Modifier.fillMaxWidth()

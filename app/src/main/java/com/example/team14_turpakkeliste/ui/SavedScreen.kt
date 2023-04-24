@@ -3,6 +3,7 @@ package com.example.team14_turpakkeliste
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,15 +19,21 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.EntityClass.AppDatabase
 import com.example.team14_turpakkeliste.EntityClass.Pakkliste
+import com.example.team14_turpakkeliste.ui.TurViewModel
 import com.example.team14_turpakkeliste.ui.theme.Burgunder
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -35,14 +42,8 @@ private lateinit var appDB : AppDatabase
 @Composable
 fun SavedScreen(navController: NavController) {
     val context = LocalContext.current
-    appDB = AppDatabase.getDatabase(context)
-    GlobalScope.launch(Dispatchers.IO) {
-        appDB.UserDao().deleteAll()
-        val user = Pakkliste(null,"haakon","zazamann")
-        appDB.UserDao().insert(user)
-        val all = appDB.UserDao().getAll()
-        println(all)
-    }
+    val appDB = AppDatabase.getDatabase(context)
+    val saved = appDB.UserDao().getAll()
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -59,6 +60,16 @@ fun SavedScreen(navController: NavController) {
         .fillMaxSize()
         .wrapContentWidth(Alignment.CenterHorizontally)
         .background(color = Burgunder)) {
+        for (s in saved){
+            item{
+                Text(modifier = Modifier
+                    .wrapContentWidth(Alignment.CenterHorizontally)
+                    .padding(20.dp),
+                    text = "${s.firstName}, ${s.lastName}",
+                    fontSize = 18.sp
+                )
+            }
+        }
 
     }
     Column(modifier = Modifier
