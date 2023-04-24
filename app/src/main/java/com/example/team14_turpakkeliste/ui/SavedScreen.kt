@@ -46,6 +46,7 @@ fun SavedScreen(navController: NavController) {
     val appDB = AppDatabase.getDatabase(context)
     val saved = appDB.UserDao().getAll()
 
+
     Column(modifier = Modifier
         .fillMaxSize()
         .background(color = Burgunder)) {
