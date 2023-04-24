@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
@@ -50,14 +49,13 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
                 modifier = Modifier.fillMaxWidth()
             ) {
                 items(outerlist) { outerlist ->
-                    val title = "${outerlist.material}${outerlist.type}"
                     val description = "Plagg: ${outerlist.image} \n" +
                             "Varme: ${outerlist.warmth}\n" +
                             "Vindtetthet: ${outerlist.windproof} \n" +
                             "Vanntetthet: ${outerlist.waterproof}"
                     val image = outerlist.image
                     Spacer(modifier = Modifier.width(60.dp))
-                    NonExpandableCard(title = title,
+                    NonExpandableCard(
                         description = description,
                         img = image)
                     Spacer(modifier = Modifier.width(30.dp))
@@ -70,14 +68,13 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
             ) {
                 //husk å endre navn!!!!!!
                 items(recommendedList) { recommendedList ->
-                    val title = "${recommendedList.material}${recommendedList.type}"
                     val description = "Plagg: ${recommendedList.image} \n" +
                             "Varme: ${recommendedList.warmth}\n" +
                             "Vindtetthet: ${recommendedList.windproof} \n" +
                             "Vanntetthet: ${recommendedList.waterproof}"
                     val image = recommendedList.image
                     Spacer(modifier = Modifier.width(50.dp))
-                    NonExpandableCard(title = title,
+                    NonExpandableCard(
                         description = description,
                         img = image)
                     Spacer(modifier = Modifier.width(40.dp))
@@ -96,12 +93,8 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
         }
 
 }
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NonExpandableCard(
-    title: String,
-    titleFontSize: TextUnit = MaterialTheme.typography.titleMedium.fontSize,
-    titleFontWeight: FontWeight = FontWeight.Bold,
     description: String,
     descriptionFontSize: TextUnit = MaterialTheme.typography.bodyMedium.fontSize,
     descriptionFontWeight: FontWeight = FontWeight.Normal,

@@ -31,6 +31,7 @@ fun getClothes(): List<Clothing>{
         Clothing("thinFleece", "jacket", "outer", 2,1,3, "thinfleece"),
         Clothing("heavyWool", "jacket", "outer", 6, 1, 6, "heavywool"),
         Clothing("thinnestFleece", "jacket", "outer", 3,1,1, "thinnestFleece"),
+        Clothing("wool", "jacket", "outer", 4, 1, 3, "wooljacket"),
 
         //innerlag
         Clothing("Wool", "sweater", "inner" ,6, 1,1, "expeditionsweater"),
