@@ -22,6 +22,7 @@ import kotlinx.serialization.SerializationException
 class TurViewModel(): ViewModel() {
     var currentLatitude : Double = 0.0
     var currentLongitude : Double = 0.0
+    //denne er litt goofy når man velger antall dager fordi det går på indeksering fra 0 til 2!!!
     var numberOfDays : Int = 2
     var chosenDay: Int = 0
     lateinit var saved: List<Pakkliste>
