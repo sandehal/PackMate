@@ -3,6 +3,7 @@ package com.example.team14_turpakkeliste.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Button
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,7 +31,11 @@ import com.example.team14_turpakkeliste.EntityClass.AppDatabase
 import com.example.team14_turpakkeliste.EntityClass.Pakkliste
 import com.example.team14_turpakkeliste.MainActivity
 import com.example.team14_turpakkeliste.databinding.ActivityMainBinding
+import com.example.team14_turpakkeliste.ui.theme.Burgunder
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
+import com.example.team14_turpakkeliste.ui.theme.Orange
+import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
+import com.example.team14_turpakkeliste.ui.theme.Yellow
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -39,7 +44,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun ListScreen(navController: NavController, viewModel: TurViewModel){
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(WhiteYellow)
     ) {
         Text(
             text = "Hva trenger jeg?",
@@ -71,8 +78,8 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel){
                 },
                 modifier = Modifier
                 .fillMaxWidth()
-                    .height(200.dp)
-                    .padding(20.dp)
+                    .height(170.dp)
+                    .padding(10.dp)
             )
         }
 
@@ -94,6 +101,7 @@ fun SaveButton(){
     ExtendedFloatingActionButton(
         icon = { Icon(Icons.Filled.Favorite, contentDescription = "Save list") },
         text = { Text("Save list") },
+        containerColor = Yellow,
         onClick = {
             appDB = AppDatabase.getDatabase(context)
             GlobalScope.launch(Dispatchers.IO) {
