@@ -12,7 +12,7 @@ fun getClothes(): List<Clothing>{
         //trenger ytterlag med vanntett 4!
         Clothing("Shell", "jacket","outer", 1, 6, 6, "goretexjacket"),
         Clothing("LightShell", "jacket", "outer", 1, 5, 6, "lightgoretextjacket"),
-        Clothing("Down", "jacket", "outer", 5,1,5, "downjacket"),
+        Clothing("Down", "jacket", "outer", 5,3,5, "downjacket"),
         Clothing("Cotton", "jacket", "outer", 2, 2,5,"cottonjacket"),
         Clothing("Primaloft", "jacket", "outer",3, 3,5, "primaloft"),
         Clothing("Softshell", "jacket", "outer", 1, 2, 4, "windjacket"),
@@ -28,11 +28,11 @@ fun getClothes(): List<Clothing>{
         Clothing("Softshell", "shorts", "outer", 1, 2, 4, "flexshorts"),
 
         //jakker uten vanntetthet
-        Clothing("thickFleece", "jacket", "outer", 5,1,1,"thermalfleece"),
+        Clothing("thermalFleece", "jacket", "outer", 5,1,4,"thermalfleece"),
         Clothing("thinFleece", "jacket", "outer", 2,1,3, "thinfleece"),
         Clothing("heavyWool", "jacket", "outer", 6, 1, 6, "heavywool"),
-        Clothing("thinnestFleece", "jacket", "outer", 3,1,1, "thinnestFleece"),
-        Clothing("mediumFleece", "jacket", "outer", 4, 1, 3, "mediumFleece"),
+        Clothing("thinnestFleece", "jacket", "outer", 3,1,1, "thinnestfleece"),
+        Clothing("mediumFleece", "jacket", "outer", 4, 1, 3, "mediumfleece"),
         //hvilken er denne?
         Clothing("Wool", "jacket", "outer", 4, 1, 3, "wooljacket"),
 

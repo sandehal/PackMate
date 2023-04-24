@@ -246,6 +246,9 @@ fun getImg(desc: String): Painter{
         "expeditionpants" -> painterResource(id = R.drawable.expeditionpants)
         "thermosweater" -> painterResource(id = R.drawable.thermosweater)
         "thermopants" -> painterResource(id = R.drawable.thermopants)
+        "warmsweater" -> painterResource(id = R.drawable.warmsweater)
+        "warmpants" -> painterResource(id = R.drawable.warmpants)
+        "thinnestfleece" -> painterResource(id = R.drawable.thinnestfleece)
         //farevarsel
         "icon_warning_snow_yellow" -> painterResource(id = R.drawable.icon_warning_snow_yellow)
 

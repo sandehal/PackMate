@@ -29,11 +29,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.team14_turpakkeliste.BottomNavBar
 import com.example.team14_turpakkeliste.EntityClass.AppDatabase
 import com.example.team14_turpakkeliste.EntityClass.Pakkliste
-import com.example.team14_turpakkeliste.MainActivity
-import com.example.team14_turpakkeliste.databinding.ActivityMainBinding
-import com.example.team14_turpakkeliste.ui.theme.Burgunder
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
-import com.example.team14_turpakkeliste.ui.theme.Orange
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 import com.example.team14_turpakkeliste.ui.theme.Yellow
 import kotlinx.coroutines.DelicateCoroutinesApi
