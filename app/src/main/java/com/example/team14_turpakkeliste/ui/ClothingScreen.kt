@@ -32,9 +32,10 @@ import com.example.team14_turpakkeliste.ui.TurViewModel
 
 @Composable
 fun ClothingScreen(navController: NavController, forecastData: ForecastData, alerts: List<Alert>,viewModel: TurViewModel){
-    viewModel.getForecast(alerts)
-    val outerlist = sortClothing(forecastData, 0, "outer")
-    val recommendedList = sortClothing(forecastData, 0, "inner")
+    //gjør dette kallet tidligere
+    //og gjør henting av data osv før skjermen lastest
+    val outerlist = sortClothing(forecastData, viewModel.chosenDay, "outer")
+    val recommendedList = sortClothing(forecastData, viewModel.chosenDay, "inner")
     for(alert in alerts){
         if(pinpointLocation(viewModel.currentLatitude,viewModel.currentLongitude,alert.areaPolygon!!)){
             println(alert.headline)
@@ -50,9 +51,10 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
             ) {
                 items(outerlist) { outerlist ->
                     val title = "${outerlist.material}${outerlist.type}"
-                    val description = "Varme: ${outerlist.warmth}\nVindtetthet:" +
-                            " ${outerlist.windproof} \nVanntetthet:" +
-                            " ${outerlist.waterproof}"
+                    val description = "Plagg: ${outerlist.image} \n" +
+                            "Varme: ${outerlist.warmth}\n" +
+                            "Vindtetthet: ${outerlist.windproof} \n" +
+                            "Vanntetthet: ${outerlist.waterproof}"
                     val image = outerlist.image
                     Spacer(modifier = Modifier.width(60.dp))
                     NonExpandableCard(title = title,
@@ -69,15 +71,16 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
                 //husk å endre navn!!!!!!
                 items(recommendedList) { recommendedList ->
                     val title = "${recommendedList.material}${recommendedList.type}"
-                    val description = "Varme: ${recommendedList.warmth}\nVindtetthet:" +
-                            " ${recommendedList.windproof} \nVanntetthet:" +
-                            " ${recommendedList.waterproof}"
+                    val description = "Plagg: ${recommendedList.image} \n" +
+                            "Varme: ${recommendedList.warmth}\n" +
+                            "Vindtetthet: ${recommendedList.windproof} \n" +
+                            "Vanntetthet: ${recommendedList.waterproof}"
                     val image = recommendedList.image
-                    Spacer(modifier = Modifier.width(60.dp))
+                    Spacer(modifier = Modifier.width(50.dp))
                     NonExpandableCard(title = title,
                         description = description,
                         img = image)
-                    Spacer(modifier = Modifier.width(30.dp))
+                    Spacer(modifier = Modifier.width(40.dp))
                 }
             }
         }
@@ -86,9 +89,9 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
             verticalArrangement = Arrangement.Bottom
         ){
             ExpandableCard(title = "Vis Været",
-                description = getWeather(forecastData),
+                description = getWeather(forecastData, viewModel.chosenDay),
                 img = forecastData.properties.timeseries.get(0).data.next_1_hours.summary.symbol_code)
-            SaveButton()
+
             BottomNavBar(navController)
         }
 
@@ -107,8 +110,8 @@ fun NonExpandableCard(
     img: String,
 ) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.
+                fillMaxWidth()
     ) {
         Column(
             modifier = Modifier
@@ -121,15 +124,6 @@ fun NonExpandableCard(
             ) {
                 val image = getImg(desc = img)
                 Image(painter = image, contentDescription = "picture of clothing-piece")
-                Text(
-                    modifier = Modifier
-                        .weight(6f),
-                    text = title,
-                    fontSize = titleFontSize,
-                    fontWeight = titleFontWeight,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
                 Text(
                     text = description,
                     fontSize = descriptionFontSize,
@@ -226,12 +220,19 @@ fun getImg(desc: String): Painter{
         "cottonjacket"->painterResource(id = R.drawable.cottonjacket)
         "cottonpants"->painterResource(id = R.drawable.cottonpants)
         "downjacket"-> painterResource(id = R.drawable.downjacket)
-        "goretextjacket"-> painterResource(id = R.drawable.goretexjacket)
-        "goretextpants" -> painterResource(id = R.drawable.goretexpants)
+        "goretexjacket"-> painterResource(id = R.drawable.goretexjacket)
+        "goretexpants" -> painterResource(id = R.drawable.goretexpants)
         "primaloft" -> painterResource(id = R.drawable.primaloft)
         "ravgenser" -> painterResource(id = R.drawable.ravgenser)
         "ravbukse" -> painterResource(id = R.drawable.ravbukse)
         "sommerull" -> painterResource(id = R.drawable.sommerull)
+        "windjacket" -> painterResource(id = R.drawable.windjacket)
+        "flexshorts" -> painterResource(id = R.drawable.flexshorts)
+        "flexpants" -> painterResource(id = R.drawable.flexpants)
+        "thermalfleece"-> painterResource(id = R.drawable.thermalfleece)
+        "thinfleece" -> painterResource(id = R.drawable.thinfleece)
+        "heavywool" -> painterResource(id = R.drawable.heavywool)
+        "trekkingpants" -> painterResource(id = R.drawable.trekkingpants)
 
         "clearsky_day" -> painterResource(id = R.drawable.clearsky_day)
         "clearsky_night" -> painterResource(id = R.drawable.clearsky_night)
@@ -323,14 +324,3 @@ fun getImg(desc: String): Painter{
     return painter
 }
 
-@Composable
-fun SaveButton(){
-    ExtendedFloatingActionButton(
-        icon = { Icon(Icons.Filled.Favorite, contentDescription = "Save list") },
-        text = { Text("Save list") },
-        onClick = {
-
-        },
-        modifier = Modifier.fillMaxWidth()
-    )
-}

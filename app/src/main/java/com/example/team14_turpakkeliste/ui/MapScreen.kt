@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.example.team14_turpakkeliste.BottomNavBar
 import com.example.team14_turpakkeliste.MakeListButton
+import com.example.team14_turpakkeliste.data.Alert
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.Marker
@@ -35,7 +36,7 @@ import java.time.ZoneId
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
+fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, alerts: List<Alert>){
 
     val properties by remember {
         mutableStateOf(MapProperties(mapType = MapType.NORMAL))
@@ -56,7 +57,6 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
     //Relatert til bottomSheet
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
-
     val markerClick: (Marker) -> Boolean = {
         if (markerState != null) {
             Log.d("pos", "${markerState.position.latitude}, ${markerState.position.longitude} ")
@@ -166,6 +166,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
                         clickedLatLng.value = latLng
                         viewModel.currentLatitude = latLng.latitude
                         viewModel.currentLongitude = latLng.longitude
+                        viewModel.getForecast(alerts = alerts)
                         Log.d(
                             "Oppdatert",
                             "${viewModel.currentLatitude}, ${viewModel.currentLongitude}"

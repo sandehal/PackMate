@@ -39,7 +39,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.team14_turpakkeliste.data.Alert
 import com.example.team14_turpakkeliste.ui.*
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
-import kotlinx.coroutines.CoroutineScope
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -57,8 +56,8 @@ fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = vi
 @Composable
 fun BootScreen(navController: NavHostController,alerts:List<Alert>, forecastData: ForecastData,viewModel: TurViewModel){
     NavHost(navController = navController, startDestination = "SavedScreen") {
-        composable(Screen.HomeScreen.route) { HomeScreen(navController) }
-        composable(Screen.MapScreen.route) { MapsComposeScreen(navController,viewModel) }
+        composable(Screen.ListScreen.route) { ListScreen(navController, viewModel) }
+        composable(Screen.MapScreen.route) { MapsComposeScreen(navController,viewModel, alerts) }
         composable(Screen.SavedScreen.route) { SavedScreen(navController) }
         composable(Screen.LoadingScreen.route) { LoadingScreen() }
         composable(Screen.ClothingScreen.route) { ClothingScreen(navController,forecastData,alerts,viewModel) }
@@ -108,7 +107,7 @@ fun LoadingScreen(){
 }
 sealed class Screen(val route: String, val icon: ImageVector, val description : String) {
     object MapScreen : Screen("MapScreen", Icons.Default.Search, "Map")
-    object HomeScreen : Screen("HomeScreen", Icons.Default.Home, "Home")
+    object ListScreen : Screen("ListScreen", Icons.Default.Home, "List")
     object SavedScreen : Screen("SavedScreen", Icons.Default.Star, "Saved")
     object ClothingScreen : Screen("ClothingScreen", Icons.Default.Favorite, "Clothing")
     object LoadingScreen : Screen("LoadingScreen", Icons.Default.Refresh, "Loading")
@@ -154,7 +153,6 @@ fun BottomNavBar(navController: NavController){
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MakeListButton(navController: NavController){
     ExtendedFloatingActionButton(
@@ -162,8 +160,7 @@ fun MakeListButton(navController: NavController){
         contentColor = Color.White,
         icon = { Icon(Icons.Filled.Email, contentDescription = null) },
         text = { Text("Motta pakkeliste for valgt lokasjon.") },
-        onClick = {
-            navController.navigate("ClothingScreen")
+        onClick = {  navController.navigate("ListScreen")
         {
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
@@ -174,7 +171,6 @@ fun MakeListButton(navController: NavController){
             launchSingleTop = true
             // Restore state when reselecting a previously selected item
             restoreState = true
-
         }
         },
         modifier = Modifier.fillMaxWidth().padding(start = 10.dp, end = 10.dp)
