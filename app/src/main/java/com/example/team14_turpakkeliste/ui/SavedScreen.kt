@@ -25,6 +25,7 @@ import com.example.team14_turpakkeliste.EntityClass.AppDatabase
 import com.example.team14_turpakkeliste.EntityClass.Pakkliste
 import com.example.team14_turpakkeliste.ui.theme.Burgunder
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
+import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -46,7 +47,7 @@ fun SavedScreen(navController: NavController) {
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(color = Burgunder)) {
+        .background(WhiteYellow)) {
         Text( modifier = Modifier
             .fillMaxSize()
             .wrapContentWidth(Alignment.CenterHorizontally)

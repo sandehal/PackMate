@@ -12,6 +12,7 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.*
@@ -27,6 +28,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.navigation.NavController
 import com.example.team14_turpakkeliste.data.*
 import com.example.team14_turpakkeliste.ui.TurViewModel
+import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
 
 @Composable
@@ -43,7 +45,8 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
     }
 
         Column(modifier = Modifier
-            .fillMaxHeight()) {
+            .fillMaxHeight()
+            .background(WhiteYellow)) {
             Text(text = "Ytterlag")
             LazyRow(
                 modifier = Modifier.fillMaxWidth()
