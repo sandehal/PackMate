@@ -39,6 +39,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.team14_turpakkeliste.data.Alert
 import com.example.team14_turpakkeliste.ui.*
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
+import kotlinx.coroutines.CoroutineScope
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -153,6 +154,7 @@ fun BottomNavBar(navController: NavController){
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MakeListButton(navController: NavController){
     ExtendedFloatingActionButton(
@@ -160,7 +162,8 @@ fun MakeListButton(navController: NavController){
         contentColor = Color.White,
         icon = { Icon(Icons.Filled.Email, contentDescription = null) },
         text = { Text("Motta pakkeliste for valgt lokasjon.") },
-        onClick = {  navController.navigate("ClothingScreen")
+        onClick = {
+            navController.navigate("ClothingScreen")
         {
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
@@ -171,6 +174,7 @@ fun MakeListButton(navController: NavController){
             launchSingleTop = true
             // Restore state when reselecting a previously selected item
             restoreState = true
+
         }
         },
         modifier = Modifier.fillMaxWidth().padding(start = 10.dp, end = 10.dp)

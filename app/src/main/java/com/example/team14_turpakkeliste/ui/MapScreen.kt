@@ -252,7 +252,9 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
                     sheetState.hide()
                 }
             },
-        ) {
+        )
+
+        {
             MakeListButton(navController)
             DateRangePickerScreen()
         }
