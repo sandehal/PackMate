@@ -48,9 +48,17 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
         position = CameraPosition.fromLatLngZoom(norway, 6f)
     }
 
+
     val clickedLatLng = remember {
         mutableStateOf<LatLng?>(null)
     }
+
+    DisposableEffect(key1 = navController.currentBackStackEntry) {
+        onDispose {
+            clickedLatLng.value = null
+        }
+    }
+
 
     val markerState = clickedLatLng.value?.let { rememberMarkerState(position = it) }
 
@@ -76,9 +84,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
 
     val context = LocalContext.current
 
-    var visible = remember {
-        (true)
-    }
+
 
 
     val trailingIconView = @Composable {
@@ -117,22 +123,22 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
             Button(
                 onClick = {
 
-                        val locCords = getLocationCompose(location.value, viewModel, context)
-                        if(markerState == null) {
-                            if (location.value != "") {
+                    val locCords = getLocationCompose(location.value, viewModel, context)
+                    if(markerState == null) {
+                        if (location.value != "") {
                             if (locCords != null && locCords != baseLatLng) {
                                 clickedLatLng.value = locCords
-                                visible = true
+
                                 cameraPositionState.position = CameraPosition.fromLatLngZoom(locCords, 9f)
                                 scope.launch {
                                     sheetState.show()
                                 }
                             }
                         }
-                        } else {
-                            clickedLatLng.value = null
-                            visible = false
-                        }
+                    } else {
+                        clickedLatLng.value = null
+
+                    }
                 },
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(ForestGreen),
@@ -146,57 +152,60 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
                 Text("Søk")
             }
         }
-        }
+    }
 
-        Box(
-            Modifier
-                .fillMaxSize()
-                .clip(shape = RoundedCornerShape(size = 50.dp))
-                .padding(bottom = 70.dp, top = 60.dp)
-        ) {
+    Box(
+        Modifier
+            .fillMaxSize()
+            .clip(shape = RoundedCornerShape(size = 50.dp))
+            .padding(bottom = 70.dp, top = 60.dp)
+    ) {
 
-            GoogleMap(
-                modifier = Modifier.matchParentSize(),
-                properties = properties,
-                cameraPositionState = cameraPositionState,
-                onMapClick = { latLng ->
+        GoogleMap(
+            modifier = Modifier.matchParentSize(),
+            properties = properties,
+            cameraPositionState = cameraPositionState,
+            onMapClick = { latLng ->
 
-                    if (markerState == null) {
-                        visible = true
-                        clickedLatLng.value = latLng
-                        viewModel.currentLatitude = latLng.latitude
-                        viewModel.currentLongitude = latLng.longitude
-                        viewModel.getForecast(alerts = alerts)
-                        Log.d(
-                            "Oppdatert",
-                            "${viewModel.currentLatitude}, ${viewModel.currentLongitude}"
-                        )
-                        cameraPositionState.position = CameraPosition.fromLatLngZoom(LatLng(viewModel.currentLatitude, viewModel.currentLongitude), 9f)
-                        scope.launch {
-                            sheetState.show()
-                        }
-                    } else {
-                        clickedLatLng.value = null
-                        visible = false
-                        //potensiell bug er at man ikke fjerner de gamle lat long verdiene fra view.
-                        //Men de oppdateres for hver gang man plasserer en ny.
+                if (markerState == null) {
+
+                    clickedLatLng.value = latLng
+                    viewModel.currentLatitude = latLng.latitude
+                    viewModel.currentLongitude = latLng.longitude
+                    viewModel.getForecast(alerts = alerts)
+                    Log.d(
+                        "Oppdatert",
+                        "${viewModel.currentLatitude}, ${viewModel.currentLongitude}"
+                    )
+                    cameraPositionState.position = CameraPosition.fromLatLngZoom(LatLng(viewModel.currentLatitude, viewModel.currentLongitude), 9f)
+                    scope.launch {
+                        sheetState.show()
                     }
-                },
-            )
-            {
 
-                if (markerState != null) {
-                    Marker(state = markerState, onClick = markerClick, visible = visible)
+                } else {
+
+                    clickedLatLng.value = null
+
+                    //potensiell bug er at man ikke fjerner de gamle lat long verdiene fra view.
+                    //Men de oppdateres for hver gang man plasserer en ny.
                 }
-            }
+            },
+        )
+        {
 
-            BottomSheet(
-                coordinates = clickedLatLng.value.toString(),
-                sheetState = sheetState,
-                scope = scope,
-                navController = navController, turViewModel = viewModel
-            )
+            if (markerState != null) {
+                Marker(state = markerState, onClick = markerClick)
+
+            }
         }
+
+        BottomSheet(
+            coordinates = clickedLatLng.value.toString(),
+            sheetState = sheetState,
+            scope = scope,
+            navController = navController, turViewModel = viewModel
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -214,28 +223,28 @@ fun getLocationCompose(location: String, viewModel: TurViewModel, context: Conte
     Log.d("Location",
         location
     )
-        val geocoder = Geocoder(context)
-        try {
+    val geocoder = Geocoder(context)
+    try {
 
-            //Lønnet seg for større treffsikkerhet å legge til "Norway" hele to ganger.
+        //Lønnet seg for større treffsikkerhet å legge til "Norway" hele to ganger.
 
-            addressList = geocoder.getFromLocationName(location.plus(", Norway"), 1)
-            println("Resultat")
-        } catch (e: IOException) {
-            e.printStackTrace()
-            println("FEIL")
-        }
+        addressList = geocoder.getFromLocationName(location.plus(", Norway"), 1)
+        println("Resultat")
+    } catch (e: IOException) {
+        e.printStackTrace()
+        println("FEIL")
+    }
 
-        if (addressList!!.isNotEmpty()) {
-            val address = addressList[0]
-            viewModel.currentLatitude = address.latitude
-            viewModel.currentLongitude = address.longitude
-            latLng = LatLng(address.latitude,address.longitude)
-            Log.d("adressekord",
-                "${viewModel.currentLatitude}, ${viewModel.currentLongitude}")
+    if (addressList!!.isNotEmpty()) {
+        val address = addressList[0]
+        viewModel.currentLatitude = address.latitude
+        viewModel.currentLongitude = address.longitude
+        latLng = LatLng(address.latitude,address.longitude)
+        Log.d("adressekord",
+            "${viewModel.currentLatitude}, ${viewModel.currentLongitude}")
 
-            return latLng
-        }
+        return latLng
+    }
     return latLng
 }
 
@@ -283,7 +292,6 @@ fun DateRangePickerScreen() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun LocalDateTime.toMillis() = this.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-
 
 
 

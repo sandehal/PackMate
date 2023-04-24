@@ -39,6 +39,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.team14_turpakkeliste.data.Alert
 import com.example.team14_turpakkeliste.ui.*
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
+import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -77,7 +78,7 @@ fun ErrorScreen(){
 fun LoadingScreen(){
 
     val image = painterResource(R.drawable.autumn_telt_1)
-    Column(modifier = Modifier.fillMaxSize()
+    Column(modifier = Modifier.fillMaxSize().background(WhiteYellow)
     ){
         val scale = remember {
             Animatable(0.0f)

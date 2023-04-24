@@ -35,62 +35,60 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
     //og gjør henting av data osv før skjermen lastest
     val outerlist = sortClothing(forecastData, viewModel.chosenDay, "outer")
     val recommendedList = sortClothing(forecastData, viewModel.chosenDay, "inner")
-    for(alert in alerts){
-        if(pinpointLocation(viewModel.currentLatitude,viewModel.currentLongitude,alert.areaPolygon!!)){
-            println(alert.headline)
-            println(alert.severity)
+    Column(modifier = Modifier
+        .fillMaxHeight()) {
+        Text(text = "Ytterlag")
+        LazyRow(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            items(outerlist) { outerlist ->
+                val description = "Plagg: ${outerlist.image} \n" +
+                        "Varme: ${outerlist.warmth}\n" +
+                        "Vindtetthet: ${outerlist.windproof} \n" +
+                        "Vanntetthet: ${outerlist.waterproof}"
+                val image = outerlist.image
+                Spacer(modifier = Modifier.width(60.dp))
+                NonExpandableCard(
+                    description = description,
+                    img = image)
+                Spacer(modifier = Modifier.width(30.dp))
+            }
+        }
+        Spacer(modifier = Modifier.height(30.dp))
+        Text(text = "Innerlag")
+        LazyRow(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            //husk å endre navn!!!!!!
+            items(recommendedList) { recommendedList ->
+                val description = "Plagg: ${recommendedList.image} \n" +
+                        "Varme: ${recommendedList.warmth}\n" +
+                        "Vindtetthet: ${recommendedList.windproof} \n" +
+                        "Vanntetthet: ${recommendedList.waterproof}"
+                val image = recommendedList.image
+                Spacer(modifier = Modifier.width(50.dp))
+                NonExpandableCard(
+                    description = description,
+                    img = image)
+                Spacer(modifier = Modifier.width(40.dp))
+            }
         }
     }
-
-        Column(modifier = Modifier
-            .fillMaxHeight()) {
-            Text(text = "Ytterlag")
-            LazyRow(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                items(outerlist) { outerlist ->
-                    val description = "Plagg: ${outerlist.image} \n" +
-                            "Varme: ${outerlist.warmth}\n" +
-                            "Vindtetthet: ${outerlist.windproof} \n" +
-                            "Vanntetthet: ${outerlist.waterproof}"
-                    val image = outerlist.image
-                    Spacer(modifier = Modifier.width(60.dp))
-                    NonExpandableCard(
-                        description = description,
-                        img = image)
-                    Spacer(modifier = Modifier.width(30.dp))
-                }
-            }
-            Spacer(modifier = Modifier.height(30.dp))
-            Text(text = "Innerlag")
-            LazyRow(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                //husk å endre navn!!!!!!
-                items(recommendedList) { recommendedList ->
-                    val description = "Plagg: ${recommendedList.image} \n" +
-                            "Varme: ${recommendedList.warmth}\n" +
-                            "Vindtetthet: ${recommendedList.windproof} \n" +
-                            "Vanntetthet: ${recommendedList.waterproof}"
-                    val image = recommendedList.image
-                    Spacer(modifier = Modifier.width(50.dp))
-                    NonExpandableCard(
-                        description = description,
-                        img = image)
-                    Spacer(modifier = Modifier.width(40.dp))
-                }
+    Column(modifier = Modifier
+        .fillMaxSize(),
+        verticalArrangement = Arrangement.Bottom
+    ){
+        for(alert in alerts){
+            if(pinpointLocation(viewModel.currentLatitude,viewModel.currentLongitude,alert.areaPolygon!!)){
+                println(alert.event)
+                println(alert.awareness_type)
             }
         }
-        Column(modifier = Modifier
-            .fillMaxSize(),
-            verticalArrangement = Arrangement.Bottom
-        ){
-            ExpandableCard(title = "Vis Været",
-                description = getWeather(forecastData, viewModel.chosenDay),
-                img = forecastData.properties.timeseries.get(0).data.next_1_hours.summary.symbol_code)
-
-            BottomNavBar(navController)
-        }
+        ExpandableCard(title = "Vis Været",
+            description = getWeather(forecastData, viewModel.chosenDay),
+            img = forecastData.properties.timeseries.get(0).data.next_1_hours.summary.symbol_code)
+        BottomNavBar(navController)
+    }
 
 }
 @Composable
