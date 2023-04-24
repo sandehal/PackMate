@@ -35,6 +35,9 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
     //og gjør henting av data osv før skjermen lastest
     val outerlist = sortClothing(forecastData, viewModel.chosenDay, "outer")
     val recommendedList = sortClothing(forecastData, viewModel.chosenDay, "inner")
+    //finpusse hvordan skjermen ser ut
+    //1: fikse tekst til å midtstilles og være fetere!
+    //2: minimere antall placeholders!
     Column(modifier = Modifier
         .fillMaxHeight()) {
         Text(text = "Ytterlag")
@@ -78,14 +81,23 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
         .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
+        //Sjekke dersom farevarsel er tomt og da bare gi en hyggelig beskjed!
         for(alert in alerts){
             if(pinpointLocation(viewModel.currentLatitude,viewModel.currentLongitude,alert.areaPolygon!!)){
-                println(alert.event)
-                println(alert.awareness_type)
+                val eventCode = alert.eventCode
+                val string = alert.awareness_level?.split(";")
+                val awareness_level = string?.get(1)?.trim()
+                println(awareness_level)
+                alert.description?.let {
+                    ExpandableCard(title = "Farevarsel",
+                        description = it,
+                        img = "icon_warning_${eventCode}_${awareness_level}")
+                }
             }
         }
         ExpandableCard(title = "Vis Været",
             description = getWeather(forecastData, viewModel.chosenDay),
+            //endre denne til å vise riktig dag!!! Se gjennom metode i clothinglist!!!
             img = forecastData.properties.timeseries.get(0).data.next_1_hours.summary.symbol_code)
         BottomNavBar(navController)
     }
@@ -208,11 +220,15 @@ fun ExpandableCard(
 @Composable
 fun getImg(desc: String): Painter{
     val painter: Painter = when(desc){
+        //Klesplagg
         "cottonjacket"->painterResource(id = R.drawable.cottonjacket)
         "cottonpants"->painterResource(id = R.drawable.cottonpants)
         "downjacket"-> painterResource(id = R.drawable.downjacket)
         "goretexjacket"-> painterResource(id = R.drawable.goretexjacket)
         "goretexpants" -> painterResource(id = R.drawable.goretexpants)
+        //endre de to under til light
+        "lightgoretexjacket"-> painterResource(id = R.drawable.goretexjacket)
+        "lightgoretexpants" -> painterResource(id = R.drawable.goretexpants)
         "primaloft" -> painterResource(id = R.drawable.primaloft)
         "ravgenser" -> painterResource(id = R.drawable.ravgenser)
         "ravbukse" -> painterResource(id = R.drawable.ravbukse)
@@ -224,7 +240,16 @@ fun getImg(desc: String): Painter{
         "thinfleece" -> painterResource(id = R.drawable.thinfleece)
         "heavywool" -> painterResource(id = R.drawable.heavywool)
         "trekkingpants" -> painterResource(id = R.drawable.trekkingpants)
+        "lightwoolsweater" -> painterResource(id = R.drawable.lightwoolsweater)
+        "lightwoolpants" -> painterResource(id = R.drawable.lightwoolpants)
+        "expeditionsweater" -> painterResource(id = R.drawable.expeditionsweater)
+        "expeditionpants" -> painterResource(id = R.drawable.expeditionpants)
+        "thermosweater" -> painterResource(id = R.drawable.thermosweater)
+        "thermopants" -> painterResource(id = R.drawable.thermopants)
+        //farevarsel
+        "icon_warning_snow_yellow" -> painterResource(id = R.drawable.icon_warning_snow_yellow)
 
+        //værdata
         "clearsky_day" -> painterResource(id = R.drawable.clearsky_day)
         "clearsky_night" -> painterResource(id = R.drawable.clearsky_night)
         //"clearsky_polartwilight" -> painterResource(id = R.drawable.clear)

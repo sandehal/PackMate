@@ -9,10 +9,11 @@ fun getClothes(): List<Clothing>{
         //klær inspirert av stat-system fra ulvang på ullklær andre klær hentet fra Norrøna
 
         //ytterlagjakker
+        //trenger ytterlag med vanntett 4!
         Clothing("Shell", "jacket","outer", 1, 6, 6, "goretexjacket"),
         Clothing("LightShell", "jacket", "outer", 1, 5, 6, "lightgoretextjacket"),
         Clothing("Down", "jacket", "outer", 5,1,5, "downjacket"),
-        Clothing("Cotton", "jacket", "outer", 2, 3,5,"cottonjacket"),
+        Clothing("Cotton", "jacket", "outer", 2, 2,5,"cottonjacket"),
         Clothing("Primaloft", "jacket", "outer",3, 3,5, "primaloft"),
         Clothing("Softshell", "jacket", "outer", 1, 2, 4, "windjacket"),
         Clothing("HeavyDown", "jacket", "outer", 6, 3, 6, "heavydown"),
@@ -26,22 +27,23 @@ fun getClothes(): List<Clothing>{
         Clothing("Softshell", "pants", "outer", 1, 3, 4, "trekkingpants"),
         Clothing("Softshell", "shorts", "outer", 1, 2, 4, "flexshorts"),
 
-        //jakker som kan fungere som ytterlag og mellomlag (her skal det være mulig å ha et mellomlag som varme dersom det er nedbør)
-        //disse skal da anbefales som underlag husk å lage ny liste da som er lang nok
+        //jakker uten vanntetthet
         Clothing("thickFleece", "jacket", "outer", 5,1,1,"thermalfleece"),
         Clothing("thinFleece", "jacket", "outer", 2,1,3, "thinfleece"),
         Clothing("heavyWool", "jacket", "outer", 6, 1, 6, "heavywool"),
         Clothing("thinnestFleece", "jacket", "outer", 3,1,1, "thinnestFleece"),
+        Clothing("mediumFleece", "jacket", "outer", 4, 1, 3, "mediumFleece"),
         //hvilken er denne?
         Clothing("Wool", "jacket", "outer", 4, 1, 3, "wooljacket"),
 
         //innerlag
         Clothing("Wool", "sweater", "inner" ,6, 1,1, "expeditionsweater"),
         Clothing("Wool", "pants", "inner", 6,1,1, "expeditionpants"),
-        Clothing("Wool", "sweater", "inner", 5, 1,1, "thermosweater"),
-        Clothing("Wool", "pants", "inner", 5,1,1, "thermopants"),
-        Clothing("Wool", "sweater", "inner" ,4, 1,1, "warmsweater"),
-        Clothing("Wool", "pants", "inner", 4,1,1, "warmpants"),
+        Clothing("Wool", "sweater", "inner", 5, 1,1, "warmsweater"),
+        Clothing("Wool", "pants", "inner", 5,1,1, "warmpants"),
+        Clothing("Wool", "sweater", "inner" ,4, 1,1, "thermosweater"),
+        Clothing("Wool", "pants", "inner", 4,1,1, "thermopants"),
+        //se gjennom imagenavn
         Clothing("Wool", "sweater", "inner", 3,1,1,"ravgenser"),
         Clothing("Wool", "pants", "inner", 3, 1, 1, "ravbukse"),
         Clothing("LightWool", "sweater", "inner", 2,1,1,"lightwoolsweater"),
@@ -51,9 +53,6 @@ fun getClothes(): List<Clothing>{
         Clothing("Kan ikke anbefale noe her", "none", "none", 0, 0 ,0, "none")
     )
     return  clothingList
-}
-fun getEquipment(){
-
 }
 fun sortClothing(forecastData: ForecastData, dayNum: Int, layer: String): List<Clothing>{
     // Ta imot værdata og få som ouput outerReqMin, outerReqMax, innerReqMin og innerReqMax
@@ -149,8 +148,8 @@ fun chooseReqsOuter(temp: Double, wind: Double, water: Double?): MinRequirements
     when(water!!){
         in 0.0..0.1 -> waterproof = 1
         in 0.2..0.3 -> waterproof = 2
-        in 0.4..0.6 -> waterproof = 3
-        in 0.7..0.9 -> waterproof = 4
+        in 0.4..0.5 -> waterproof = 3
+        in 0.6..0.8 -> waterproof = 4
         in 0.9..1.1 -> waterproof = 5
         in 1.2..50.0-> waterproof = 6
     }
