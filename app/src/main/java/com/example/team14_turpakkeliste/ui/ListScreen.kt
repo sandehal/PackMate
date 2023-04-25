@@ -1,8 +1,6 @@
 package com.example.team14_turpakkeliste.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.widget.Button
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

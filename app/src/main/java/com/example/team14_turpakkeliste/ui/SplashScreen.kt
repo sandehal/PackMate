@@ -22,14 +22,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.BuildConfig
 import com.example.team14_turpakkeliste.R
-import com.example.team14_turpakkeliste.ui.theme.Burgunder
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
-import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(navController: NavController) {

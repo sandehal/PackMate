@@ -1,25 +1,18 @@
 package com.example.team14_turpakkeliste.ui
 
 
-import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.team14_turpakkeliste.EntityClass.AppDatabase
-import com.example.team14_turpakkeliste.EntityClass.Pakkliste
 import com.example.team14_turpakkeliste.data.*
 import io.ktor.client.plugins.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.SerializationException
 
 
-class TurViewModel(): ViewModel() {
+class TurViewModel: ViewModel() {
     var error : String? = null
     var currentLatitude : Double = 0.0
     var currentLongitude : Double = 0.0

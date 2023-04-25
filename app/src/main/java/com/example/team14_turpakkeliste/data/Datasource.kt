@@ -1,17 +1,12 @@
 package com.example.team14_turpakkeliste.data
 import ForecastData
-import android.content.Context
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
-import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.serialization.gson.*
-import java.io.IOException
 import java.io.InputStream
 
 class Datasource {

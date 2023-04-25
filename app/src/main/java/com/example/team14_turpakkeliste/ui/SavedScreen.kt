@@ -2,8 +2,6 @@ package com.example.team14_turpakkeliste
 
 
 import android.annotation.SuppressLint
-import android.app.Application
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,22 +20,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.EntityClass.AppDatabase
-import com.example.team14_turpakkeliste.EntityClass.Pakkliste
-import com.example.team14_turpakkeliste.ui.TurViewModel
 import com.example.team14_turpakkeliste.ui.theme.Burgunder
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.DelicateCoroutinesApi
-import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
