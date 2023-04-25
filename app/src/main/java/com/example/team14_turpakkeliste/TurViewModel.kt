@@ -26,9 +26,6 @@ class TurViewModel(): ViewModel() {
     //denne er litt goofy når man velger antall dager fordi det går på indeksering fra 0 til 2!!!
     var numberOfDays : Int = 2
     var chosenDay: Int = 0
-    lateinit var saved: List<Pakkliste>
-
-    var currentLatitudeLongitude = MutableLiveData<Pair<Double, Double>>()
 
     var turUiState: TurpakklisteUiState by mutableStateOf(TurpakklisteUiState.Booting)
         private set
@@ -60,14 +57,6 @@ class TurViewModel(): ViewModel() {
                 error = e.toString()
                 TurpakklisteUiState.Error
             }
-        }
-    }
-
-    fun getDatabase(context:Context){
-        val appDB = AppDatabase.getDatabase(context)
-        viewModelScope.launch {
-            val saved = appDB.UserDao().getAll()
-            turUiState = TurpakklisteUiState.DataBase(saved)
         }
     }
 }

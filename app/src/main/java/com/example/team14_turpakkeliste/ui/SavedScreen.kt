@@ -41,7 +41,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-private lateinit var appDB : AppDatabase
 @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SavedScreen(navController: NavController, error: String?) {
