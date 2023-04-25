@@ -47,10 +47,10 @@ fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = vi
 
     when(val state = viewModel.turUiState){
         is TurpakklisteUiState.Booting -> SplashScreen(navController)
-        is TurpakklisteUiState.Error -> ErrorScreen()
+        is TurpakklisteUiState.Error -> SavedScreen(navController, viewModel.error)
         is TurpakklisteUiState.Loading -> LoadingScreen()
         is TurpakklisteUiState.Success -> BootScreen(navController,state.alerts,state.forecastData, viewModel)
-        is TurpakklisteUiState.DataBase -> SavedScreen(navController)
+        is TurpakklisteUiState.DataBase -> SavedScreen(navController, null)
     }
 }
 
@@ -60,7 +60,7 @@ fun BootScreen(navController: NavHostController,alerts:List<Alert>, forecastData
     NavHost(navController = navController, startDestination = "SavedScreen") {
         composable(Screen.ListScreen.route) { ListScreen(navController, viewModel) }
         composable(Screen.MapScreen.route) { MapsComposeScreen(navController,viewModel, alerts) }
-        composable(Screen.SavedScreen.route) { SavedScreen(navController) }
+        composable(Screen.SavedScreen.route) { SavedScreen(navController, null) }
         composable(Screen.LoadingScreen.route) { LoadingScreen() }
         composable(Screen.ClothingScreen.route) { ClothingScreen(navController,forecastData,alerts,viewModel) }
     }
@@ -69,11 +69,6 @@ fun BootScreen(navController: NavHostController,alerts:List<Alert>, forecastData
 
 
 
-@Composable
-fun ErrorScreen(){
-    Text("zaza error!")
-
-}
 @Composable
 fun LoadingScreen(){
 

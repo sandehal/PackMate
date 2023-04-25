@@ -20,6 +20,7 @@ import kotlinx.serialization.SerializationException
 
 
 class TurViewModel(): ViewModel() {
+    var error : String? = null
     var currentLatitude : Double = 0.0
     var currentLongitude : Double = 0.0
     //denne er litt goofy når man velger antall dager fordi det går på indeksering fra 0 til 2!!!
@@ -50,10 +51,13 @@ class TurViewModel(): ViewModel() {
                 val forecast = source.getForecastData(currentLatitude,currentLongitude)
                 TurpakklisteUiState.Success(alertList, forecast)
             } catch (ex: ResponseException) {
+                error = ex.toString()
                 TurpakklisteUiState.Error
             } catch (ex: SerializationException) {
+                error = ex.toString()
                 TurpakklisteUiState.Error
             } catch(e:Throwable){
+                error = e.toString()
                 TurpakklisteUiState.Error
             }
         }

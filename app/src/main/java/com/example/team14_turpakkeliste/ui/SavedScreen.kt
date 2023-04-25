@@ -11,6 +11,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -39,55 +42,83 @@ import kotlinx.coroutines.launch
 
 
 private lateinit var appDB : AppDatabase
-@SuppressLint("CoroutineCreationDuringComposition")
+@SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun SavedScreen(navController: NavController) {
+fun SavedScreen(navController: NavController, error: String?) {
     val context = LocalContext.current
     val appDB = AppDatabase.getDatabase(context)
     val saved = appDB.UserDao().getAll()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
-
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(color = Burgunder)) {
-        Text( modifier = Modifier
+    Scaffold(
+        snackbarHost = { SnackbarHost(
+            snackbarHostState,
+        ) },
+        modifier = Modifier
             .fillMaxSize()
-            .wrapContentWidth(Alignment.CenterHorizontally)
-            .padding(20.dp),
-            text = "Lagrede pakkelister:",
-            fontSize = 30.sp
-        )
-    }
-    LazyColumn(modifier = Modifier
-        .fillMaxSize()
-        .wrapContentWidth(Alignment.CenterHorizontally)
-        .background(color = Burgunder)) {
-        for (s in saved){
-            item{
-                Text(modifier = Modifier
-                    .wrapContentWidth(Alignment.CenterHorizontally)
-                    .padding(20.dp),
-                    text = "${s.firstName}, ${s.lastName}",
-                    fontSize = 18.sp
-                )
+            .background(color = Burgunder),
+
+    ) {
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Burgunder)
+                .wrapContentWidth(Alignment.CenterHorizontally)
+                .padding(20.dp)
+        ) {
+            Text( modifier = Modifier
+                .fillMaxWidth()
+                .background(Burgunder)
+                .wrapContentWidth(Alignment.CenterHorizontally),
+                text = "Lagrede pakkelister:",
+                fontSize = 30.sp
+            )
+
+            LazyColumn(modifier = Modifier
+                .fillMaxSize()
+                .background(color = Burgunder)
+                .wrapContentWidth(Alignment.CenterHorizontally)
+                .padding(1.dp)) {
+                for (s in saved){
+                    item{
+                        Text(modifier = Modifier
+                            .wrapContentWidth(Alignment.CenterHorizontally)
+                            .padding(20.dp),
+                            text = "${s.firstName}, ${s.lastName}",
+                            fontSize = 18.sp
+                        )
+                    }
+                }
+
+            }
+            if (error != null){
+                scope.launch {
+                    snackbarHostState.showSnackbar(
+                        error
+                    )
+                }
             }
         }
 
-    }
-    Column(modifier = Modifier
-        .fillMaxSize(),
-        verticalArrangement = Arrangement.Bottom
-    ){
-        Text(modifier = Modifier
-            .wrapContentWidth(Alignment.CenterHorizontally)
-            .padding(20.dp),
-            text = "Klikk på Map for å lage en ny pakkeliste!",
-            fontSize = 18.sp
-        )
-        BottomNavBar(navController)
+            Column(modifier = Modifier
+                .fillMaxSize(),
+                verticalArrangement = Arrangement.Bottom
+            ){
+                Text(modifier = Modifier
+                    .wrapContentWidth(Alignment.CenterHorizontally)
+                    .padding(20.dp),
+                    text = "Klikk på Map for å lage en ny pakkeliste!",
+                    fontSize = 18.sp
+                )
+                BottomNavBar(navController)
+            }
+        }
     }
 
-}
+
+
 
 @Composable
 fun SavedButton(navController: NavController){
@@ -117,6 +148,6 @@ fun SavedButton(navController: NavController){
 @Composable
 fun SavedPreview() {
     Team14TurPakkeListeTheme {
-        SavedScreen(rememberNavController())
+        SavedScreen(rememberNavController(), null)
     }
 }
