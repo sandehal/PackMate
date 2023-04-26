@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.SerializationException
 
 
-class TurViewModel(): ViewModel() {
+class TurViewModel: ViewModel() {
     var error : String? = null
     var currentLatitude : Double = 0.0
     var currentLongitude : Double = 0.0
@@ -27,6 +27,11 @@ class TurViewModel(): ViewModel() {
     var numberOfDays : Int = 2
     var chosenDay: Int = 0
     lateinit var saved: List<Pakkliste>
+    lateinit var outerLayerList: List<Clothing>
+    lateinit var innerLayerList: List<Clothing>
+    lateinit var weaterInfo: String
+    lateinit var weaterImg: String
+    lateinit var alertList: List<Alert>
 
     var currentLatitudeLongitude = MutableLiveData<Pair<Double, Double>>()
 
@@ -60,14 +65,6 @@ class TurViewModel(): ViewModel() {
                 error = e.toString()
                 TurpakklisteUiState.Error
             }
-        }
-    }
-
-    fun getDatabase(context:Context){
-        val appDB = AppDatabase.getDatabase(context)
-        viewModelScope.launch {
-            val saved = appDB.UserDao().getAll()
-            turUiState = TurpakklisteUiState.DataBase(saved)
         }
     }
 }

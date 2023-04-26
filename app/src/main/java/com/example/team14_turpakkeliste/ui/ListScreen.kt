@@ -1,8 +1,7 @@
 package com.example.team14_turpakkeliste.ui
 
-import android.annotation.SuppressLint
+import ForecastData
 import android.content.Context
-import android.widget.Button
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,6 +28,9 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.team14_turpakkeliste.BottomNavBar
 import com.example.team14_turpakkeliste.EntityClass.AppDatabase
 import com.example.team14_turpakkeliste.EntityClass.Pakkliste
+import com.example.team14_turpakkeliste.data.getweatherIcon
+import com.example.team14_turpakkeliste.data.sortClothing
+import com.example.team14_turpakkeliste.data.getWeather
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 import com.example.team14_turpakkeliste.ui.theme.Yellow
@@ -38,7 +40,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun ListScreen(navController: NavController, viewModel: TurViewModel){
+//legg inn for å sortere vær her
+fun ListScreen(navController: NavController, viewModel: TurViewModel,forecastData: ForecastData ){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -53,13 +56,17 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel){
                 .padding(20.dp)
         )
         for(i in 0..viewModel.numberOfDays){ExtendedFloatingActionButton(
-
             containerColor = ForestGreen,
             contentColor = Color.White,
             icon = { Icon(Icons.Filled.Email, contentDescription = null) },
             text = { Text("Dag ${i+1}") },
                 //send med beskjed her om for å sortere klær som skal til clothingscreen henter ut infor om riktig dag
-                onClick = { viewModel.chosenDay = i; navController.navigate("ClothingScreen")
+                onClick = { viewModel.chosenDay = i
+                    viewModel.outerLayerList = sortClothing(forecastData, viewModel.chosenDay, "outer")
+                    viewModel.innerLayerList = sortClothing(forecastData, viewModel.chosenDay, "inner")
+                    viewModel.weaterInfo = getWeather(forecastData, viewModel.chosenDay)
+                    viewModel.weaterImg = getweatherIcon(forecastData, viewModel.chosenDay)
+                    navController.navigate("ClothingScreen")
                 {
                     popUpTo(navController.graph.findStartDestination().id) {
                         saveState = true

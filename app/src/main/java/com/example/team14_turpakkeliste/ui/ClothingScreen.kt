@@ -30,22 +30,19 @@ import com.example.team14_turpakkeliste.ui.TurViewModel
 
 
 @Composable
-fun ClothingScreen(navController: NavController, forecastData: ForecastData, alerts: List<Alert>,viewModel: TurViewModel){
-    //gjør dette kallet tidligere
-    //og gjør henting av data osv før skjermen lastest
-    val outerlist = sortClothing(forecastData, viewModel.chosenDay, "outer")
-    val recommendedList = sortClothing(forecastData, viewModel.chosenDay, "inner")
+fun ClothingScreen(navController: NavController,alerts: List<Alert>, viewModel: TurViewModel){
+    println(alerts)
     //finpusse hvordan skjermen ser ut
     //1: fikse tekst til å midtstilles og være fetere!
-    //2: minimere antall placeholders!
     Column(modifier = Modifier
-        .fillMaxHeight()) {
+        .fillMaxHeight(),
+        horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Ytterlag")
         LazyRow(
             modifier = Modifier.fillMaxWidth()
         ) {
-            items(outerlist) { outerlist ->
-                val description = "Plagg: ${outerlist.image} \n" +
+            items(viewModel.outerLayerList) { outerlist ->
+                val description = "Plagg: ${outerlist.material}${outerlist.type} \n" +
                         "Varme: ${outerlist.warmth}\n" +
                         "Vindtetthet: ${outerlist.windproof} \n" +
                         "Vanntetthet: ${outerlist.waterproof}"
@@ -57,18 +54,17 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
                 Spacer(modifier = Modifier.width(30.dp))
             }
         }
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         Text(text = "Innerlag")
         LazyRow(
             modifier = Modifier.fillMaxWidth()
         ) {
-            //husk å endre navn!!!!!!
-            items(recommendedList) { recommendedList ->
-                val description = "Plagg: ${recommendedList.image} \n" +
-                        "Varme: ${recommendedList.warmth}\n" +
-                        "Vindtetthet: ${recommendedList.windproof} \n" +
-                        "Vanntetthet: ${recommendedList.waterproof}"
-                val image = recommendedList.image
+            items(viewModel.innerLayerList) { innerList ->
+                val description = "Plagg: ${innerList.image} \n" +
+                        "Varme: ${innerList.warmth}\n" +
+                        "Vindtetthet: ${innerList.windproof} \n" +
+                        "Vanntetthet: ${innerList.waterproof}"
+                val image = innerList.image
                 Spacer(modifier = Modifier.width(50.dp))
                 NonExpandableCard(
                     description = description,
@@ -81,24 +77,23 @@ fun ClothingScreen(navController: NavController, forecastData: ForecastData, ale
         .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
-        //Sjekke dersom farevarsel er tomt og da bare gi en hyggelig beskjed!
         for(alert in alerts){
+            println(alert.eventCode)
             if(pinpointLocation(viewModel.currentLatitude,viewModel.currentLongitude,alert.areaPolygon!!)){
                 val eventCode = alert.eventCode
                 val string = alert.awareness_level?.split(";")
-                val awareness_level = string?.get(1)?.trim()
-                println(awareness_level)
+                val awarenesslevel = string?.get(1)?.trim()
                 alert.description?.let {
                     ExpandableCard(title = "Farevarsel",
                         description = it,
-                        img = "icon_warning_${eventCode}_${awareness_level}")
+                        img = "icon_warning_${eventCode}_${awarenesslevel}")
                 }
             }
         }
         ExpandableCard(title = "Vis Været",
-            description = getWeather(forecastData, viewModel.chosenDay),
+            description = viewModel.weaterInfo,
             //endre denne til å vise riktig dag!!! Se gjennom metode i clothinglist!!!
-            img = forecastData.properties.timeseries.get(0).data.next_1_hours.summary.symbol_code)
+            img = viewModel.weaterImg)
         BottomNavBar(navController)
     }
 
@@ -114,7 +109,7 @@ fun NonExpandableCard(
 ) {
     Card(
         modifier = Modifier.
-                fillMaxWidth()
+                size(350.dp, 150.dp)
     ) {
         Column(
             modifier = Modifier
@@ -226,7 +221,6 @@ fun getImg(desc: String): Painter{
         "downjacket"-> painterResource(id = R.drawable.downjacket)
         "goretexjacket"-> painterResource(id = R.drawable.goretexjacket)
         "goretexpants" -> painterResource(id = R.drawable.goretexpants)
-        //endre de to under til light
         "lightgoretexjacket"-> painterResource(id = R.drawable.goretexjacket)
         "lightgoretexpants" -> painterResource(id = R.drawable.goretexpants)
         "primaloft" -> painterResource(id = R.drawable.primaloft)
@@ -240,6 +234,7 @@ fun getImg(desc: String): Painter{
         "thinfleece" -> painterResource(id = R.drawable.thinfleece)
         "heavywool" -> painterResource(id = R.drawable.heavywool)
         "trekkingpants" -> painterResource(id = R.drawable.trekkingpants)
+        "heavypants" -> painterResource(id = R.drawable.heavypants)
         "lightwoolsweater" -> painterResource(id = R.drawable.lightwoolsweater)
         "lightwoolpants" -> painterResource(id = R.drawable.lightwoolpants)
         "expeditionsweater" -> painterResource(id = R.drawable.expeditionsweater)
@@ -249,6 +244,9 @@ fun getImg(desc: String): Painter{
         "warmsweater" -> painterResource(id = R.drawable.warmsweater)
         "warmpants" -> painterResource(id = R.drawable.warmpants)
         "thinnestfleece" -> painterResource(id = R.drawable.thinnestfleece)
+        "alphajacket" -> painterResource(id = R.drawable.alphajacket)
+        "wooljacket" -> painterResource(id = R.drawable.wooljacket)
+        "mediumfleece" -> painterResource(id = R.drawable.mediumfleece)
         //farevarsel
         "icon_warning_snow_yellow" -> painterResource(id = R.drawable.icon_warning_snow_yellow)
 

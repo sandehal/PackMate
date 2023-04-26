@@ -1,7 +1,7 @@
 package com.example.team14_turpakkeliste.EntityClass
 
 
-import androidx.room.ColumnInfo;
+import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Entity
@@ -30,6 +30,9 @@ data class WeatherInfo(
     @ColumnInfo(name = "windspeed") val windspeed: Double?,
     @ColumnInfo(name = "watermilimeter") val watermilimeter: Double?,
     @ColumnInfo(name = "imageCode") val image: String?
+)
+data class ClothingDataList(
+    @ColumnInfo(name = "listforday") val list: List<ClothingObject>
 )
 @Dao
 interface UserDao {
