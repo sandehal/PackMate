@@ -8,11 +8,6 @@ data class Clothing(val material: String, val type: String, val layer: String, v
         TODO("Not yet implemented")
     }
 }
-data class SleepingSystem(val warmth: String, val type: String, val minTemp: Int): Equipment(){
-    override fun show_info() {
-        TODO("Not yet implemented")
-    }
-}
 
 data class SunScreen(val factor: Int)
 
