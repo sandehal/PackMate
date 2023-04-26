@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -265,7 +266,7 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
 
         {
             MakeListButton(navController)
-            DateRangePickerScreen()
+            DatePickerScreen()
         }
     }
 }
@@ -273,20 +274,22 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun DateRangePickerScreen() {
+fun DatePickerScreen() {
 
     val dateTime = LocalDateTime.now()
 
-    val dateRangePickerState = remember {
-        DateRangePickerState(
-            initialSelectedStartDateMillis = dateTime.toMillis(),
-            initialDisplayedMonthMillis = null,
-            initialSelectedEndDateMillis = dateTime.plusDays(1).toMillis(),
-            initialDisplayMode = DisplayMode.Input,
+    val datePickerState = remember {
+        DatePickerState(
             yearRange = (2023..2023),
+            initialSelectedDateMillis = dateTime.toMillis(),
+            initialDisplayMode = DisplayMode.Picker,
+            initialDisplayedMonthMillis = null
         )
     }
-    DateRangePicker(state = dateRangePickerState, title = { "Choose timeframe for your journey!" })
+    val date = datePickerState.selectedDateMillis?.let { Date(it) }
+
+    Log.d("Dato for tur: ","$date")
+    DatePicker(state = datePickerState, title = { "Choose timeframe for your journey!" })
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
