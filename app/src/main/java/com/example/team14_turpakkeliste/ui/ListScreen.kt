@@ -13,10 +13,16 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -82,7 +88,7 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel,forecastDat
                 modifier = Modifier
                 .fillMaxWidth()
                     .height(170.dp)
-                    .padding(10.dp)
+                    .padding(5.dp)
             )
         }
 
@@ -100,18 +106,24 @@ private lateinit var appDB : AppDatabase
 @OptIn(DelicateCoroutinesApi::class)
 @Composable
 fun SaveButton(){
+    var buttonState by remember { mutableStateOf(true) }
     val context: Context = LocalContext.current
-    ExtendedFloatingActionButton(
-        icon = { Icon(Icons.Filled.Favorite, contentDescription = "Save list") },
-        text = { Text("Save list") },
-        containerColor = Yellow,
+    Button(
+        enabled = buttonState,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Yellow,
+            contentColor = Color.Black),
         onClick = {
             appDB = AppDatabase.getDatabase(context)
             GlobalScope.launch(Dispatchers.IO) {
                 val user = Pakkliste(null,"haakon","zazamann")
                 appDB.UserDao().insert(user)
             }
+            buttonState = false
         },
         modifier = Modifier.fillMaxWidth()
-    )
+    ) {
+        Icon(Icons.Filled.Favorite, contentDescription = "Save list")
+        Text("Save list")
+    }
 }

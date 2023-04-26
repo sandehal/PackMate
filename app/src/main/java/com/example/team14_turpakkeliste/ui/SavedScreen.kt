@@ -114,12 +114,15 @@ fun SavedScreen(navController: NavController, error: String?) {
                 .fillMaxSize(),
                 verticalArrangement = Arrangement.Bottom
             ){
-                Text(modifier = Modifier
-                    .wrapContentWidth(Alignment.CenterHorizontally)
-                    .padding(20.dp),
-                    text = "Klikk på Map for å lage en ny pakkeliste!",
-                    fontSize = 18.sp
-                )
+                if (saved.isEmpty()) {
+                    Text(
+                        modifier = Modifier
+                            .wrapContentWidth(Alignment.CenterHorizontally)
+                            .padding(20.dp),
+                        text = "Klikk på Map for å lage en ny pakkeliste!",
+                        fontSize = 18.sp
+                    )
+                }
                 BottomNavBar(navController)
             }
         }
