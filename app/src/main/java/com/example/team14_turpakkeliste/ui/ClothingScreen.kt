@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.team14_turpakkeliste.data.*
 import com.example.team14_turpakkeliste.ui.TurViewModel
 
@@ -36,7 +38,32 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
     Column(modifier = Modifier
         .fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "Ytterlag")
+
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
+            IconButton(
+                onClick = {
+                    navController.navigate("ListScreen")
+                    {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+
+                        // Avoid multiple copies of the same destination when
+                        // reselecting the same item
+                        launchSingleTop = true
+                        // Restore state when reselecting a previously selected item
+                        restoreState = true
+                    }
+                }
+            ) {
+                Icon(Icons.Outlined.ArrowBack, contentDescription = "Back")
+
+            }
+
+
+
+        }
+            Text(text = "Ytterlag")
         LazyRow(
             modifier = Modifier.fillMaxWidth()
         ) {
