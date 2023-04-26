@@ -157,7 +157,7 @@ fun MakeListButton(navController: NavController){
         containerColor = ForestGreen,
         contentColor = Color.White,
         icon = { Icon(Icons.Filled.Email, contentDescription = null) },
-        text = { Text("Motta pakkeliste for valgt lokasjon.") },
+        text = { Text("Motta pakkeliste for valgt lokasjon. ") },
         onClick = {  navController.navigate("ListScreen")
         {
             popUpTo(navController.graph.findStartDestination().id) {
