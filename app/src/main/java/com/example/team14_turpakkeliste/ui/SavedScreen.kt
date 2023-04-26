@@ -57,20 +57,20 @@ fun SavedScreen(navController: NavController, error: String?) {
         ) },
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Burgunder),
+            .background(WhiteYellow),
 
     ) {
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Burgunder)
+                .background(WhiteYellow)
                 .wrapContentWidth(Alignment.CenterHorizontally)
                 .padding(20.dp)
         ) {
             Text( modifier = Modifier
                 .fillMaxWidth()
-                .background(Burgunder)
+                .background(WhiteYellow)
                 .wrapContentWidth(Alignment.CenterHorizontally),
                 text = "Lagrede pakkelister:",
                 fontSize = 30.sp
@@ -78,7 +78,7 @@ fun SavedScreen(navController: NavController, error: String?) {
 
             LazyColumn(modifier = Modifier
                 .fillMaxSize()
-                .background(color = Burgunder)
+                .background(WhiteYellow)
                 .wrapContentWidth(Alignment.CenterHorizontally)
                 .padding(1.dp)) {
                 for (s in saved){
