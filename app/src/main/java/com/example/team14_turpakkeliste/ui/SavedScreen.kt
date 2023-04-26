@@ -80,7 +80,7 @@ fun SavedScreen(navController: NavController, error: String?) {
                                 .padding(20.dp),
                             containerColor = ForestGreen,
                             contentColor = Color.White,
-                            content = {Text("${s.firstName}, ${s.lastName}")},
+                            content = {Text("${s.date},  ${s.temperature}C")},
                             onClick = {navController.navigate("ListScreen")
                             {
                                 popUpTo(navController.graph.findStartDestination().id) {
@@ -95,8 +95,6 @@ fun SavedScreen(navController: NavController, error: String?) {
                             }
                             }
                         )
-
-
                     }
                 }
 
@@ -114,15 +112,12 @@ fun SavedScreen(navController: NavController, error: String?) {
                 .fillMaxSize(),
                 verticalArrangement = Arrangement.Bottom
             ){
-                if (saved.isEmpty()) {
-                    Text(
-                        modifier = Modifier
-                            .wrapContentWidth(Alignment.CenterHorizontally)
-                            .padding(20.dp),
-                        text = "Klikk på Map for å lage en ny pakkeliste!",
-                        fontSize = 18.sp
-                    )
-                }
+                Text(modifier = Modifier
+                    .wrapContentWidth(Alignment.CenterHorizontally)
+                    .padding(20.dp),
+                    text = "Klikk på Map for å lage en ny pakkeliste!",
+                    fontSize = 18.sp
+                )
                 BottomNavBar(navController)
             }
         }

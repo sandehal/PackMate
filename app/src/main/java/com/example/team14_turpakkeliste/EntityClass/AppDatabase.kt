@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 
-@Database(entities = [Pakkliste:: class], version = 1)
+@Database(entities = [WeatherInfo:: class], version = 1)
 abstract class AppDatabase: RoomDatabase(){
 
     abstract fun UserDao(): UserDao

@@ -33,7 +33,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.team14_turpakkeliste.BottomNavBar
 import com.example.team14_turpakkeliste.EntityClass.AppDatabase
-import com.example.team14_turpakkeliste.EntityClass.Pakkliste
+import com.example.team14_turpakkeliste.EntityClass.WeatherInfo
+import com.example.team14_turpakkeliste.data.Alert
 import com.example.team14_turpakkeliste.data.getweatherIcon
 import com.example.team14_turpakkeliste.data.sortClothing
 import com.example.team14_turpakkeliste.data.getWeather
@@ -47,7 +48,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 //legg inn for å sortere vær her
-fun ListScreen(navController: NavController, viewModel: TurViewModel,forecastData: ForecastData ){
+fun ListScreen(navController: NavController, viewModel: TurViewModel,forecastData: ForecastData, alerts: List<Alert>){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -70,8 +71,9 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel,forecastDat
                 onClick = { viewModel.chosenDay = i
                     viewModel.outerLayerList = sortClothing(forecastData, viewModel.chosenDay, "outer")
                     viewModel.innerLayerList = sortClothing(forecastData, viewModel.chosenDay, "inner")
-                    viewModel.weaterInfo = getWeather(forecastData, viewModel.chosenDay)
-                    viewModel.weaterImg = getweatherIcon(forecastData, viewModel.chosenDay)
+                    viewModel.weatherInfo = getWeather(forecastData, viewModel.chosenDay)
+                    viewModel.weatherImg = getweatherIcon(forecastData, viewModel.chosenDay)
+                    viewModel.alertList = alerts
                     navController.navigate("ClothingScreen")
                 {
                     popUpTo(navController.graph.findStartDestination().id) {
@@ -97,7 +99,7 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel,forecastDat
         modifier = Modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom) {
-        SaveButton()
+        SaveButton(viewModel = viewModel, forecastData = forecastData )
         BottomNavBar(navController)
     }
 }
@@ -105,7 +107,7 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel,forecastDat
 private lateinit var appDB : AppDatabase
 @OptIn(DelicateCoroutinesApi::class)
 @Composable
-fun SaveButton(){
+fun SaveButton(viewModel: TurViewModel, forecastData: ForecastData){
     var buttonState by remember { mutableStateOf(true) }
     val context: Context = LocalContext.current
     Button(
@@ -116,8 +118,14 @@ fun SaveButton(){
         onClick = {
             appDB = AppDatabase.getDatabase(context)
             GlobalScope.launch(Dispatchers.IO) {
-                val user = Pakkliste(null,"haakon","zazamann")
-                appDB.UserDao().insert(user)
+                //gå gjennom variabelnavn her og tenk engelsk og riktig
+                val date = forecastData.properties.timeseries.get(0).time
+                for(i in 0..viewModel.numberOfDays){
+                    val weather = getWeather(forecastData, i)
+                    val img = getweatherIcon(forecastData, i)
+                    val tempList = WeatherInfo(date, i, weather.temp, weather.windspeed,weather.watermm, img)
+                    appDB.UserDao().insert(tempList)
+                }
             }
             buttonState = false
         },

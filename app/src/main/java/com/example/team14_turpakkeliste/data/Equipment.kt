@@ -8,6 +8,8 @@ data class Clothing(val material: String, val type: String, val layer: String, v
         TODO("Not yet implemented")
     }
 }
+data class WeatherValues(val temp: Double, val windspeed: Double, val watermm: Double?){
+}
 
 data class SunScreen(val factor: Int)
 

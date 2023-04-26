@@ -1,6 +1,7 @@
 package com.example.team14_turpakkeliste.data
 
 import ForecastData
+import com.example.team14_turpakkeliste.EntityClass.WeatherInfo
 
 //værdata gi beskjed om vindretning
 //evt gi beskjed om en gjennomsnittstempratur der et plagg kan fungere
@@ -37,7 +38,6 @@ fun getClothes(): List<Clothing>{
         Clothing("thinnestFleece", "jacket", "outer", 3,1,1, "thinnestfleece"),
         Clothing("mediumFleece", "jacket", "outer", 4, 1, 3, "mediumfleece"),
         Clothing("Wool", "jacket", "outer", 4, 1, 4, "wooljacket"),
-
         //innerlag
         Clothing("Wool", "sweater", "inner" ,6, 1,1, "expeditionsweater"),
         Clothing("Wool", "pants", "inner", 6,1,1, "expeditionpants"),
@@ -46,11 +46,12 @@ fun getClothes(): List<Clothing>{
         Clothing("Wool", "sweater", "inner" ,4, 1,1, "thermosweater"),
         Clothing("Wool", "pants", "inner", 4,1,1, "thermopants"),
         //se gjennom imagenavn
-        Clothing("Wool", "sweater", "inner", 3,1,1,"ravgenser"),
-        Clothing("Wool", "pants", "inner", 3, 1, 1, "ravbukse"),
+        Clothing("Wool", "sweater", "inner", 3,1,1,"mediumwoolsweater"),
+        Clothing("Wool", "pants", "inner", 3, 1, 1, "mediumwoolpants"),
         Clothing("LightWool", "sweater", "inner", 2,1,1,"lightwoolsweater"),
         //Clothing("LightWool", "pants", "inner", 2,1,1,"lightwoolpants"),
         Clothing("LightWool", "tshirt", "inner", 1, 1,1, "sommerull"),
+        Clothing("Lightwool", "boxer", "inner", 1,1,1, "woolboxer"),
 
         Clothing("Kan ikke anbefale noe her", "none", "none", 0, 0 ,0, "none")
     )
@@ -117,7 +118,7 @@ fun sortClothing(forecastData: ForecastData, dayNum: Int, layer: String): List<C
             continue
         }
         if(warmth == innerReqMin.warmth
-            && clothing.type == "pants"
+            && (clothing.type == "pants" || clothing.type == "boxer")
             && clothing.layer == layer){
                 tempList.set(1,clothing)
                 println(clothing.image)
@@ -181,7 +182,7 @@ fun chooseInnerReqs(temp: Double, water: Double?): MinRequirementsClothes{
     }
     return MinRequirementsClothes(warmth, 1,1)
 }
-fun getWeather(forecastData: ForecastData, dayNum: Int): String{
+fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues{
     val dataForDay = when(dayNum){
         0 -> 2
         1 -> 26
@@ -198,7 +199,7 @@ fun getWeather(forecastData: ForecastData, dayNum: Int): String{
             water += forecastData.properties.timeseries.get(i).data.next_1_hours.details!!.precipitation_amount.toDouble()
         }
     }
-    val returnString = "Det er meldt ${temp} grader \nog vind på ${wind} m/s \nDu kan forvente ${water} mm nedbør i løpet av dagen"
+    val returnString =  WeatherValues(temp, wind, water)
     return returnString
 }
 fun getweatherIcon(forecastData: ForecastData, dayNum: Int): String{

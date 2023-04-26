@@ -30,8 +30,7 @@ import com.example.team14_turpakkeliste.ui.TurViewModel
 
 
 @Composable
-fun ClothingScreen(navController: NavController,alerts: List<Alert>, viewModel: TurViewModel){
-    println(alerts)
+fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
     //finpusse hvordan skjermen ser ut
     //1: fikse tekst til å midtstilles og være fetere!
     Column(modifier = Modifier
@@ -77,23 +76,31 @@ fun ClothingScreen(navController: NavController,alerts: List<Alert>, viewModel: 
         .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
-        for(alert in alerts){
+        for(alert in viewModel.alertList){
             println(alert.eventCode)
             if(pinpointLocation(viewModel.currentLatitude,viewModel.currentLongitude,alert.areaPolygon!!)){
-                val eventCode = alert.eventCode
-                val string = alert.awareness_level?.split(";")
+                //bruk awerness_type her, split denne på lengde dersom det er går ann
+                val string= alert.awareness_level?.split(";")
+                val typeString = alert.awareness_type?.split(";")
+                val typeStringsplit1 = typeString?.get(1)?.split("-")
+                val awarenesstype = typeStringsplit1?.get(0)?.trim()
+
                 val awarenesslevel = string?.get(1)?.trim()
                 alert.description?.let {
                     ExpandableCard(title = "Farevarsel",
                         description = it,
-                        img = "icon_warning_${eventCode}_${awarenesslevel}")
+                        img = "icon_warning_${awarenesstype}_${awarenesslevel}")
                 }
             }
         }
+        val info = viewModel.weatherInfo
         ExpandableCard(title = "Vis Været",
-            description = viewModel.weaterInfo,
+            //legg til riktig info her
+            description = "Det er meldt ${info.temp} grader \n" +
+                    "og vind på ${info.windspeed} m/s \n" +
+                    "Du kan forvente ${info.watermm} mm nedbør i løpet av dagen",
             //endre denne til å vise riktig dag!!! Se gjennom metode i clothinglist!!!
-            img = viewModel.weaterImg)
+            img = viewModel.weatherImg)
         BottomNavBar(navController)
     }
 
@@ -224,8 +231,8 @@ fun getImg(desc: String): Painter{
         "lightgoretexjacket"-> painterResource(id = R.drawable.goretexjacket)
         "lightgoretexpants" -> painterResource(id = R.drawable.goretexpants)
         "primaloft" -> painterResource(id = R.drawable.primaloft)
-        "ravgenser" -> painterResource(id = R.drawable.ravgenser)
-        "ravbukse" -> painterResource(id = R.drawable.ravbukse)
+        "ravgenser" -> painterResource(id = R.drawable.warmsweater)
+        "ravbukse" -> painterResource(id = R.drawable.warmpants)
         "sommerull" -> painterResource(id = R.drawable.sommerull)
         "windjacket" -> painterResource(id = R.drawable.windjacket)
         "flexshorts" -> painterResource(id = R.drawable.flexshorts)

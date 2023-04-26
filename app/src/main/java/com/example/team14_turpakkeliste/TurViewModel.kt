@@ -1,7 +1,6 @@
 package com.example.team14_turpakkeliste.ui
 
 
-import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -10,7 +9,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.team14_turpakkeliste.EntityClass.AppDatabase
-import com.example.team14_turpakkeliste.EntityClass.Pakkliste
 import com.example.team14_turpakkeliste.data.*
 import io.ktor.client.plugins.*
 import kotlinx.coroutines.Dispatchers
@@ -26,11 +24,10 @@ class TurViewModel: ViewModel() {
     //denne er litt goofy når man velger antall dager fordi det går på indeksering fra 0 til 2!!!
     var numberOfDays : Int = 2
     var chosenDay: Int = 0
-    lateinit var saved: List<Pakkliste>
     lateinit var outerLayerList: List<Clothing>
     lateinit var innerLayerList: List<Clothing>
-    lateinit var weaterInfo: String
-    lateinit var weaterImg: String
+    lateinit var weatherInfo: WeatherValues
+    lateinit var weatherImg: String
     lateinit var alertList: List<Alert>
 
     var currentLatitudeLongitude = MutableLiveData<Pair<Double, Double>>()
