@@ -26,6 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.EntityClass.AppDatabase
 import com.example.team14_turpakkeliste.ui.theme.Burgunder
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
+import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 import kotlinx.coroutines.launch
 
 
