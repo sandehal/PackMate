@@ -20,8 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.example.team14_turpakkeliste.BottomNavBar
-import com.example.team14_turpakkeliste.MakeListButton
+import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.Alert
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.google.android.gms.maps.model.CameraPosition
@@ -104,7 +103,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
 
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Row() {
+        Row {
             TextField(
                 value = location.value,
 

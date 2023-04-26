@@ -29,7 +29,7 @@ import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen() {
     Box(
         Modifier
             .fillMaxSize()
@@ -86,6 +86,6 @@ fun SplashScreen(navController: NavController) {
 @Composable
 fun DefaultPreview() {
     Team14TurPakkeListeTheme {
-        SplashScreen(navController = rememberNavController())
+        SplashScreen()
     }
 }

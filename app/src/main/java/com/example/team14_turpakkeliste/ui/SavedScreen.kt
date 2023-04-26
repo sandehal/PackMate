@@ -1,15 +1,11 @@
-package com.example.team14_turpakkeliste
+package com.example.team14_turpakkeliste.ui
 
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -26,7 +22,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.EntityClass.AppDatabase
-import com.example.team14_turpakkeliste.ui.theme.Burgunder
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
@@ -122,30 +117,6 @@ fun SavedScreen(navController: NavController, error: String?) {
             }
         }
     }
-
-
-
-
-@Composable
-fun SavedButton(navController: NavController){
-    ExtendedFloatingActionButton(
-        icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
-        text = { Text("Hent siste pakkeliste") },
-        onClick = {  navController.navigate("ListScreen")
-        {
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-            }
-            // Avoid multiple copies of the same destination when
-            // reselecting the same item
-            launchSingleTop = true
-            // Restore state when reselecting a previously selected item
-            restoreState = true
-        }
-        },
-        modifier = Modifier.fillMaxWidth()
-    )
-}
 
 
 

@@ -1,4 +1,4 @@
-
+package com.example.team14_turpakkeliste.data
 
 data class ForecastData(
     val geometry: Geometry,

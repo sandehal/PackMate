@@ -1,6 +1,6 @@
 package com.example.team14_turpakkeliste.ui
 
-import ForecastData
+import com.example.team14_turpakkeliste.data.ForecastData
 import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -31,9 +31,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.example.team14_turpakkeliste.BottomNavBar
 import com.example.team14_turpakkeliste.EntityClass.AppDatabase
 import com.example.team14_turpakkeliste.EntityClass.WeatherInfo
+import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.Alert
 import com.example.team14_turpakkeliste.data.getweatherIcon
 import com.example.team14_turpakkeliste.data.sortClothing
@@ -48,7 +48,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 //legg inn for å sortere vær her
-fun ListScreen(navController: NavController, viewModel: TurViewModel,forecastData: ForecastData, alerts: List<Alert>){
+fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastData: ForecastData, alerts: List<Alert>){
     Column(
         modifier = Modifier
             .fillMaxSize()

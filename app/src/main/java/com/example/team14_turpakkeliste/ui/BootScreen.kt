@@ -1,6 +1,6 @@
-package com.example.team14_turpakkeliste
+package com.example.team14_turpakkeliste.ui
 
-import ForecastData
+import com.example.team14_turpakkeliste.data.ForecastData
 import android.os.Build
 import android.view.animation.OvershootInterpolator
 import androidx.annotation.RequiresApi
@@ -36,6 +36,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.team14_turpakkeliste.R
+import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.Alert
 import com.example.team14_turpakkeliste.ui.*
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
@@ -46,7 +48,7 @@ import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = viewModel()){
 
     when(val state = viewModel.turUiState){
-        is TurpakklisteUiState.Booting -> SplashScreen(navController)
+        is TurpakklisteUiState.Booting -> SplashScreen()
         is TurpakklisteUiState.Error -> SavedScreen(navController, viewModel.error)
         is TurpakklisteUiState.Loading -> LoadingScreen()
         is TurpakklisteUiState.Success -> BootScreen(navController,state.alerts,state.forecastData, viewModel)
@@ -55,7 +57,7 @@ fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = vi
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun BootScreen(navController: NavHostController,alerts:List<Alert>, forecastData: ForecastData,viewModel: TurViewModel){
+fun BootScreen(navController: NavHostController, alerts:List<Alert>, forecastData: ForecastData, viewModel: TurViewModel){
     NavHost(navController = navController, startDestination = "SavedScreen") {
         composable(Screen.ListScreen.route) { ListScreen(navController, viewModel, forecastData, alerts) }
         composable(Screen.MapScreen.route) { MapsComposeScreen(navController,viewModel, alerts) }
@@ -123,12 +125,13 @@ fun BottomNavBar(navController: NavController){
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
-        items.forEachIndexed { index, item ->
+        items.forEachIndexed { _, item ->
             NavigationBarItem(
                 icon = { Icon(item.icon, contentDescription = item.route) },
                 label = { Text(item.description) },
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = { if (currentDestination?.hierarchy?.any { it.route == item.route} == true) {
+                    //Do nothing
                 } else {
                     navController.navigate(item.route)
                     {

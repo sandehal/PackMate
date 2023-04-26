@@ -1,5 +1,4 @@
 package com.example.team14_turpakkeliste.data
-import ForecastData
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*

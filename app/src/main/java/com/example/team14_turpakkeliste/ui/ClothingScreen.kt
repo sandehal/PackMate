@@ -1,6 +1,5 @@
-package com.example.team14_turpakkeliste
+package com.example.team14_turpakkeliste.ui
 
-import ForecastData
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -27,8 +26,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.example.team14_turpakkeliste.R
+import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.*
-import com.example.team14_turpakkeliste.ui.TurViewModel
+import com.example.team14_turpakkeliste.data.pinpointLocation
 
 
 @Composable

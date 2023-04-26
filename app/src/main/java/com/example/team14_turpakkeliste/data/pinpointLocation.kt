@@ -1,4 +1,4 @@
-package com.example.team14_turpakkeliste
+package com.example.team14_turpakkeliste.data
 
 
 fun pinpointLocation(currentLatitude: Double,currentLongitude: Double, polygon : String): Boolean{

@@ -28,14 +28,16 @@ class XmlForMetAlerts {
                 continue
             }
             // Starts by looking for the entry tag
-            if (parser.name == "item") {
-                dataList.add(readEntry(parser))
-            }
-            else if(parser.name == "channel"){
-                parser.require(XmlPullParser.START_TAG, ns, "channel")
-            }
-            else {
-                skip(parser)
+            when (parser.name) {
+                "item" -> {
+                    dataList.add(readEntry(parser))
+                }
+                "channel" -> {
+                    parser.require(XmlPullParser.START_TAG, ns, "channel")
+                }
+                else -> {
+                    skip(parser)
+                }
             }
         }
         return dataList

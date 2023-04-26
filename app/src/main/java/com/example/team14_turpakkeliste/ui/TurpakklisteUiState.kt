@@ -1,6 +1,6 @@
 package com.example.team14_turpakkeliste.ui
 
-import ForecastData
+import com.example.team14_turpakkeliste.data.ForecastData
 import com.example.team14_turpakkeliste.data.Alert
 
 sealed interface TurpakklisteUiState {

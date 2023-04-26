@@ -1,8 +1,5 @@
 package com.example.team14_turpakkeliste.data
 
-import ForecastData
-import com.example.team14_turpakkeliste.EntityClass.WeatherInfo
-
 //værdata gi beskjed om vindretning
 //evt gi beskjed om en gjennomsnittstempratur der et plagg kan fungere
 
