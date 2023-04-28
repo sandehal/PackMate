@@ -61,6 +61,7 @@ fun ErrorScreen(viewModel: TurViewModel){
                 .wrapContentWidth(Alignment.CenterHorizontally),
                 text = "PackerBuddy funger kun med internettforbindelse!",
                 fontSize = 20.sp
+
             )
 
         }
