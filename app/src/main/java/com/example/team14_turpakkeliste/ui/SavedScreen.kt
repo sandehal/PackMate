@@ -48,7 +48,7 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun SavedScreen(navController: NavController, viewModel: TurViewModel) {
+fun SavedScreen(navController: NavController, viewModel: TurViewModel, isOffline: Boolean) {
     val context = LocalContext.current
     val appDB = AppDatabase.getDatabase(context)
     val saved = appDB.UserDao().getAll()
@@ -79,7 +79,17 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel) {
                 text = "Lagrede pakkelister:",
                 fontSize = 30.sp
             )
-            DeleteButton(navController)
+            if (isOffline){
+                Text( modifier = Modifier
+                    .fillMaxWidth()
+                    .background(WhiteYellow)
+                    .wrapContentWidth(Alignment.CenterHorizontally),
+                    text = "Frakoblet modus",
+                    fontSize = 20.sp
+                )
+            }else{
+                DeleteButton(navController)
+            }
 
             LazyColumn(modifier = Modifier
                 .fillMaxSize()
@@ -118,6 +128,13 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel) {
                 }
 
             }
+            if (isOffline){
+                scope.launch {
+                    snackbarHostState.showSnackbar(
+                        "Internett ikke tilgjenglig: "+ viewModel.error
+                    )
+                }
+            }
         }
         Column(modifier = Modifier
                 .fillMaxSize(),
@@ -131,7 +148,9 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel) {
                         fontSize = 18.sp
                     )
                 }
+            if (!isOffline){
                 BottomNavBar(navController)
+            }
             }
         }
     }
@@ -139,7 +158,7 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel) {
 @Composable
 fun SavedPreview() {
     Team14TurPakkeListeTheme {
-        SavedScreen(rememberNavController(), viewModel = TurViewModel())
+        SavedScreen(rememberNavController(), viewModel = TurViewModel(), isOffline = false)
     }
 }
 
