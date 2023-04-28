@@ -11,6 +11,7 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.*
@@ -30,6 +31,7 @@ import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.*
 import com.example.team14_turpakkeliste.data.pinpointLocation
+import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
 
 @Composable
@@ -37,7 +39,8 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
     //finpusse hvordan skjermen ser ut
     //1: fikse tekst til å midtstilles og være fetere!
     Column(modifier = Modifier
-        .fillMaxHeight(),
+        .fillMaxHeight()
+        .background(WhiteYellow),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
