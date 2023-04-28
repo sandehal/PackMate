@@ -23,7 +23,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.Alert
@@ -33,6 +35,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.compose.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 import java.io.IOException
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -253,20 +256,34 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
         )
 
         {
-            Box(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 10.dp, end = 10.dp),
-                contentAlignment = Alignment.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
 
             ){
 
-            Image(painter = painterResource(id = R.drawable.mappet_ikon), contentDescription = "Kart")}
+            Image(painter = painterResource(id = R.drawable.mappet_ikon), contentDescription = "Kart")
+                Text(text = " Valgt lokasjon - Oslo ",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 30.sp)
+                Text(text = "Hvor mange dager ",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 30.sp)
+
+                Text(text = " skal du på tur ",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 30.sp)
+            }
             //DatePickerScreen()
             MakeListButton(navController)
         }
+
+
+        }
     }
-}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
