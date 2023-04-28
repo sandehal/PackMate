@@ -104,7 +104,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
                 value = location.value,
 
                 onValueChange = { location.value = it},
-                placeholder = { Text(text = "Søk på område") },
+                placeholder = { Text(text = "Søk på område, eller trykk på kartet") },
                 modifier = Modifier
                     .padding()
                     .width(300.dp)

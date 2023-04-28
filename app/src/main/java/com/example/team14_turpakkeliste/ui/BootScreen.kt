@@ -128,7 +128,7 @@ fun BottomNavBar(navController: NavController){
         items.forEachIndexed { _, item ->
             NavigationBarItem(
                 icon = { Icon(item.icon, contentDescription = item.route) },
-                label = { Text(item.description) },
+                label = { Text(text = item.description, color = Color.White) },
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = { if (currentDestination?.hierarchy?.any { it.route == item.route} == true) {
                     //Do nothing
