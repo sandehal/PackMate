@@ -57,7 +57,7 @@ class TurViewModel: ViewModel() {
         }
     }
     //se over
-    fun getAlertDataForArea(): Triple<String, String, String>{
+    fun getAlertDataForArea(): Triple<String, String, String>?{
         var alertColor = "green"
         var alertType = ""
         var alertdescription = ""
@@ -88,6 +88,7 @@ class TurViewModel: ViewModel() {
                 }
             }
         }
+        if (alertType == ""){return null}
         return Triple(alertType, alertColor, alertdescription)
     }
 
