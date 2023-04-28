@@ -41,27 +41,38 @@ class TurViewModel: ViewModel() {
         }
     }
     //se over
-    fun getAlertColorForArea(): String{
+    fun getAlertDataForArea(): Triple<String, String, String>{
         var alertColor = "green"
+        var alertType = ""
+        var alertdescription = ""
         for(alert in alerts){
             println(alert.eventCode)
             if(pinpointLocation(currentLatitude,currentLongitude,alert.areaPolygon!!)){
                 //bruk awerness_type her, split denne på lengde dersom det er går ann
                 val string= alert.awareness_level?.split(";")
                 val awarenesslevel = string?.get(1)?.trim()
+                val typeString = alert.awareness_type?.split(";")
+                val typeStringsplit1 = typeString?.get(1)?.split("-")
+                val awarenesstype = typeStringsplit1?.get(0)?.trim()
                 if(awarenesslevel == "red"){
                     alertColor = "red"
+                    alertType = awarenesstype.toString()
+                    alertdescription = alert.description.toString()
                     break
                 }
                 if(alertColor != "red" && awarenesslevel == "orange"){
                     alertColor = "orange"
+                    alertType = awarenesstype.toString()
+                    alertdescription = alert.description.toString()
                 }
                 if(awarenesslevel == "yellow" && alertColor == "green"){
                     alertColor = "yellow"
+                    alertType = awarenesstype.toString()
+                    alertdescription = alert.description.toString()
                 }
             }
         }
-        return alertColor
+        return Triple(alertType, alertColor, alertdescription)
     }
 
     private fun getData() {

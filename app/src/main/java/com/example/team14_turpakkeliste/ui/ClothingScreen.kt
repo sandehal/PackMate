@@ -27,7 +27,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.*
@@ -371,19 +370,5 @@ fun getImg(desc: String): Painter{
         }
     }
     return painter
-}
-
-fun backToListScreen(navController: NavController) {
-    navController.navigate("ListScreen")
-    {
-        popUpTo(navController.graph.findStartDestination().id) {
-            saveState = true
-        }
-        // Avoid multiple copies of the same destination when
-        // reselecting the same item
-        launchSingleTop = true
-        // Restore state when reselecting a previously selected item
-        restoreState = true
-    }
 }
 
