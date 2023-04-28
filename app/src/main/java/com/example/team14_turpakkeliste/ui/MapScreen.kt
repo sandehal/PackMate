@@ -162,9 +162,12 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
 
                 if (markerState == null) {
 
+
+
                     clickedLatLng.value = latLng
-                    viewModel.currentLatitude = latLng.latitude
-                    viewModel.currentLongitude = latLng.longitude
+                    viewModel.currentLatitude = String.format("%.2f",latLng.latitude).toDouble()
+                    viewModel.currentLongitude =  String.format("%.2f",latLng.longitude).toDouble()
+                    viewModel.location = "${viewModel.currentLatitude}, ${viewModel.currentLongitude}"
                     viewModel.getForecast(alerts = alerts)
                     Log.d(
                         "Oppdatert",
@@ -196,7 +199,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
             coordinates = clickedLatLng.value.toString(),
             sheetState = sheetState,
             scope = scope,
-            navController = navController, turViewModel = viewModel
+            navController = navController, turViewModel = viewModel,clickedLatLng
         )
     }
 
@@ -209,6 +212,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
 }
 
 fun getLocationCompose(location: String, viewModel: TurViewModel, context: Context): LatLng? {
+    viewModel.location = location
     var latLng : LatLng?
     latLng = null
     var addressList : List<Address>? = null
@@ -242,7 +246,9 @@ fun getLocationCompose(location: String, viewModel: TurViewModel, context: Conte
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineScope, navController: NavController, turViewModel: TurViewModel){
+fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineScope, navController: NavController, turViewModel: TurViewModel,latLng: MutableState<LatLng?>){
+    var tekstLocation = turViewModel.checkIntitialized()
+
 
 
     if (sheetState.isVisible){
@@ -262,21 +268,35 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
                     .padding(start = 10.dp, end = 10.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
 
-            ){
+                ) {
 
-            Image(painter = painterResource(id = R.drawable.mappet_ikon), contentDescription = "Kart")
-                Text(text = " Valgt lokasjon - Oslo ",
+                Image(
+                    painter = painterResource(id = R.drawable.mappet_ikon),
+                    contentDescription = "Kart"
+                )
+                Text(
+                    text = " Valgt lokasjon - ${tekstLocation} ",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 30.sp)
-                Text(text = "Hvor mange dager ",
+                    fontSize = 20.sp
+                )
+                Text(
+                    text = "Hvor mange dager ",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 30.sp)
+                    fontSize = 20.sp
+                )
 
-                Text(text = " skal du på tur ",
+                Text(
+                    text = " skal du på tur? Maks 3 dager ",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 30.sp)
+                    fontSize = 20.sp
+                )
             }
+
+
+            //DropdownMenu(turViewModel)
             //DatePickerScreen()
+            Spacer(modifier = Modifier.height(30.dp))
+
             MakeListButton(navController)
         }
 
@@ -306,6 +326,72 @@ fun DatePickerScreen() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun LocalDateTime.toMillis() = this.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DropdownMenu(viewModel: TurViewModel): Int{
+
+
+    var expanded by remember { mutableStateOf(false) }
+    val districts = listOf("Dag 1", "Dag 2", "Dag 3")
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded }
+
+    ) {
+
+        TextField(
+            modifier = Modifier.menuAnchor(),
+            readOnly = true,
+            value = districts[viewModel.numberOfDays - 1],
+            onValueChange = { },
+            label = { Text("Velg district") },
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(
+                    expanded = expanded
+                )
+            }
+        )
+
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = {
+                expanded = false
+            }
+        ) {
+            districts.forEach { selectionOption ->
+                DropdownMenuItem(
+                    text = { Text(selectionOption) },
+                    onClick = {
+
+
+                        when (selectionOption) {
+                            "Dag 1" -> {
+
+                                viewModel.numberOfDays = 1
+
+                            }
+
+                            "Dag 2" -> {
+                                viewModel.numberOfDays = 2
+
+                            }
+
+                            "Dag 3" -> {
+                                viewModel.numberOfDays = 3
+                            }
+                        }
+                        expanded = false
+                    })
+
+            }
+        }
+
+
+    }
+
+    return  viewModel.numberOfDays
+}
 
 
 

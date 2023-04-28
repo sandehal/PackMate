@@ -25,7 +25,8 @@ class TurViewModel: ViewModel() {
     lateinit var innerLayerList: List<Clothing>
     lateinit var weatherInfo: WeatherValues
     lateinit var weatherImg: String
-    //lateinit var location: String
+    lateinit var location: String
+
 
 
     var turUiState: TurpakklisteUiState by mutableStateOf(TurpakklisteUiState.Booting)
@@ -33,6 +34,15 @@ class TurViewModel: ViewModel() {
     private val source: Datasource = Datasource()
     init {
         getData()
+    }
+
+    fun checkIntitialized(): String{
+            if(this::location.isInitialized){
+                return location
+            }
+            else{
+                return "${currentLatitude}, ${currentLongitude}"
+            }
     }
     fun getForecast(alerts:List<Alert>){
         viewModelScope.launch {
