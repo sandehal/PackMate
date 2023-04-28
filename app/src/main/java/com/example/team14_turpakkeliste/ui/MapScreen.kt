@@ -6,6 +6,7 @@ import android.location.Geocoder
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -16,10 +17,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.Alert
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
@@ -248,8 +253,17 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
         )
 
         {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 10.dp, end = 10.dp),
+                contentAlignment = Alignment.Center,
+
+            ){
+
+            Image(painter = painterResource(id = R.drawable.mappet_ikon), contentDescription = "Kart")}
+            //DatePickerScreen()
             MakeListButton(navController)
-            DatePickerScreen()
         }
     }
 }
