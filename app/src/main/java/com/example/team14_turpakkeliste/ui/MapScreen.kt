@@ -305,10 +305,23 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
                     }
                 )
 
+
                 if(days != ""){
 
-                    turViewModel.updateDays(Integer.parseInt(days)-1)
+                    val intDays = Integer.parseInt(days)
+                    if(intDays > 3){
+                        turViewModel.updateDays(2)
+                    }
+                    else if(intDays < 1){
+                        turViewModel.updateDays(0)
+                    }
+                    else{
+
+                        turViewModel.updateDays(intDays-1)
+                    }
+
                 }
+
             }
 
 
