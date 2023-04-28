@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,6 +40,7 @@ import com.example.team14_turpakkeliste.data.getweatherIcon
 import com.example.team14_turpakkeliste.data.sortClothing
 import com.example.team14_turpakkeliste.data.getWeather
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
+import com.example.team14_turpakkeliste.ui.theme.Orange
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 import com.example.team14_turpakkeliste.ui.theme.Yellow
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -62,8 +64,16 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastDa
                 .wrapContentWidth(Alignment.CenterHorizontally)
                 .padding(20.dp)
         )
-        for(i in 0..viewModel.numberOfDays){ExtendedFloatingActionButton(
-            containerColor = ForestGreen,
+        for(i in 0..viewModel.numberOfDays)
+        {
+            var color = when(viewModel.getAlertDataForArea().second.trim()) {
+                 "Red"-> Color.Red
+                 "Yellow"-> Color.Yellow
+                 "Orange"-> Orange
+                else -> ForestGreen
+            }
+            ExtendedFloatingActionButton(
+            containerColor = color ,
             contentColor = Color.White,
             icon = { Icon(Icons.Filled.Email, contentDescription = null) },
             text = { Text("Dag ${i+1}") },
@@ -114,6 +124,7 @@ fun SaveButton(viewModel: TurViewModel, forecastData: ForecastData){
         colors = ButtonDefaults.buttonColors(
             containerColor = Yellow,
             contentColor = Color.Black),
+        shape = RectangleShape,
         onClick = {
             appDB = AppDatabase.getDatabase(context)
             GlobalScope.launch(Dispatchers.IO) {
@@ -139,6 +150,6 @@ fun SaveButton(viewModel: TurViewModel, forecastData: ForecastData){
         modifier = Modifier.fillMaxWidth()
     ) {
         Icon(Icons.Filled.Favorite, contentDescription = "Save list")
-        Text("Save list")
+        Text("   Save list")
     }
 }
