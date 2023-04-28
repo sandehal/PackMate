@@ -297,7 +297,7 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
             //DatePickerScreen()
             Spacer(modifier = Modifier.height(30.dp))
 
-            MakeListButton(navController)
+            MakeListButton(navController, turViewModel)
         }
 
 
@@ -326,85 +326,3 @@ fun DatePickerScreen() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun LocalDateTime.toMillis() = this.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DropdownMenu(viewModel: TurViewModel): Int{
-
-
-    var expanded by remember { mutableStateOf(false) }
-    val districts = listOf("Dag 1", "Dag 2", "Dag 3")
-
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded }
-
-    ) {
-
-        TextField(
-            modifier = Modifier.menuAnchor(),
-            readOnly = true,
-            value = districts[viewModel.numberOfDays - 1],
-            onValueChange = { },
-            label = { Text("Velg district") },
-            trailingIcon = {
-                ExposedDropdownMenuDefaults.TrailingIcon(
-                    expanded = expanded
-                )
-            }
-        )
-
-        ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = {
-                expanded = false
-            }
-        ) {
-            districts.forEach { selectionOption ->
-                DropdownMenuItem(
-                    text = { Text(selectionOption) },
-                    onClick = {
-
-
-                        when (selectionOption) {
-                            "Dag 1" -> {
-
-                                viewModel.numberOfDays = 1
-
-                            }
-
-                            "Dag 2" -> {
-                                viewModel.numberOfDays = 2
-
-                            }
-
-                            "Dag 3" -> {
-                                viewModel.numberOfDays = 3
-                            }
-                        }
-                        expanded = false
-                    })
-
-            }
-        }
-
-
-    }
-
-    return  viewModel.numberOfDays
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

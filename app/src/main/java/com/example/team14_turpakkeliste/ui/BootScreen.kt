@@ -20,13 +20,16 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -151,8 +154,21 @@ fun BottomNavBar(navController: NavController){
 }
 
 @Composable
-fun MakeListButton(navController: NavController){
+fun MakeListButton(navController: NavController,viewModel: TurViewModel){
+
+    var days by remember { mutableStateOf("") }
+    TextField(
+        value = days,
+        onValueChange = { newText ->
+            days = newText
+        }
+    )
+    if(days != ""){
+
+    viewModel.updateDays(Integer.parseInt(days)-1)
+    }
     ExtendedFloatingActionButton(
+
         containerColor = ForestGreen,
         contentColor = Color.White,
         icon = { Icon(Icons.Filled.Email, contentDescription = null) },

@@ -44,6 +44,12 @@ class TurViewModel: ViewModel() {
                 return "${currentLatitude}, ${currentLongitude}"
             }
     }
+
+    fun updateDays(days: Int){
+
+        numberOfDays = days
+
+    }
     fun getForecast(alerts:List<Alert>){
         viewModelScope.launch {
             val forecast = source.getForecastData(currentLatitude, currentLongitude)
