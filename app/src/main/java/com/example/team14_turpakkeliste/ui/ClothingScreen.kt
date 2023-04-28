@@ -48,7 +48,6 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
                         }
-
                         // Avoid multiple copies of the same destination when
                         // reselecting the same item
                         launchSingleTop = true
@@ -60,11 +59,9 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
                 Icon(Icons.Outlined.ArrowBack, contentDescription = "Back")
 
             }
-
-
-
         }
-            Text(text = "Ytterlag")
+            Text(text = "Ytterlag", fontSize = MaterialTheme.typography.titleMedium.fontSize)
+            Spacer(modifier = Modifier.height(10.dp))
         LazyRow(
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -82,7 +79,8 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = "Innerlag")
+        Text(text = "Innerlag", fontSize = MaterialTheme.typography.titleMedium.fontSize)
+        Spacer(modifier = Modifier.height(10.dp))
         LazyRow(
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -104,7 +102,7 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
         .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
-        for(alert in viewModel.alertList){
+        for(alert in viewModel.alerts){
             println(alert.eventCode)
             if(pinpointLocation(viewModel.currentLatitude,viewModel.currentLongitude,alert.areaPolygon!!)){
                 //bruk awerness_type her, split denne på lengde dersom det er går ann
@@ -112,7 +110,6 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
                 val typeString = alert.awareness_type?.split(";")
                 val typeStringsplit1 = typeString?.get(1)?.split("-")
                 val awarenesstype = typeStringsplit1?.get(0)?.trim()
-
                 val awarenesslevel = string?.get(1)?.trim()
                 alert.description?.let {
                     ExpandableCard(title = "Farevarsel",
@@ -122,7 +119,7 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
             }
         }
         val info = viewModel.weatherInfo
-        ExpandableCard(title = "Vis Været",
+        ExpandableCard(title = "Vis været",
             //legg til riktig info her
             description = "Det er meldt ${info.temp} grader \n" +
                     "og vind på ${info.windspeed} m/s \n" +
@@ -282,6 +279,8 @@ fun getImg(desc: String): Painter{
         "alphajacket" -> painterResource(id = R.drawable.alphajacket)
         "wooljacket" -> painterResource(id = R.drawable.wooljacket)
         "mediumfleece" -> painterResource(id = R.drawable.mediumfleece)
+        "mediumwoolsweater" -> painterResource(id = R.drawable.ravgenser)
+        "mediumwoolpants" -> painterResource(id = R.drawable.ravbukse)
         //farevarsel
         "icon_warning_snow_yellow" -> painterResource(id = R.drawable.icon_warning_snow_yellow)
 

@@ -22,6 +22,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.EntityClass.AppDatabase
+import com.example.team14_turpakkeliste.TurViewModel
+import com.example.team14_turpakkeliste.data.WeatherValues
+import com.example.team14_turpakkeliste.data.sortClothing
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
@@ -30,7 +33,7 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun SavedScreen(navController: NavController, error: String?) {
+fun SavedScreen(navController: NavController, error: String?, viewModel: TurViewModel) {
     val context = LocalContext.current
     val appDB = AppDatabase.getDatabase(context)
     val saved = appDB.UserDao().getAll()
@@ -75,8 +78,13 @@ fun SavedScreen(navController: NavController, error: String?) {
                                 .padding(20.dp),
                             containerColor = ForestGreen,
                             contentColor = Color.White,
-                            content = {Text("${s.date},  ${s.temperature}C")},
-                            onClick = {navController.navigate("ListScreen")
+                            content = {Text("${s.location},  ${s.date}C")},
+                            onClick = {
+                                viewModel.outerLayerList = sortClothing( "outer",  WeatherValues(s.temperature!!, s.windspeed!!, s.watermilimeter))
+                                viewModel.innerLayerList = sortClothing( "inner",  WeatherValues(s.temperature!!, s.windspeed!!, s.watermilimeter))
+                                viewModel.weatherInfo = WeatherValues(s.temperature!!, s.windspeed!!, s.watermilimeter)
+                                viewModel.weatherImg = s.image.toString()
+                                navController.navigate("ClothingScreen")
                             {
                                 popUpTo(navController.graph.findStartDestination().id) {
                                     saveState = true
@@ -102,7 +110,6 @@ fun SavedScreen(navController: NavController, error: String?) {
                 }
             }
         }
-
             Column(modifier = Modifier
                 .fillMaxSize(),
                 verticalArrangement = Arrangement.Bottom
@@ -119,14 +126,10 @@ fun SavedScreen(navController: NavController, error: String?) {
             }
         }
     }
-
-
-
-
 @Preview(showBackground = true)
 @Composable
 fun SavedPreview() {
     Team14TurPakkeListeTheme {
-        SavedScreen(rememberNavController(), null)
+        SavedScreen(rememberNavController(), null, viewModel = TurViewModel())
     }
 }

@@ -13,6 +13,7 @@ import androidx.room.Query
 data class WeatherInfo(
     @PrimaryKey() val date: String,
     @ColumnInfo(name = "daynumber") val daynumber: Int?,
+    @ColumnInfo(name = "locationName") val location: String?,
     @ColumnInfo(name = "temperature") val temperature: Double?,
     @ColumnInfo(name = "windspeed") val windspeed: Double?,
     @ColumnInfo(name = "watermilimeter") val watermilimeter: Double?,

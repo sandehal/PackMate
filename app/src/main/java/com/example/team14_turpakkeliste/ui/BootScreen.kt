@@ -49,7 +49,7 @@ fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = vi
 
     when(val state = viewModel.turUiState){
         is TurpakklisteUiState.Booting -> SplashScreen()
-        is TurpakklisteUiState.Error -> SavedScreen(navController, viewModel.error)
+        is TurpakklisteUiState.Error -> SavedScreen(navController, viewModel.error, viewModel)
         is TurpakklisteUiState.Loading -> LoadingScreen()
         is TurpakklisteUiState.Success -> BootScreen(navController,state.alerts,state.forecastData, viewModel)
     }
@@ -61,7 +61,7 @@ fun BootScreen(navController: NavHostController, alerts:List<Alert>, forecastDat
     NavHost(navController = navController, startDestination = "SavedScreen") {
         composable(Screen.ListScreen.route) { ListScreen(navController, viewModel, forecastData, alerts) }
         composable(Screen.MapScreen.route) { MapsComposeScreen(navController,viewModel, alerts) }
-        composable(Screen.SavedScreen.route) { SavedScreen(navController, null) }
+        composable(Screen.SavedScreen.route) { SavedScreen(navController, null, viewModel) }
         composable(Screen.LoadingScreen.route) { LoadingScreen() }
         composable(Screen.ClothingScreen.route) { ClothingScreen(navController,viewModel) }
     }

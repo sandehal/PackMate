@@ -4,7 +4,6 @@ package com.example.team14_turpakkeliste
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.team14_turpakkeliste.data.*
@@ -18,6 +17,7 @@ class TurViewModel: ViewModel() {
     var error : String? = null
     var currentLatitude : Double = 0.0
     var currentLongitude : Double = 0.0
+    lateinit var alerts: List<Alert>
     //denne er litt goofy når man velger antall dager fordi det går på indeksering fra 0 til 2!!!
     var numberOfDays : Int = 2
     var chosenDay: Int = 0
@@ -25,14 +25,12 @@ class TurViewModel: ViewModel() {
     lateinit var innerLayerList: List<Clothing>
     lateinit var weatherInfo: WeatherValues
     lateinit var weatherImg: String
-    lateinit var alertList: List<Alert>
+    //lateinit var location: String
 
-    var currentLatitudeLongitude = MutableLiveData<Pair<Double, Double>>()
 
     var turUiState: TurpakklisteUiState by mutableStateOf(TurpakklisteUiState.Booting)
         private set
     private val source: Datasource = Datasource()
-
     init {
         getData()
     }
@@ -42,11 +40,35 @@ class TurViewModel: ViewModel() {
             turUiState = TurpakklisteUiState.Success(alerts, forecast)
         }
     }
+    //se over
+    fun getAlertColorForArea(): String{
+        var alertColor = "green"
+        for(alert in alerts){
+            println(alert.eventCode)
+            if(pinpointLocation(currentLatitude,currentLongitude,alert.areaPolygon!!)){
+                //bruk awerness_type her, split denne på lengde dersom det er går ann
+                val string= alert.awareness_level?.split(";")
+                val awarenesslevel = string?.get(1)?.trim()
+                if(awarenesslevel == "red"){
+                    alertColor = "red"
+                    break
+                }
+                if(alertColor != "red" && awarenesslevel == "orange"){
+                    alertColor = "orange"
+                }
+                if(awarenesslevel == "yellow" && alertColor == "green"){
+                    alertColor = "yellow"
+                }
+            }
+        }
+        return alertColor
+    }
 
     private fun getData() {
         viewModelScope.launch {
             turUiState = try {
                 val alertList = source.getAllAlerts()
+                alerts = alertList
                 val forecast = source.getForecastData(currentLatitude,currentLongitude)
                 TurpakklisteUiState.Success(alertList, forecast)
             } catch (ex: ResponseException) {

@@ -69,11 +69,10 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastDa
             text = { Text("Dag ${i+1}") },
                 //send med beskjed her om for å sortere klær som skal til clothingscreen henter ut infor om riktig dag
                 onClick = { viewModel.chosenDay = i
-                    viewModel.outerLayerList = sortClothing(forecastData, viewModel.chosenDay, "outer")
-                    viewModel.innerLayerList = sortClothing(forecastData, viewModel.chosenDay, "inner")
+                    viewModel.outerLayerList = sortClothing( "outer", getWeather(forecastData, viewModel.chosenDay))
+                    viewModel.innerLayerList = sortClothing( "inner", getWeather(forecastData, viewModel.chosenDay))
                     viewModel.weatherInfo = getWeather(forecastData, viewModel.chosenDay)
                     viewModel.weatherImg = getweatherIcon(forecastData, viewModel.chosenDay)
-                    viewModel.alertList = alerts
                     navController.navigate("ClothingScreen")
                 {
                     popUpTo(navController.graph.findStartDestination().id) {
@@ -119,11 +118,19 @@ fun SaveButton(viewModel: TurViewModel, forecastData: ForecastData){
             appDB = AppDatabase.getDatabase(context)
             GlobalScope.launch(Dispatchers.IO) {
                 //gå gjennom variabelnavn her og tenk engelsk og riktig
-                val date = forecastData.properties.timeseries.get(0).time
+                //Denne legger bare inn et objekt, og ikke flere for dagene
+                //må da oppdatere databasen til å kunne holde på denne dataen!
                 for(i in 0..viewModel.numberOfDays){
+                    val dataForDay = when(i){
+                        0 -> 2
+                        1 -> 26
+                        2 -> 40
+                        else -> 0
+                    }
+                    val date = forecastData.properties.timeseries.get(dataForDay).time
                     val weather = getWeather(forecastData, i)
                     val img = getweatherIcon(forecastData, i)
-                    val tempList = WeatherInfo(date, i, weather.temp, weather.windspeed,weather.watermm, img)
+                    val tempList = WeatherInfo(date, i, "Oslo", weather.temp, weather.windspeed,weather.watermm, img)
                     appDB.UserDao().insert(tempList)
                 }
             }

@@ -74,18 +74,10 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
         }
         false
     }
-
     val baseLatLng = LatLng(60.47202399999999, 8.468945999999999)
-
     //Hentet fra Sander
-    val location = remember {
-        mutableStateOf("")
-    }
-
+    val location = remember { mutableStateOf("") }
     val context = LocalContext.current
-
-
-
 
     val trailingIconView = @Composable {
         IconButton(
@@ -101,8 +93,6 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
         }
     }
 
-
-
     Column(modifier = Modifier.fillMaxSize()) {
         Row {
             TextField(
@@ -110,25 +100,21 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
 
                 onValueChange = { location.value = it},
                 placeholder = { Text(text = "Søk på område") },
-
                 modifier = Modifier
                     .padding()
                     .width(300.dp)
                     .height(60.dp),
-
                 singleLine = true,
                 trailingIcon = if (location.value.isNotBlank()) trailingIconView else null,
             )
             // on below line adding a button.
             Button(
                 onClick = {
-
                     val locCords = getLocationCompose(location.value, viewModel, context)
                     if(markerState == null) {
                         if (location.value != "") {
                             if (locCords != null && locCords != baseLatLng) {
                                 clickedLatLng.value = locCords
-
                                 cameraPositionState.position = CameraPosition.fromLatLngZoom(locCords, 9f)
                                 scope.launch {
                                     sheetState.show()
@@ -137,7 +123,6 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
                         }
                     } else {
                         clickedLatLng.value = null
-
                     }
                 },
                 shape = RectangleShape,
@@ -216,7 +201,6 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
 }
 
 fun getLocationCompose(location: String, viewModel: TurViewModel, context: Context): LatLng? {
-
     var latLng : LatLng?
     latLng = null
     var addressList : List<Address>? = null
@@ -225,7 +209,6 @@ fun getLocationCompose(location: String, viewModel: TurViewModel, context: Conte
     )
     val geocoder = Geocoder(context)
     try {
-
         //Lønnet seg for større treffsikkerhet å legge til "Norway" hele to ganger.
 
         addressList = geocoder.getFromLocationName(location.plus(", Norway"), 1)

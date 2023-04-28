@@ -1,14 +1,14 @@
 package com.example.team14_turpakkeliste.data
 
+import com.example.team14_turpakkeliste.EntityClass.WeatherInfo
+
 //værdata gi beskjed om vindretning
 //evt gi beskjed om en gjennomsnittstempratur der et plagg kan fungere
 
 
 fun getClothes(): List<Clothing>{
-    val clothingList: List<Clothing> = listOf(
-        //legg inn mer klær med varmeverdi
+    return listOf(
         //klær inspirert av stat-system fra ulvang på ullklær andre klær hentet fra Norrøna
-
         //ytterlagjakker
         //trenger ytterlag med vanntett 4!
         Clothing("Shell", "jacket","outer", 1, 6, 6, "goretexjacket"),
@@ -52,31 +52,16 @@ fun getClothes(): List<Clothing>{
 
         Clothing("Kan ikke anbefale noe her", "none", "none", 0, 0 ,0, "none")
     )
-    return  clothingList
 }
-fun sortClothing(forecastData: ForecastData, dayNum: Int, layer: String): List<Clothing>{
-    val dataForDay = when(dayNum){
-        0 -> 2
-        1 -> 26
-        2 -> 40
-        else -> 0
-    }
+fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
     //val date = forecastData.properties.timeseries.get(dataForDay).time
-    val temp: Double = forecastData.properties.timeseries.get(dataForDay).data.instant.details.air_temperature.toDouble()
-    val wind: Double = forecastData.properties.timeseries.get(dataForDay).data.instant.details.wind_speed.toDouble()
-    var water = 0.0
-    for(i in dataForDay..dataForDay+6){
-        forecastData.properties.timeseries.get(i).data.next_1_hours.details?.precipitation_amount?.let {
-            water += forecastData.properties.timeseries.get(i).data.next_1_hours.details!!.precipitation_amount.toDouble()
-        }
-    }
+    val temp = weatherValues.temp
+    val wind = weatherValues.windspeed
+    var water = weatherValues.watermm
     //disse burde ikke være avhengige av hverandre
     val outerReqMin = chooseReqsOuter(temp, wind, water)
     val outerReqPants = chooseReqsOuter(temp,wind,water)
     val innerReqMin = chooseInnerReqs(temp, water)
-    println(outerReqMin)
-    println(outerReqPants)
-    println(innerReqMin)
     if(outerReqPants.warmth > 2){
         outerReqPants.warmth = 2
     }
@@ -179,6 +164,7 @@ fun chooseInnerReqs(temp: Double, water: Double?): MinRequirementsClothes{
     }
     return MinRequirementsClothes(warmth, 1,1)
 }
+//fiks denne slik at den henter ut riktig data på dato!!!!
 fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues{
     val dataForDay = when(dayNum){
         0 -> 2
@@ -196,8 +182,7 @@ fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues{
             water += forecastData.properties.timeseries.get(i).data.next_1_hours.details!!.precipitation_amount.toDouble()
         }
     }
-    val returnString =  WeatherValues(temp, wind, water)
-    return returnString
+    return WeatherValues(temp, wind, water)
 }
 fun getweatherIcon(forecastData: ForecastData, dayNum: Int): String{
     val dataForDay = when(dayNum){
