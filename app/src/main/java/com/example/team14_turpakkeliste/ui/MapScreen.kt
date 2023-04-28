@@ -289,9 +289,7 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DatePickerScreen() {
-
     val dateTime = LocalDateTime.now()
-
     val datePickerState = remember {
         DatePickerState(
             yearRange = (2023..2023),
