@@ -52,8 +52,20 @@ class TurViewModel: ViewModel() {
     }
     fun getForecast(alerts:List<Alert>){
         viewModelScope.launch {
-            val forecast = source.getForecastData(currentLatitude, currentLongitude)
-            turUiState = TurpakklisteUiState.Success(alerts, forecast)
+
+            turUiState = try {
+                val forecast = source.getForecastData(currentLatitude, currentLongitude)
+                TurpakklisteUiState.Success(alerts, forecast)
+            } catch (ex: ResponseException) {
+                error = ex.toString()
+                TurpakklisteUiState.Error
+            } catch (ex: SerializationException) {
+                error = ex.toString()
+                TurpakklisteUiState.Error
+            } catch(e:Throwable){
+                error = e.toString()
+                TurpakklisteUiState.Error
+            }
         }
     }
     //se over
@@ -101,13 +113,13 @@ class TurViewModel: ViewModel() {
                 TurpakklisteUiState.Success(alertList, forecast)
             } catch (ex: ResponseException) {
                 error = ex.toString()
-                TurpakklisteUiState.Error
+                TurpakklisteUiState.OfflineMode
             } catch (ex: SerializationException) {
                 error = ex.toString()
-                TurpakklisteUiState.Error
+                TurpakklisteUiState.OfflineMode
             } catch(e:Throwable){
                 error = e.toString()
-                TurpakklisteUiState.Error
+                TurpakklisteUiState.OfflineMode
             }
         }
     }

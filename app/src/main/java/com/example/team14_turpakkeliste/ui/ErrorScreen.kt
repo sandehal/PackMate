@@ -52,14 +52,12 @@ fun ErrorScreen(viewModel: TurViewModel){
         )
         Spacer(modifier = Modifier.height(100.dp))
         Box(modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 50.dp, end = 50.dp),
+            .fillMaxWidth().padding(0.dp),
             contentAlignment = Alignment.Center){
             Text( modifier = Modifier
                 .fillMaxWidth()
-                .background(WhiteYellow)
-                .wrapContentWidth(Alignment.CenterHorizontally),
-                text = "PackerBuddy funger kun med internettforbindelse!",
+                .background(WhiteYellow),
+                text = "Kan ikke legge til nye pakklister uten internettforbindelse!\nDumrian...",
                 fontSize = 20.sp
 
             )
