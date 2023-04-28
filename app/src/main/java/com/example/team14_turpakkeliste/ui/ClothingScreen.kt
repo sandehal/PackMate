@@ -69,11 +69,10 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
                         "Vindtetthet: ${outerlist.windproof} \n" +
                         "Vanntetthet: ${outerlist.waterproof}"
                 val image = outerlist.image
-                Spacer(modifier = Modifier.width(60.dp))
                 NonExpandableCard(
                     description = description,
                     img = image)
-                Spacer(modifier = Modifier.width(30.dp))
+                    Spacer(modifier = Modifier.width(20.dp))
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
@@ -88,11 +87,10 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
                         "Vindtetthet: ${innerList.windproof} \n" +
                         "Vanntetthet: ${innerList.waterproof}"
                 val image = innerList.image
-                Spacer(modifier = Modifier.width(50.dp))
                 NonExpandableCard(
                     description = description,
                     img = image)
-                Spacer(modifier = Modifier.width(40.dp))
+                Spacer(modifier = Modifier.width(20.dp))
             }
         }
     }
