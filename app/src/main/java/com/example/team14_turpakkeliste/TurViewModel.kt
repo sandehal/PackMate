@@ -100,8 +100,10 @@ class TurViewModel: ViewModel() {
                 }
             }
         }
-        if (alertType == ""){return null}
-        return Triple(alertType, alertColor, alertdescription)
+        if (alertColor == "green"){return null}
+        else {
+            return Triple(alertType, alertColor, alertdescription)
+        }
     }
 
     private fun getData() {
