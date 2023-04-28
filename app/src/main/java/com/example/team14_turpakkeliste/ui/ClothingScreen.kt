@@ -1,5 +1,6 @@
 package com.example.team14_turpakkeliste.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -36,6 +37,10 @@ import com.example.team14_turpakkeliste.data.pinpointLocation
 fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
     //finpusse hvordan skjermen ser ut
     //1: fikse tekst til å midtstilles og være fetere!
+    BackHandler() {
+        backToListScreen(navController)
+    }
+
     Column(modifier = Modifier
         .fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally) {
@@ -43,17 +48,7 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
             IconButton(
                 onClick = {
-                    navController.navigate("ListScreen")
-                    {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        // Avoid multiple copies of the same destination when
-                        // reselecting the same item
-                        launchSingleTop = true
-                        // Restore state when reselecting a previously selected item
-                        restoreState = true
-                    }
+                    backToListScreen(navController)
                 }
             ) {
                 Icon(Icons.Outlined.ArrowBack, contentDescription = "Back")
@@ -373,5 +368,19 @@ fun getImg(desc: String): Painter{
         }
     }
     return painter
+}
+
+fun backToListScreen(navController: NavController) {
+    navController.navigate("ListScreen")
+    {
+        popUpTo(navController.graph.findStartDestination().id) {
+            saveState = true
+        }
+        // Avoid multiple copies of the same destination when
+        // reselecting the same item
+        launchSingleTop = true
+        // Restore state when reselecting a previously selected item
+        restoreState = true
+    }
 }
 
