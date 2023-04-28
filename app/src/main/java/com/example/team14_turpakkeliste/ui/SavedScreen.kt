@@ -48,7 +48,7 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun SavedScreen(navController: NavController, error: String?, viewModel: TurViewModel) {
+fun SavedScreen(navController: NavController, viewModel: TurViewModel) {
     val context = LocalContext.current
     val appDB = AppDatabase.getDatabase(context)
     val saved = appDB.UserDao().getAll()
@@ -118,13 +118,6 @@ fun SavedScreen(navController: NavController, error: String?, viewModel: TurView
                 }
 
             }
-            if (error != null){
-                scope.launch {
-                    snackbarHostState.showSnackbar(
-                        error
-                    )
-                }
-            }
         }
         Column(modifier = Modifier
                 .fillMaxSize(),
@@ -146,7 +139,7 @@ fun SavedScreen(navController: NavController, error: String?, viewModel: TurView
 @Composable
 fun SavedPreview() {
     Team14TurPakkeListeTheme {
-        SavedScreen(rememberNavController(), null, viewModel = TurViewModel())
+        SavedScreen(rememberNavController(), viewModel = TurViewModel())
     }
 }
 
