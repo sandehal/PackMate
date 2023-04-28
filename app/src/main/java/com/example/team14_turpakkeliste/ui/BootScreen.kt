@@ -11,9 +11,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -29,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -75,7 +79,9 @@ fun BootScreen(navController: NavHostController, alerts:List<Alert>, forecastDat
 fun LoadingScreen(){
 
     val image = painterResource(R.drawable.autumn_telt_1)
-    Column(modifier = Modifier.fillMaxSize().background(WhiteYellow)
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(WhiteYellow)
     ){
         val scale = remember {
             Animatable(0.0f)
@@ -156,17 +162,6 @@ fun BottomNavBar(navController: NavController){
 @Composable
 fun MakeListButton(navController: NavController,viewModel: TurViewModel){
 
-    var days by remember { mutableStateOf("") }
-    TextField(
-        value = days,
-        onValueChange = { newText ->
-            days = newText
-        }
-    )
-    if(days != ""){
-
-    viewModel.updateDays(Integer.parseInt(days)-1)
-    }
     ExtendedFloatingActionButton(
 
         containerColor = ForestGreen,

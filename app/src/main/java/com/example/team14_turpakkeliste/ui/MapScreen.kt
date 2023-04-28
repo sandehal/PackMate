@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.google.android.gms.maps.model.LatLng
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.*
@@ -24,6 +25,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.team14_turpakkeliste.R
@@ -290,12 +292,30 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp
                 )
+                var days by remember { mutableStateOf("") }
+
+                //vi må kanskje endre en del hvis spacer er forskjellig fra telefon til telefon
+
+                OutlinedTextField(
+                    value = days,
+                    label = { Text(text = "Antall dager: ") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    onValueChange = {
+                        days = it
+                    }
+                )
+
+                if(days != ""){
+
+                    turViewModel.updateDays(Integer.parseInt(days)-1)
+                }
             }
 
 
             //DropdownMenu(turViewModel)
             //DatePickerScreen()
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(20.dp))
+
 
             MakeListButton(navController, turViewModel)
         }
