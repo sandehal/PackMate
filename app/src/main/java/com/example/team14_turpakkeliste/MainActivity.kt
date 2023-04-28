@@ -14,6 +14,7 @@ import com.example.team14_turpakkeliste.ui.SetStateScreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 import com.google.android.gms.location.FusedLocationProviderClient
 
+
 //The activity needs to be a subclass of ComponentActivity; AppCompatActivity
 //In order for google maps to function, according to the current implementation.
 class MainActivity : AppCompatActivity() {
