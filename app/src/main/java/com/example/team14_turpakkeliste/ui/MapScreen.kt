@@ -167,9 +167,11 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
 
 
                     clickedLatLng.value = latLng
+
+                    viewModel.location = getNameFromLocation(clickedLatLng.value!!,viewModel, context )
                     viewModel.currentLatitude = String.format("%.2f",latLng.latitude).toDouble()
                     viewModel.currentLongitude =  String.format("%.2f",latLng.longitude).toDouble()
-                    viewModel.location = "${viewModel.currentLatitude}, ${viewModel.currentLongitude}"
+
                     viewModel.getForecast(alerts = alerts)
                     Log.d(
                         "Oppdatert",
@@ -359,3 +361,70 @@ fun DatePickerScreen() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun LocalDateTime.toMillis() = this.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+
+
+fun getNameFromLocation(cordinates: LatLng,viewModel: TurViewModel, context: Context): String {
+    var locationName : String = ""
+    var addressList : List<Address>? = null
+    if(cordinates != null) {
+        val geocoder = Geocoder(context)
+        try {
+            //Lønnet seg for større treffsikkerhet å legge til "Norway" hele to ganger.
+            addressList = geocoder.getFromLocation(cordinates.latitude, cordinates.longitude, 1)
+            println("Resultat")
+        } catch (e: IOException) {
+            e.printStackTrace()
+            println("FEIL")
+        }
+        if (addressList!!.isNotEmpty()) {
+            val address = addressList[0]
+            viewModel.currentLatitude = address.latitude
+            viewModel.currentLongitude = address.longitude
+
+            locationName = checkAvailabilityLoc(address)
+            Log.d("Adressenavn", "${locationName}")
+            println(locationName)
+            return locationName
+        }
+    }
+    return locationName
+}
+
+
+
+fun checkAvailabilityLoc(address: Address): String{
+
+    if(address.subLocality != null){
+        return address.subLocality.toString()
+    }
+    else if(address.subAdminArea!=null){
+        return address.subAdminArea.toString()
+    }
+    else if(address.locality!=null){
+        return address.locality.toString()
+    }
+    else if(address.adminArea!=null){
+
+        return address.adminArea.toString()
+    }
+    else{
+        return address.countryName.toString()
+    }
+
+
+   return "lokasjon ikke funnet"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
