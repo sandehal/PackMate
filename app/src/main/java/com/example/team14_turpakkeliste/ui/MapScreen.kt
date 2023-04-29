@@ -308,7 +308,9 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
                     mutableStateOf(true)
                 }
                 Row() {
-                    Button(
+                    Button(colors = ButtonDefaults.buttonColors(
+                        containerColor = ForestGreen,
+                        contentColor = Color.White),
                         onClick = {
                             enabled1 = false
                             enabled2 = true
@@ -321,7 +323,11 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
                     }
                     Spacer(modifier = Modifier.width(5.dp))
                     Button(
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = ForestGreen,
+                            contentColor = Color.White),
                         onClick = {
+
                             enabled2 = false
                             enabled1 = true
                             enabled3 = true
@@ -334,6 +340,9 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
                     }
                     Spacer(modifier = Modifier.width(5.dp))
                     Button(
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = ForestGreen,
+                            contentColor = Color.White),
                         onClick = {
                             enabled3 = false
                             enabled1 = true
@@ -348,14 +357,7 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
                 }
 
 
-                /* OutlinedTextField(
-                     value = days,
-                     label = { Text(text = "Antall dager: ") },
-                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                     onValueChange = {
-                         days = it
-                     }
-                 )*/
+
 
 
 
