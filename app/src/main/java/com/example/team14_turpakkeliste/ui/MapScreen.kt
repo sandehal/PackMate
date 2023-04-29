@@ -5,6 +5,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -294,35 +295,84 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp
                 )
-                var days by remember { mutableStateOf("") }
+                var days by remember { mutableStateOf(0) }
 
                 //vi må kanskje endre en del hvis spacer er forskjellig fra telefon til telefon
-
-                OutlinedTextField(
-                    value = days,
-                    label = { Text(text = "Antall dager: ") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    onValueChange = {
-                        days = it
+                var enabled1 by remember {
+                    mutableStateOf(true)
+                }
+                var enabled2 by remember {
+                    mutableStateOf(true)
+                }
+                var enabled3 by remember {
+                    mutableStateOf(true)
+                }
+                Row() {
+                    Button(
+                        onClick = {
+                            enabled1 = false
+                            enabled2 = true
+                            enabled3 = true
+                            days = 1
+                        },
+                        enabled = enabled1
+                    ) {
+                        Text("1 dag")
                     }
-                )
+                    Spacer(modifier = Modifier.width(5.dp))
+                    Button(
+                        onClick = {
+                            enabled2 = false
+                            enabled1 = true
+                            enabled3 = true
+                            days = 2
+                        },
+                        enabled = enabled2
+
+                    ) {
+                        Text("2 dager")
+                    }
+                    Spacer(modifier = Modifier.width(5.dp))
+                    Button(
+                        onClick = {
+                            enabled3 = false
+                            enabled1 = true
+                            enabled2 = true
+                            days = 3
+                        },
+                        enabled = enabled3
+                    ) {
+                        Text("3 dager")
+                    }
+                    Spacer(modifier = Modifier.width(5.dp))
+                }
 
 
-                if(days != ""){
+                /* OutlinedTextField(
+                     value = days,
+                     label = { Text(text = "Antall dager: ") },
+                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                     onValueChange = {
+                         days = it
+                     }
+                 )*/
 
-                    val intDays = Integer.parseInt(days)
-                    if(intDays > 3){
+
+
+
+
+                    if(days > 3){
                         turViewModel.updateDays(2)
                     }
-                    else if(intDays < 1){
+                    else if(days < 1){
                         turViewModel.updateDays(0)
                     }
                     else{
 
-                        turViewModel.updateDays(intDays-1)
+                        turViewModel.updateDays(days -1)
                     }
 
-                }
+
 
             }
 
