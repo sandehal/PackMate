@@ -72,7 +72,7 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
                 NonExpandableCard(
                     description = description,
                     img = image)
-                    Spacer(modifier = Modifier.width(20.dp))
+                    Spacer(modifier = Modifier.width(10.dp))
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
@@ -90,7 +90,7 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
                 NonExpandableCard(
                     description = description,
                     img = image)
-                Spacer(modifier = Modifier.width(20.dp))
+                Spacer(modifier = Modifier.width(10.dp))
             }
         }
     }

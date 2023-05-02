@@ -140,7 +140,7 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel, isOffline
                 .fillMaxSize(),
                 verticalArrangement = Arrangement.Bottom
             ){
-            if (saved.isEmpty()){
+            if (saved.isEmpty() && !isOffline){
                 Text(modifier = Modifier
                     .wrapContentWidth(Alignment.CenterHorizontally)
                     .padding(20.dp),
