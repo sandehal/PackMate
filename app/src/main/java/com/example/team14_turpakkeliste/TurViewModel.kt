@@ -18,8 +18,7 @@ class TurViewModel: ViewModel() {
     var currentLatitude : Double = 0.0
     var currentLongitude : Double = 0.0
     lateinit var alerts: List<Alert>
-    //denne er litt goofy når man velger antall dager fordi det går på indeksering fra 0 til 2!!!
-    var numberOfDays : Int = 2
+    var numberOfDays : Int = 0
     var chosenDay: Int = 0
     lateinit var outerLayerList: List<Clothing>
     lateinit var innerLayerList: List<Clothing>

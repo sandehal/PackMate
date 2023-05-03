@@ -19,7 +19,7 @@ fun getClothes(): List<Clothing>{
         Clothing("HeavyDown", "jacket", "outer", 6, 3, 6, "heavydown"),
         Clothing("Alpha100", "jacket", "outer", 3,2,4, "alphajacket"),
         Clothing("ShellDown", "jacket", "outer", 6,6,6, "shelldownaparka"),
-        Clothing("MediumDown", "jacket", "outer", 4,3,6, "mediumDown"),
+        Clothing("MediumDown", "jacket", "outer", 4,3,6, "mediumdown"),
 
         //ytterlag bukser
         Clothing("Shell", "pants", "outer", 1,6, 6,"goretexpants"),
@@ -82,8 +82,8 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
             && (watermilimeter == outerReqMin.waterproof || watermilimeter == outerReqMin.waterproof+1)
             && clothing.type == "jacket"
             && clothing.layer == layer){
-            tempList.set(0,clothing)
-            continue
+                tempList.set(0,clothing)
+                continue
         }
         //fiks slik at den kan velge bukser og bare anbefale varmere underlag!
         if(warmth == outerReqPants.warmth
@@ -104,7 +104,6 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
             && (clothing.type == "pants" || clothing.type == "boxer")
             && clothing.layer == layer){
                 tempList.set(1,clothing)
-                println(clothing.image)
             continue
         }
     }
@@ -173,8 +172,8 @@ fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues{
         2 -> 48
         else -> 0
     }
-    val date = forecastData.properties.timeseries.get(dataForDay).time
-    println(date)
+    //val date = forecastData.properties.timeseries.get(dataForDay).time
+    //println(date)
     val temp: Double = forecastData.properties.timeseries.get(dataForDay).data.instant.details.air_temperature.toDouble()
     val wind: Double = forecastData.properties.timeseries.get(dataForDay).data.instant.details.wind_speed.toDouble()
     var water = 0.0
