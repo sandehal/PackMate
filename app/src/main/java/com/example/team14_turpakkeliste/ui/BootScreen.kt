@@ -71,6 +71,7 @@ fun BootScreen(navController: NavHostController, alerts:List<Alert>, forecastDat
         composable(Screen.SavedScreen.route) { SavedScreen(navController, viewModel, false) }
         composable(Screen.LoadingScreen.route) { LoadingScreen() }
         composable(Screen.ClothingScreen.route) { ClothingScreen(navController,viewModel) }
+        composable(Screen.InfoScreen.route) { InfoScreen(navController) }
     }
 }
 
@@ -117,6 +118,7 @@ sealed class Screen(val route: String, val icon: ImageVector, val description : 
     object SavedScreen : Screen("SavedScreen", Icons.Default.Star, "Saved")
     object ClothingScreen : Screen("ClothingScreen", Icons.Default.Favorite, "Clothing")
     object LoadingScreen : Screen("LoadingScreen", Icons.Default.Refresh, "Loading")
+    object InfoScreen : Screen("InfoScreen", Icons.Default.Info, "Info")
 }
 
 @Composable
@@ -186,4 +188,17 @@ fun MakeListButton(navController: NavController,viewModel: TurViewModel){
             .fillMaxWidth()
             .padding(start = 10.dp, end = 10.dp)
     )
+}
+fun navigate(navController: NavController, route: String) {
+    navController.navigate(route)
+    {
+        popUpTo(navController.graph.findStartDestination().id) {
+            saveState = true
+        }
+        // Avoid multiple copies of the same destination when
+        // reselecting the same item
+        launchSingleTop = true
+        // Restore state when reselecting a previously selected item
+        restoreState = true
+    }
 }

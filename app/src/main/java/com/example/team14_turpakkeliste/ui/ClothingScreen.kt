@@ -19,6 +19,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
@@ -37,20 +38,29 @@ import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 @Composable
 fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
     BackHandler {
-        backToListScreen(navController)
+        navigate(navController, "ListScreen")
     }
     Column(modifier = Modifier
         .fillMaxHeight()
         .background(WhiteYellow),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
+        Row(modifier = Modifier.fillMaxWidth()) {
             IconButton(
                 onClick = {
-                    backToListScreen(navController)
+                    navigate(navController, "ListScreen")
                 }
             ) {
                 Icon(Icons.Outlined.ArrowBack, contentDescription = "Back")
+
+            }
+            Spacer(Modifier.weight(1f))
+            IconButton(
+                onClick = {
+                    navigate(navController, "InfoScreen")
+                }
+            ) {
+                Icon(Icons.Outlined.Info, contentDescription = "Info")
 
             }
         }
@@ -403,17 +413,5 @@ fun getImg(desc: String): Painter{
     }
     return painter
 }
-fun backToListScreen(navController: NavController) {
-    navController.navigate("ListScreen")
-    {
-        popUpTo(navController.graph.findStartDestination().id) {
-            saveState = true
-        }
-        // Avoid multiple copies of the same destination when
-        // reselecting the same item
-        launchSingleTop = true
-        // Restore state when reselecting a previously selected item
-        restoreState = true
-    }
-}
+
 
