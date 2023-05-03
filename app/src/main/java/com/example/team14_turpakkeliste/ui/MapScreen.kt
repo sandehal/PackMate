@@ -34,7 +34,6 @@ import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.compose.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 import java.io.IOException
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -351,14 +350,7 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
                     }
                     Spacer(modifier = Modifier.width(5.dp))
                 }
-
-
-
-
-
-
-
-
+                //hvordan fungerer denne? hilsen Trym
                     if(days > 3){
                         turViewModel.updateDays(2)
                     }
@@ -366,20 +358,12 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
                         turViewModel.updateDays(0)
                     }
                     else{
-
                         turViewModel.updateDays(days -1)
                     }
-
-
-
             }
-
-
             //DropdownMenu(turViewModel)
             //DatePickerScreen()
             Spacer(modifier = Modifier.height(20.dp))
-
-
             MakeListButton(navController, turViewModel)
         }
 
@@ -387,7 +371,7 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
         }
     }
 
-
+//fjern dette
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -431,7 +415,7 @@ fun getNameFromLocation(cordinates: LatLng,viewModel: TurViewModel, context: Con
             viewModel.currentLongitude = address.longitude
 
             locationName = checkAvailabilityLoc(address)
-            Log.d("Adressenavn", "${locationName}")
+            Log.d("Adressenavn", locationName)
             println(locationName)
             return locationName
         }

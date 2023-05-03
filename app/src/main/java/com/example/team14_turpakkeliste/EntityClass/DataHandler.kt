@@ -29,5 +29,4 @@ interface UserDao {
     @Query("DELETE FROM WeatherInfo")
     suspend fun deleteAll()
 
-
 }

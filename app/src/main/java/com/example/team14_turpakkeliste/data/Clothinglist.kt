@@ -1,15 +1,9 @@
 package com.example.team14_turpakkeliste.data
 
-
-//værdata gi beskjed om vindretning
-//evt gi beskjed om en gjennomsnittstempratur der et plagg kan fungere
-
-
 fun getClothes(): List<Clothing>{
     return listOf(
         //klær inspirert av stat-system fra ulvang på ullklær andre klær hentet fra Norrøna
         //ytterlagjakker
-        //trenger ytterlag med vanntett 4!
         Clothing("Shell", "jacket","outer", 1, 6, 6, "goretexjacket"),
         Clothing("LightShell", "jacket", "outer", 1, 5, 6, "lightgoretexjacket"),
         Clothing("Down", "jacket", "outer", 5,3,5, "downjacket"),
@@ -20,7 +14,6 @@ fun getClothes(): List<Clothing>{
         Clothing("Alpha100", "jacket", "outer", 3,2,4, "alphajacket"),
         Clothing("ShellDown", "jacket", "outer", 6,6,6, "shelldownaparka"),
         Clothing("MediumDown", "jacket", "outer", 4,3,6, "mediumdown"),
-
         //ytterlag bukser
         Clothing("Shell", "pants", "outer", 1,6, 6,"goretexpants"),
         Clothing("LightShell", "pants", "outer", 1, 5, 6, "lightgoretexpants"),
@@ -28,7 +21,6 @@ fun getClothes(): List<Clothing>{
         Clothing("Softshell", "pants", "outer", 2, 4, 5, "heavypants"),
         Clothing("Softshell", "pants", "outer", 1, 3, 4, "trekkingpants"),
         Clothing("Softshell", "shorts", "outer", 1, 2, 4, "flexshorts"),
-
         //jakker uten vanntetthet
         Clothing("thermalFleece", "jacket", "outer", 5,1,4,"thermalfleece"),
         Clothing("thinFleece", "jacket", "outer", 2,1,3, "thinfleece"),
