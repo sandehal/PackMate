@@ -98,7 +98,7 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
         val alertInfo = viewModel.getAlertDataForArea()
         if(alertInfo != null){
             ExpandableCard(title = "Farevarsel",
-                description = alertInfo!!.third,
+                description = alertInfo.third,
                 img = "icon_warning_${alertInfo.first}_${alertInfo.second}")
         }
         val info = viewModel.weatherInfo

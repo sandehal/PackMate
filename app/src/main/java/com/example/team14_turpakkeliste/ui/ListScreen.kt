@@ -36,7 +36,6 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.team14_turpakkeliste.EntityClass.AppDatabase
 import com.example.team14_turpakkeliste.EntityClass.WeatherInfo
 import com.example.team14_turpakkeliste.TurViewModel
-import com.example.team14_turpakkeliste.data.Alert
 import com.example.team14_turpakkeliste.data.getweatherIcon
 import com.example.team14_turpakkeliste.data.sortClothing
 import com.example.team14_turpakkeliste.data.getWeather
@@ -75,7 +74,6 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastDa
                 containerColor = ForestGreen,
                 contentColor = Color.White),
             shape = RectangleShape,
-
                 //send med beskjed her om for å sortere klær som skal til clothingscreen henter ut infor om riktig dag
                 onClick = { viewModel.chosenDay = i
                     viewModel.outerLayerList = sortClothing( "outer", getWeather(forecastData, i))
@@ -108,7 +106,6 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastDa
             }
         }
         }
-
     }
     Column(
         modifier = Modifier
