@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -29,17 +28,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.EntityClass.AppDatabase
-import com.example.team14_turpakkeliste.EntityClass.WeatherInfo
 import com.example.team14_turpakkeliste.TurViewModel
-import com.example.team14_turpakkeliste.data.ForecastData
 import com.example.team14_turpakkeliste.data.WeatherValues
-import com.example.team14_turpakkeliste.data.getWeather
-import com.example.team14_turpakkeliste.data.getweatherIcon
 import com.example.team14_turpakkeliste.data.sortClothing
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
-import com.example.team14_turpakkeliste.ui.theme.Yellow
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -104,11 +98,11 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel, isOffline
                                 .padding(20.dp),
                             containerColor = ForestGreen,
                             contentColor = Color.White,
-                            content = {Text("${s.location},  ${s.date}C")},
+                            content = {Text("${s.location}, dag: ${s.daynumber?.plus(1)}")},
                             onClick = {
-                                viewModel.outerLayerList = sortClothing( "outer",  WeatherValues(s.temperature!!, s.windspeed!!, s.watermilimeter))
-                                viewModel.innerLayerList = sortClothing( "inner",  WeatherValues(s.temperature!!, s.windspeed!!, s.watermilimeter))
-                                viewModel.weatherInfo = WeatherValues(s.temperature!!, s.windspeed!!, s.watermilimeter)
+                                viewModel.outerLayerList = sortClothing( "outer",  WeatherValues(s.temperature!!,s.windspeed!!, s.watermilimeter))
+                                viewModel.innerLayerList = sortClothing( "inner",  WeatherValues(s.temperature, s.windspeed, s.watermilimeter))
+                                viewModel.weatherInfo = WeatherValues(s.temperature, s.windspeed, s.watermilimeter)
                                 viewModel.weatherImg = s.image.toString()
                                 navController.navigate("ClothingScreen")
                             {
@@ -126,7 +120,6 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel, isOffline
                         )
                     }
                 }
-
             }
             if (isOffline){
                 scope.launch {

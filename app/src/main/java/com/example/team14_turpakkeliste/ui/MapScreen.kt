@@ -5,7 +5,6 @@ import android.location.Address
 import android.location.Geocoder
 import android.os.Build
 import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -15,7 +14,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.google.android.gms.maps.model.LatLng
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.*
@@ -23,10 +21,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.team14_turpakkeliste.R
@@ -165,13 +161,13 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
 
                 if (markerState == null) {
 
-
-
                     clickedLatLng.value = latLng
 
                     viewModel.location = getNameFromLocation(clickedLatLng.value!!,viewModel, context )
-                    viewModel.currentLatitude = String.format("%.2f",latLng.latitude).toDouble()
-                    viewModel.currentLongitude =  String.format("%.2f",latLng.longitude).toDouble()
+                    viewModel.currentLatitude = latLng.latitude
+                    //String.format("%.2f",latLng.latitude).toDouble()
+                    viewModel.currentLongitude =  latLng.longitude
+                    //String.format("%.2f",latLng.longitude).toDouble()
 
                     viewModel.getForecast(alerts = alerts)
                     Log.d(
@@ -252,7 +248,7 @@ fun getLocationCompose(location: String, viewModel: TurViewModel, context: Conte
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineScope, navController: NavController, turViewModel: TurViewModel,latLng: MutableState<LatLng?>){
-    var tekstLocation = turViewModel.checkIntitialized()
+    val tekstLocation = turViewModel.checkIntitialized()
 
 
 
@@ -417,7 +413,7 @@ fun LocalDateTime.toMillis() = this.atZone(ZoneId.systemDefault()).toInstant().t
 
 
 fun getNameFromLocation(cordinates: LatLng,viewModel: TurViewModel, context: Context): String {
-    var locationName : String = ""
+    var locationName = ""
     var addressList : List<Address>? = null
     if(cordinates != null) {
         val geocoder = Geocoder(context)

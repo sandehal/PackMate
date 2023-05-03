@@ -31,18 +31,14 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.*
-import com.example.team14_turpakkeliste.data.pinpointLocation
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
 
 @Composable
 fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
-    //finpusse hvordan skjermen ser ut
-    //1: fikse tekst til å midtstilles og være fetere!
-    BackHandler() {
+    BackHandler {
         backToListScreen(navController)
     }
-
     Column(modifier = Modifier
         .fillMaxHeight()
         .background(WhiteYellow),
@@ -98,21 +94,12 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
         .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
-        for(alert in viewModel.alerts){
-            println(alert.eventCode)
-            if(pinpointLocation(viewModel.currentLatitude,viewModel.currentLongitude,alert.areaPolygon!!)){
-                //bruk awerness_type her, split denne på lengde dersom det er går ann
-                val string= alert.awareness_level?.split(";")
-                val typeString = alert.awareness_type?.split(";")
-                val typeStringsplit1 = typeString?.get(1)?.split("-")
-                val awarenesstype = typeStringsplit1?.get(0)?.trim()
-                val awarenesslevel = string?.get(1)?.trim()
-                alert.description?.let {
-                    ExpandableCard(title = "Farevarsel",
-                        description = it,
-                        img = "icon_warning_${awarenesstype}_${awarenesslevel}")
-                }
-            }
+        //fiks denne tilbake til å gjøre kall på funksjon!
+        val alertInfo = viewModel.getAlertDataForArea()
+        if(alertInfo != null){
+            ExpandableCard(title = "Farevarsel",
+                description = alertInfo!!.third,
+                img = "icon_warning_${alertInfo.first}_${alertInfo.second}")
         }
         val info = viewModel.weatherInfo
         ExpandableCard(title = "Vis været",
@@ -249,8 +236,8 @@ fun getImg(desc: String): Painter{
         "downjacket"-> painterResource(id = R.drawable.downjacket)
         "goretexjacket"-> painterResource(id = R.drawable.goretexjacket)
         "goretexpants" -> painterResource(id = R.drawable.goretexpants)
-        "lightgoretexjacket"-> painterResource(id = R.drawable.goretexjacket)
-        "lightgoretexpants" -> painterResource(id = R.drawable.goretexpants)
+        "lightgoretexjacket"-> painterResource(id = R.drawable.lightgoretexjacket)
+        "lightgoretexpants" -> painterResource(id = R.drawable.lightgoretexpants)
         "primaloft" -> painterResource(id = R.drawable.primaloft)
         "ravgenser" -> painterResource(id = R.drawable.warmsweater)
         "ravbukse" -> painterResource(id = R.drawable.warmpants)
@@ -277,8 +264,54 @@ fun getImg(desc: String): Painter{
         "mediumfleece" -> painterResource(id = R.drawable.mediumfleece)
         "mediumwoolsweater" -> painterResource(id = R.drawable.ravgenser)
         "mediumwoolpants" -> painterResource(id = R.drawable.ravbukse)
+        "shelldownparka" -> painterResource(id = R.drawable.goretextdownparka)
+        "mediumdown" -> painterResource(id = R.drawable.mediumwarmdown)
+        //legg inn ullboxer
         //farevarsel
+        "icon_warning_flood_yellow" -> painterResource(id = R.drawable.icon_warning_flood_yellow)
+        "icon_warning_forestfire_yellow" -> painterResource(id = R.drawable.icon_warning_forestfire_yellow)
+        "icon_warning_forestfire_orange"-> painterResource(id = R.drawable.icon_warning_forestfire_orange)
+        "icon_warning_forestfire_red" -> painterResource(id = R.drawable.icon_warning_forestfire_red)
+        "icon_warning_generic_orange" -> painterResource(id = R.drawable.icon_warning_forestfire_yellow)
+        "icon_warning_generic_red" -> painterResource(id = R.drawable.icon_warning_generic_red)
+        "icon_warning_generic_yellow" -> painterResource(id = R.drawable.icon_warning_generic_yellow)
+        "icon_warning_ice_orange" -> painterResource(id = R.drawable.icon_warning_ice_orange)
+        "icon_warning_ice_red" -> painterResource(id = R.drawable.icon_warning_ice_red)
+        "icon_warning_ice_yellow" -> painterResource(id = R.drawable.icon_warning_ice_yellow)
+        "icon_warning_landslide_orange" -> painterResource(id = R.drawable.icon_warning_landslide_orange)
+        "icon_warning_landslide_red"-> painterResource(id = R.drawable.icon_warning_landslide_red)
+        "icon_warning_landslide_yellow" -> painterResource(id = R.drawable.icon_warning_landslide_yellow)
+        "icon_warning_lightning_orange"  -> painterResource(id = R.drawable.icon_warning_lightning_orange)
+        "icon_warning_lightning_red"  -> painterResource(id = R.drawable.icon_warning_lightning_red)
+        "icon_warning_lightning_yellow" -> painterResource(id = R.drawable.icon_warning_lightning_yellow)
+        "icon_warning_polarlow_orange"  -> painterResource(id = R.drawable.icon_warning_polarlow_orange)
+        "icon_warning_polarlow_red"  -> painterResource(id = R.drawable.icon_warning_polarlow_red)
+        "icon_warning_polarlow_yellow" -> painterResource(id = R.drawable.icon_warning_polarlow_yellow)
+        "icon_warning_rainflood_orange" -> painterResource(id = R.drawable.icon_warning_rainflood_orange)
+        "icon_warning_raindflood_red" -> painterResource(id = R.drawable.icon_warning_rainflood_red)
+        "icon_warning_rainflood_yellow" -> painterResource(id = R.drawable.icon_warning_rainflood_yellow)
+        "icon_warning_rain_orange" -> painterResource(id = R.drawable.icon_warning_rain_orange)
+        "icon_warning_rain_red" -> painterResource(id = R.drawable.icon_warning_rain_red)
+        "icon_warning_rain_yellow" -> painterResource(id = R.drawable.icon_warning_rain_yellow)
+        "icon_warning_snow_orange" -> painterResource(id = R.drawable.icon_warning_snow_orange)
+        "icon_warning_snow_red" -> painterResource(id = R.drawable.icon_warning_snow_red)
         "icon_warning_snow_yellow" -> painterResource(id = R.drawable.icon_warning_snow_yellow)
+        "icon_warning_stormsurge_orange" -> painterResource(id = R.drawable.icon_warning_stormsurge_orange)
+        "icon_warning_stormsurge_red"-> painterResource(id = R.drawable.icon_warning_stormsurge_red)
+        "icon_warning_stormsurge_yellow" -> painterResource(id = R.drawable.icon_warning_stormsurge_yellow)
+        "icon_warning_wind_orange" -> painterResource(id = R.drawable.icon_warning_wind_orange)
+        "icon_warning_wind_red" -> painterResource(id = R.drawable.icon_warning_wind_red)
+        "icon_warning_wind_yellow" -> painterResource(id = R.drawable.icon_warning_wind_yellow)
+        "icon_warning_avalanches_orange" -> painterResource(id = R.drawable.icon_warning_avalanches_orange)
+        "icon_warning_avalanches_red" -> painterResource(id = R.drawable.icon_warning_avalanches_red)
+        "icon_warning_avalanches_yellow" -> painterResource(id = R.drawable.icon_warning_avalanches_yellow)
+        "icon_warning_drivingconditions_orange" -> painterResource(id = R.drawable.icon_warning_drivingconditions_orange)
+            "icon_warning_drivingconditions_red" -> painterResource(id = R.drawable.icon_warning_drivingconditions_red)
+            "icon_warning_drivingconditions_yellow" -> painterResource(id = R.drawable.icon_warning_drivingconditions_yellow)
+        //husk dette
+        "icon_warning_extreme_red" -> painterResource(id = R.drawable.icon_warning_extreme)
+            "icon-warning-flood-orange" -> painterResource(id = R.drawable.icon_warning_flood_orange)
+
 
         //værdata
         "clearsky_day" -> painterResource(id = R.drawable.clearsky_day)

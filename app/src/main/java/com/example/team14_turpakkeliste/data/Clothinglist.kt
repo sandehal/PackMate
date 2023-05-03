@@ -1,6 +1,5 @@
 package com.example.team14_turpakkeliste.data
 
-import com.example.team14_turpakkeliste.EntityClass.WeatherInfo
 
 //værdata gi beskjed om vindretning
 //evt gi beskjed om en gjennomsnittstempratur der et plagg kan fungere
@@ -12,17 +11,19 @@ fun getClothes(): List<Clothing>{
         //ytterlagjakker
         //trenger ytterlag med vanntett 4!
         Clothing("Shell", "jacket","outer", 1, 6, 6, "goretexjacket"),
-        Clothing("LightShell", "jacket", "outer", 1, 5, 6, "lightgoretextjacket"),
+        Clothing("LightShell", "jacket", "outer", 1, 5, 6, "lightgoretexjacket"),
         Clothing("Down", "jacket", "outer", 5,3,5, "downjacket"),
         Clothing("Cotton", "jacket", "outer", 2, 2,5,"cottonjacket"),
         Clothing("Primaloft", "jacket", "outer",3, 3,5, "primaloft"),
         Clothing("Softshell", "jacket", "outer", 1, 2, 4, "windjacket"),
         Clothing("HeavyDown", "jacket", "outer", 6, 3, 6, "heavydown"),
         Clothing("Alpha100", "jacket", "outer", 3,2,4, "alphajacket"),
+        Clothing("ShellDown", "jacket", "outer", 6,6,6, "shelldownaparka"),
+        Clothing("MediumDown", "jacket", "outer", 4,3,6, "mediumDown"),
 
         //ytterlag bukser
         Clothing("Shell", "pants", "outer", 1,6, 6,"goretexpants"),
-        Clothing("LightShell", "pants", "outer", 1, 5, 6, "lightgoretextpants"),
+        Clothing("LightShell", "pants", "outer", 1, 5, 6, "lightgoretexpants"),
         Clothing("Softshell", "pants", "outer", 2,3,5, "cottonpants"),
         Clothing("Softshell", "pants", "outer", 2, 4, 5, "heavypants"),
         Clothing("Softshell", "pants", "outer", 1, 3, 4, "trekkingpants"),
@@ -46,7 +47,7 @@ fun getClothes(): List<Clothing>{
         Clothing("Wool", "sweater", "inner", 3,1,1,"mediumwoolsweater"),
         Clothing("Wool", "pants", "inner", 3, 1, 1, "mediumwoolpants"),
         Clothing("LightWool", "sweater", "inner", 2,1,1,"lightwoolsweater"),
-        //Clothing("LightWool", "pants", "inner", 2,1,1,"lightwoolpants"),
+        Clothing("LightWool", "pants", "inner", 2,1,1,"lightwoolpants"),
         Clothing("LightWool", "tshirt", "inner", 1, 1,1, "sommerull"),
         Clothing("Lightwool", "boxer", "inner", 1,1,1, "woolboxer"),
 
@@ -57,7 +58,7 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
     //val date = forecastData.properties.timeseries.get(dataForDay).time
     val temp = weatherValues.temp
     val wind = weatherValues.windspeed
-    var water = weatherValues.watermm
+    val water = weatherValues.watermm
     //disse burde ikke være avhengige av hverandre
     val outerReqMin = chooseReqsOuter(temp, wind, water)
     val outerReqPants = chooseReqsOuter(temp,wind,water)
@@ -114,8 +115,6 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
 fun chooseReqsOuter(temp: Double, wind: Double, water: Double?): MinRequirementsClothes{
     //maks og mintemp for å være med å avgjøre
     var warmth = when(temp) {
-        //endre litt i disse til senere
-        //endre slik at de kanskje ikke går får inn for å se hvordan dette egr fungerer, gjør et par tester her
         in -30.0..-20.0 -> 6
         in -19.9..-10.0 ->  5
         in -9.9..-0.1 ->  4
@@ -136,10 +135,12 @@ fun chooseReqsOuter(temp: Double, wind: Double, water: Double?): MinRequirements
     val waterproof = when(water!!){
         in 0.0..0.1 ->  1
         in 0.2..0.3 ->  2
-        in 0.4..0.5 ->  3
-        in 0.6..0.8 -> 4
-        in 0.9..1.1 ->  5
-        in 1.2..50.0->  6
+        in 0.4..0.8 ->  3
+        //det finnes ikke tilstrekkelig data som tilsier at vi kan ha klær osm har vanntetthet 4
+        //Dette må vi da evt "lage" selv ller bare drite i
+        //in 0.6..0.8 -> 4
+        in 0.9..1.4 ->  5
+        in 1.5..50.0->  6
         else -> {0}
     }
     if(waterproof >= 5 && warmth <= 4){
@@ -169,7 +170,7 @@ fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues{
     val dataForDay = when(dayNum){
         0 -> 2
         1 -> 26
-        2 -> 40
+        2 -> 48
         else -> 0
     }
     val date = forecastData.properties.timeseries.get(dataForDay).time
@@ -177,7 +178,8 @@ fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues{
     val temp: Double = forecastData.properties.timeseries.get(dataForDay).data.instant.details.air_temperature.toDouble()
     val wind: Double = forecastData.properties.timeseries.get(dataForDay).data.instant.details.wind_speed.toDouble()
     var water = 0.0
-    for(i in dataForDay..dataForDay+6){
+    //her kunne vi tatt avgjørelsen å ha maxprecipitation fordi denne metoden er så av og på :/ kan kræsje når det er ny time osv
+    for(i in dataForDay..dataForDay+2){
         forecastData.properties.timeseries.get(i).data.next_1_hours.details?.precipitation_amount?.let {
             water += forecastData.properties.timeseries.get(i).data.next_1_hours.details!!.precipitation_amount.toDouble()
         }
@@ -188,7 +190,7 @@ fun getweatherIcon(forecastData: ForecastData, dayNum: Int): String{
     val dataForDay = when(dayNum){
         0 -> 2
         1 -> 26
-        2 -> 40
+        2 -> 48
         else -> 0
     }
     return forecastData.properties.timeseries.get(dataForDay).data.next_1_hours.summary.symbol_code

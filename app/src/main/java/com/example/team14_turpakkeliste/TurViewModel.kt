@@ -26,6 +26,7 @@ class TurViewModel: ViewModel() {
     lateinit var weatherInfo: WeatherValues
     lateinit var weatherImg: String
     lateinit var location: String
+    //data for hver mulige dag!
 
 
 
@@ -74,7 +75,6 @@ class TurViewModel: ViewModel() {
         var alertType = ""
         var alertdescription = ""
         for(alert in alerts){
-            println(alert.eventCode)
             if(pinpointLocation(currentLatitude,currentLongitude,alert.areaPolygon!!)){
                 //bruk awerness_type her, split denne på lengde dersom det er går ann
                 val string= alert.awareness_level?.split(";")

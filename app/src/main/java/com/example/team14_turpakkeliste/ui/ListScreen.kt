@@ -13,11 +13,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,7 +41,6 @@ import com.example.team14_turpakkeliste.data.getweatherIcon
 import com.example.team14_turpakkeliste.data.sortClothing
 import com.example.team14_turpakkeliste.data.getWeather
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
-import com.example.team14_turpakkeliste.ui.theme.Orange
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 import com.example.team14_turpakkeliste.ui.theme.Yellow
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -53,7 +50,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 //legg inn for å sortere vær her
-fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastData: ForecastData, alerts: List<Alert>){
+fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastData: ForecastData){
     var farevarsel: String? = null
     if (viewModel.getAlertDataForArea()?.first != null){
         farevarsel = "icon_warning_${viewModel.getAlertDataForArea()?.first}_${viewModel.getAlertDataForArea()?.second}"
@@ -81,10 +78,10 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastDa
 
                 //send med beskjed her om for å sortere klær som skal til clothingscreen henter ut infor om riktig dag
                 onClick = { viewModel.chosenDay = i
-                    viewModel.outerLayerList = sortClothing( "outer", getWeather(forecastData, viewModel.chosenDay))
-                    viewModel.innerLayerList = sortClothing( "inner", getWeather(forecastData, viewModel.chosenDay))
-                    viewModel.weatherInfo = getWeather(forecastData, viewModel.chosenDay)
-                    viewModel.weatherImg = getweatherIcon(forecastData, viewModel.chosenDay)
+                    viewModel.outerLayerList = sortClothing( "outer", getWeather(forecastData, i))
+                    viewModel.innerLayerList = sortClothing( "inner", getWeather(forecastData, i))
+                    viewModel.weatherInfo = getWeather(forecastData, i)
+                    viewModel.weatherImg = getweatherIcon(forecastData, i)
                     navController.navigate("ClothingScreen")
                 {
                     popUpTo(navController.graph.findStartDestination().id) {
@@ -150,7 +147,7 @@ fun SaveButton(viewModel: TurViewModel, forecastData: ForecastData){
                     val date = forecastData.properties.timeseries.get(dataForDay).time
                     val weather = getWeather(forecastData, i)
                     val img = getweatherIcon(forecastData, i)
-                    val tempList = WeatherInfo(date, i, "Oslo", weather.temp, weather.windspeed,weather.watermm, img)
+                    val tempList = WeatherInfo(date, viewModel.location, i, weather.temp, weather.windspeed,weather.watermm, img)
                     appDB.UserDao().insert(tempList)
                 }
             }
