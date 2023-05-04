@@ -279,9 +279,9 @@ fun getImg(desc: String): Painter{
         //legg inn ullboxer
         //farevarsel
         "icon_warning_flood_yellow" -> painterResource(id = R.drawable.icon_warning_flood_yellow)
-        "icon_warning_forestfire_yellow" -> painterResource(id = R.drawable.icon_warning_forestfire_yellow)
-        "icon_warning_forestfire_orange"-> painterResource(id = R.drawable.icon_warning_forestfire_orange)
-        "icon_warning_forestfire_red" -> painterResource(id = R.drawable.icon_warning_forestfire_red)
+        "icon_warning_forest_yellow" -> painterResource(id = R.drawable.icon_warning_forestfire_yellow)
+        "icon_warning_forest_orange"-> painterResource(id = R.drawable.icon_warning_forestfire_orange)
+        "icon_warning_forest_red" -> painterResource(id = R.drawable.icon_warning_forestfire_red)
         "icon_warning_generic_orange" -> painterResource(id = R.drawable.icon_warning_forestfire_yellow)
         "icon_warning_generic_red" -> painterResource(id = R.drawable.icon_warning_generic_red)
         "icon_warning_generic_yellow" -> painterResource(id = R.drawable.icon_warning_generic_yellow)
@@ -316,11 +316,11 @@ fun getImg(desc: String): Painter{
         "icon_warning_avalanches_red" -> painterResource(id = R.drawable.icon_warning_avalanches_red)
         "icon_warning_avalanches_yellow" -> painterResource(id = R.drawable.icon_warning_avalanches_yellow)
         "icon_warning_drivingconditions_orange" -> painterResource(id = R.drawable.icon_warning_drivingconditions_orange)
-            "icon_warning_drivingconditions_red" -> painterResource(id = R.drawable.icon_warning_drivingconditions_red)
-            "icon_warning_drivingconditions_yellow" -> painterResource(id = R.drawable.icon_warning_drivingconditions_yellow)
+        "icon_warning_drivingconditions_red" -> painterResource(id = R.drawable.icon_warning_drivingconditions_red)
+        "icon_warning_drivingconditions_yellow" -> painterResource(id = R.drawable.icon_warning_drivingconditions_yellow)
         //husk dette
         "icon_warning_extreme_red" -> painterResource(id = R.drawable.icon_warning_extreme)
-            "icon-warning-flood-orange" -> painterResource(id = R.drawable.icon_warning_flood_orange)
+        "icon-warning-flood-orange" -> painterResource(id = R.drawable.icon_warning_flood_orange)
 
 
         //værdata

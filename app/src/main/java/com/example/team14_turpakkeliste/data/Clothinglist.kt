@@ -106,12 +106,12 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
 fun chooseReqsOuter(temp: Double, wind: Double, water: Double?): MinRequirementsClothes{
     //maks og mintemp for å være med å avgjøre
     var warmth = when(temp) {
-        in -30.0..-20.0 -> 6
-        in -19.9..-10.0 ->  5
-        in -9.9..-0.1 ->  4
-        in 0.0..9.9->  3
-        in 10.0..15.9->  2
         in 16.0..30.0 ->  1
+        in 10.0..15.9->  2
+        in 0.0..9.9->  3
+        in -9.9..-0.1 ->  4
+        in -19.9..-10.0 ->  5
+        in -30.0..-20.0 -> 6
         else -> {0}
     }
     val windproof = when(wind){
