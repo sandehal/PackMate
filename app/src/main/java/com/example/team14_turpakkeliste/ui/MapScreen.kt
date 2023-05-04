@@ -37,7 +37,6 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -249,8 +248,6 @@ fun getLocationCompose(location: String, viewModel: TurViewModel, context: Conte
 fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineScope, navController: NavController, turViewModel: TurViewModel,latLng: MutableState<LatLng?>){
     val tekstLocation = turViewModel.checkIntitialized()
 
-
-
     if (sheetState.isVisible){
         ModalBottomSheet(
             sheetState = sheetState,
@@ -370,27 +367,6 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
 
         }
     }
-
-//fjern dette
-@OptIn(ExperimentalMaterial3Api::class)
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-fun DatePickerScreen() {
-    val dateTime = LocalDateTime.now()
-    val datePickerState = remember {
-        DatePickerState(
-            yearRange = (2023..2023),
-            initialSelectedDateMillis = dateTime.toMillis(),
-            initialDisplayMode = DisplayMode.Picker,
-            initialDisplayedMonthMillis = null
-        )
-    }
-    val date = datePickerState.selectedDateMillis?.let { Date(it) }
-
-    Log.d("Dato for tur: ","$date")
-    DatePicker(state = datePickerState, title = { "Choose timeframe for your journey!" })
-}
-
 @RequiresApi(Build.VERSION_CODES.O)
 fun LocalDateTime.toMillis() = this.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
@@ -443,9 +419,6 @@ fun checkAvailabilityLoc(address: Address): String{
     else{
         return address.countryName.toString()
     }
-
-
-   return "lokasjon ikke funnet"
 }
 
 
