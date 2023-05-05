@@ -274,7 +274,7 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
                 Text(
                     text = " Valgt lokasjon - ${tekstLocation} ",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
+                    fontSize = 28.sp
                 )
                 Text(
                     text = "Hvor mange dager ",
@@ -301,8 +301,10 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
                 }
                 Row() {
                     Button(colors = ButtonDefaults.buttonColors(
-                        containerColor = ForestGreen,
-                        contentColor = Color.White),
+                        containerColor = Color.LightGray,
+                        contentColor = Color.Black,
+                        disabledContainerColor = ForestGreen,
+                        disabledContentColor = Color.White),
                         onClick = {
                             enabled1 = false
                             enabled2 = true
@@ -316,8 +318,10 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
                     Spacer(modifier = Modifier.width(5.dp))
                     Button(
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = ForestGreen,
-                            contentColor = Color.White),
+                            containerColor = Color.LightGray,
+                            contentColor = Color.Black,
+                            disabledContainerColor = ForestGreen,
+                            disabledContentColor = Color.White),
                         onClick = {
 
                             enabled2 = false
@@ -333,8 +337,10 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
                     Spacer(modifier = Modifier.width(5.dp))
                     Button(
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = ForestGreen,
-                            contentColor = Color.White),
+                            containerColor = Color.LightGray,
+                            contentColor = Color.Black,
+                            disabledContainerColor = ForestGreen,
+                            disabledContentColor = Color.White),
                         onClick = {
                             enabled3 = false
                             enabled1 = true

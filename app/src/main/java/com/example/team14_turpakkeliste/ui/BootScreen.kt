@@ -162,7 +162,7 @@ fun MakeListButton(navController: NavController,viewModel: TurViewModel){
 
         containerColor = ForestGreen,
         contentColor = Color.White,
-        icon = { Icon(Icons.Filled.Email, contentDescription = null) },
+        icon = { Icon(Icons.Filled.KeyboardArrowRight, contentDescription = null) },
         text = { Text("Motta pakkeliste for valgt lokasjon. ") },
         onClick = {  navController.navigate("ListScreen")
         {
