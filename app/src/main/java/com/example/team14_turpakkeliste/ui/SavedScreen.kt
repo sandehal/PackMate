@@ -104,6 +104,7 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel, isOffline
                                 viewModel.innerLayerList = sortClothing( "inner",  WeatherValues(s.temperature, s.windspeed, s.watermilimeter))
                                 viewModel.weatherInfo = WeatherValues(s.temperature, s.windspeed, s.watermilimeter)
                                 viewModel.weatherImg = s.image.toString()
+                                viewModel.prevScreen = "SavedScreen"
                                 navController.navigate("ClothingScreen")
                             {
                                 popUpTo(navController.graph.findStartDestination().id) {

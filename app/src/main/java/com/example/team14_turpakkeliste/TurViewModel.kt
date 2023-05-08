@@ -14,6 +14,7 @@ import kotlinx.serialization.SerializationException
 
 
 class TurViewModel: ViewModel() {
+    var prevScreen : String = "SavedScreen"
     var error : String? = null
     var currentLatitude : Double = 0.0
     var currentLongitude : Double = 0.0

@@ -80,6 +80,7 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastDa
                     viewModel.innerLayerList = sortClothing( "inner", getWeather(forecastData, i))
                     viewModel.weatherInfo = getWeather(forecastData, i)
                     viewModel.weatherImg = getweatherIcon(forecastData, i)
+                    viewModel.prevScreen = "ListScreen"
                     navController.navigate("ClothingScreen")
                 {
                     popUpTo(navController.graph.findStartDestination().id) {

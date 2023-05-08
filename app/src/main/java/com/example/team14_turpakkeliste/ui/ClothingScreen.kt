@@ -35,15 +35,9 @@ import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
 
 @Composable
-fun ClothingScreen(navController: NavController, viewModel: TurViewModel, isOffline : Boolean){
-    if(!isOffline){
-        BackHandler {
-            navigate(navController, "ListScreen")
-        }
-    } else{
-        BackHandler {
-            navigate(navController, "SavedScreen")
-        }
+fun ClothingScreen(navController: NavController, viewModel: TurViewModel, isOffline : Boolean, prevScreen: String){
+    BackHandler {
+        navigate(navController, prevScreen)
     }
     Column(modifier = Modifier
         .fillMaxHeight()
@@ -51,27 +45,15 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel, isOffl
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         Row(modifier = Modifier.fillMaxWidth()) {
-            if(!isOffline){
-                IconButton(
-                    onClick = {
-                        navigate(navController, "ListScreen")
-                    }
-                ) {
-                    Icon(Icons.Outlined.ArrowBack, contentDescription = "Back")
-
+            IconButton(
+                onClick = {
+                    navigate(navController, prevScreen)
                 }
-            } else
-            {
-                IconButton(
-                    onClick = {
-                        navigate(navController, "SavedScreen")
-                    }
-                ) {
-                    Icon(Icons.Outlined.ArrowBack, contentDescription = "Back")
-
-                }
+            ) {
+                Icon(Icons.Outlined.ArrowBack, contentDescription = "Back")
 
             }
+
             Spacer(Modifier.weight(1f))
             IconButton(
                 onClick = {
