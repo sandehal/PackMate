@@ -3,7 +3,13 @@ package com.example.team14_turpakkeliste.ui
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,6 +28,16 @@ fun InfoScreen(navController: NavController){
             .background(WhiteYellow),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Row(modifier = Modifier.fillMaxWidth()) {
+            IconButton(
+                onClick = {
+                    navigate(navController, "ClothingScreen")
+                }
+            ) {
+                Icon(Icons.Outlined.ArrowBack, contentDescription = "Back")
+
+            }
+        }
         //test
         Text(text ="Varmeverdier\n"+
                 "6 = -30.0 -> -20.0 grader\n" +

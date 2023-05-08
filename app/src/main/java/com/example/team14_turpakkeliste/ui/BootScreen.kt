@@ -63,7 +63,7 @@ fun BootScreen(navController: NavHostController, alerts: List<Alert>?, forecastD
         composable(Screen.MapScreen.route) { MapsComposeScreen(navController,viewModel, alerts!!) }
         composable(Screen.SavedScreen.route) { SavedScreen(navController, viewModel, isOffline) }
         composable(Screen.LoadingScreen.route) { LoadingScreen() }
-        composable(Screen.ClothingScreen.route) { ClothingScreen(navController,viewModel, isOffline) }
+        composable(Screen.ClothingScreen.route) { ClothingScreen(navController,viewModel, isOffline, viewModel.prevScreen) }
         composable(Screen.InfoScreen.route) { InfoScreen(navController) }
     }
 }
