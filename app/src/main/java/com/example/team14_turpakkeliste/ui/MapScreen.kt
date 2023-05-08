@@ -291,7 +291,7 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
 
                 //vi må kanskje endre en del hvis spacer er forskjellig fra telefon til telefon
                 var enabled1 by remember {
-                    mutableStateOf(true)
+                    mutableStateOf(false)
                 }
                 var enabled2 by remember {
                     mutableStateOf(true)
