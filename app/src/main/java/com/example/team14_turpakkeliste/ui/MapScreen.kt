@@ -105,8 +105,8 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
                 placeholder = { Text(text = "Søk på område, eller trykk på kartet") },
                 modifier = Modifier
                     .padding()
-                    .width(300.dp)
-                    .height(60.dp),
+                    .fillMaxWidth(0.8f)
+                    .fillMaxHeight(0.08f),
                 singleLine = true,
                 trailingIcon = if (location.value.isNotBlank()) trailingIconView else null,
             )
@@ -132,9 +132,8 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
                 colors = ButtonDefaults.buttonColors(ForestGreen),
                 // on below line adding a modifier for our button.
                 modifier = Modifier
-
-                    .height(60.dp)
-                    .fillMaxSize()
+                    .fillMaxHeight(0.08f)
+                    .fillMaxWidth()
             )
             {
                 Text("Søk")
