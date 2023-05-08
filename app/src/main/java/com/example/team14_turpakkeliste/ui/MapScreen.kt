@@ -159,13 +159,14 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
 
                     clickedLatLng.value = latLng
 
-                    viewModel.location = getNameFromLocation(clickedLatLng.value!!,viewModel, context )
                     viewModel.currentLatitude = latLng.latitude
                     //String.format("%.2f",latLng.latitude).toDouble()
                     viewModel.currentLongitude =  latLng.longitude
+
+                    viewModel.location = getNameFromLocation(clickedLatLng.value!!,viewModel, context )
+
                     //String.format("%.2f",latLng.longitude).toDouble()
 
-                    viewModel.getForecast(alerts = alerts)
                     Log.d(
                         "Oppdatert",
                         "${viewModel.currentLatitude}, ${viewModel.currentLongitude}"
@@ -241,6 +242,7 @@ fun getLocationCompose(location: String, viewModel: TurViewModel, context: Conte
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: NavController, turViewModel: TurViewModel){
+    turViewModel.getForecast(turViewModel.alerts)
     val tekstLocation = turViewModel.checkIntitialized()
     if (sheetState.isVisible){
         ModalBottomSheet(
