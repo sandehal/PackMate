@@ -82,8 +82,8 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel, isOffl
 
             }
         }
-            Text(text = "Ytterlag", fontSize = MaterialTheme.typography.titleMedium.fontSize)
-            Spacer(modifier = Modifier.height(10.dp))
+        Text(text = "Ytterlag", fontSize = MaterialTheme.typography.titleMedium.fontSize)
+        Spacer(modifier = Modifier.height(10.dp))
         LazyRow(
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -96,7 +96,7 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel, isOffl
                 NonExpandableCard(
                     description = description,
                     img = image)
-                    Spacer(modifier = Modifier.width(10.dp))
+                Spacer(modifier = Modifier.width(10.dp))
             }
         }
         Spacer(modifier = Modifier.height(20.dp))

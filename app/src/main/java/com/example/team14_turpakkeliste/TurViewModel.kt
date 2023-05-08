@@ -15,6 +15,7 @@ import kotlinx.serialization.SerializationException
 
 class TurViewModel: ViewModel() {
     var error : String? = null
+    //kan vi endre dette til Oslo?
     var currentLatitude : Double = 0.0
     var currentLongitude : Double = 0.0
     lateinit var alerts: List<Alert>
@@ -25,9 +26,6 @@ class TurViewModel: ViewModel() {
     lateinit var weatherInfo: WeatherValues
     lateinit var weatherImg: String
     lateinit var location: String
-    //data for hver mulige dag!
-
-
 
     var turUiState: TurpakklisteUiState by mutableStateOf(TurpakklisteUiState.Booting)
         private set

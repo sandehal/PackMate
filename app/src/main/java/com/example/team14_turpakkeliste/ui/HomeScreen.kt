@@ -24,14 +24,10 @@ fun HomeScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .weight(1f)
-
         )
         BottomNavBar(navController)
     }
-
 }
-
-
 @Preview(showBackground = true)
 @Composable
 fun Preview() {

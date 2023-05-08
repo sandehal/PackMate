@@ -156,10 +156,8 @@ fun BottomNavBar(navController: NavController){
 }
 
 @Composable
-fun MakeListButton(navController: NavController,viewModel: TurViewModel){
-
+fun MakeListButton(navController: NavController){
     ExtendedFloatingActionButton(
-
         containerColor = ForestGreen,
         contentColor = Color.White,
         icon = { Icon(Icons.Filled.KeyboardArrowRight, contentDescription = null) },

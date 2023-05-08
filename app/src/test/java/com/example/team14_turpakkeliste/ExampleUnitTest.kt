@@ -1,5 +1,7 @@
 package com.example.team14_turpakkeliste
 
+import com.example.team14_turpakkeliste.data.MinRequirementsClothes
+import com.example.team14_turpakkeliste.data.chooseReqsOuter
 import org.junit.Test
 
 import org.junit.Assert.*
