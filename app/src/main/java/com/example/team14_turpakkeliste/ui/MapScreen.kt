@@ -35,8 +35,6 @@ import com.google.maps.android.compose.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.io.IOException
-import java.time.LocalDateTime
-import java.time.ZoneId
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -178,9 +176,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
                     }
 
                 } else {
-
                     clickedLatLng.value = null
-
                     //potensiell bug er at man ikke fjerner de gamle lat long verdiene fra view.
                     //Men de oppdateres for hver gang man plasserer en ny.
                 }
@@ -195,10 +191,9 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
         }
 
         BottomSheet(
-            coordinates = clickedLatLng.value.toString(),
             sheetState = sheetState,
             scope = scope,
-            navController = navController, turViewModel = viewModel,clickedLatLng
+            navController = navController, turViewModel = viewModel
         )
     }
 
@@ -245,9 +240,8 @@ fun getLocationCompose(location: String, viewModel: TurViewModel, context: Conte
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineScope, navController: NavController, turViewModel: TurViewModel,latLng: MutableState<LatLng?>){
+fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: NavController, turViewModel: TurViewModel){
     val tekstLocation = turViewModel.checkIntitialized()
-
     if (sheetState.isVisible){
         ModalBottomSheet(
             sheetState = sheetState,
@@ -367,17 +361,12 @@ fun BottomSheet(coordinates: String, sheetState: SheetState, scope : CoroutineSc
             //DropdownMenu(turViewModel)
             //DatePickerScreen()
             Spacer(modifier = Modifier.height(20.dp))
-            MakeListButton(navController, turViewModel)
+            MakeListButton(navController)
         }
 
 
         }
     }
-@RequiresApi(Build.VERSION_CODES.O)
-fun LocalDateTime.toMillis() = this.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-
-
-
 fun getNameFromLocation(cordinates: LatLng,viewModel: TurViewModel, context: Context): String {
     var locationName = ""
     var addressList : List<Address>? = null

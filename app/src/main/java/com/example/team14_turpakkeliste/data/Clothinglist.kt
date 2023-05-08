@@ -1,5 +1,8 @@
 package com.example.team14_turpakkeliste.data
 
+/*
+Returnerer en liste med klesobjekter som kan manipuleres med algoritme for å sortere
+ */
 fun getClothes(): List<Clothing>{
     return listOf(
         //klær inspirert av stat-system fra ulvang på ullklær andre klær hentet fra Norrøna
@@ -39,36 +42,29 @@ fun getClothes(): List<Clothing>{
         Clothing("Wool", "sweater", "inner", 3,1,1,"mediumwoolsweater"),
         Clothing("Wool", "pants", "inner", 3, 1, 1, "mediumwoolpants"),
         Clothing("LightWool", "sweater", "inner", 2,1,1,"lightwoolsweater"),
-        Clothing("LightWool", "pants", "inner", 2,1,1,"lightwoolpants"),
+        //Clothing("LightWool", "pants", "inner", 2,1,1,"lightwoolpants"),
         Clothing("LightWool", "tshirt", "inner", 1, 1,1, "sommerull"),
-        Clothing("Lightwool", "boxer", "inner", 1,1,1, "woolboxer"),
+        Clothing("Lightwool", "boxer", "inner", 1,1,1, "ullboxer"),
 
         Clothing("Kan ikke anbefale noe her", "none", "none", 0, 0 ,0, "none")
     )
 }
 fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
-    //val date = forecastData.properties.timeseries.get(dataForDay).time
+    //endre disse til bedre navn
     val temp = weatherValues.temp
     val wind = weatherValues.windspeed
     val water = weatherValues.watermm
-    //disse burde ikke være avhengige av hverandre
     val outerReqMin = chooseReqsOuter(temp, wind, water)
     val outerReqPants = chooseReqsOuter(temp,wind,water)
-    val innerReqMin = chooseInnerReqs(temp, water)
+    val innerReqMin = chooseInnerClothingRequirements(temp, water)
     if(outerReqPants.warmth > 2){
         outerReqPants.warmth = 2
     }
-    //fyller liste med tomme kleselementer som informerer om at dert evt ikke finnes noen riktige plass dersom disse overskrives
     val tempList: MutableList<Clothing> = MutableList(2){ getClothes().get(getClothes().size-1) }
     for(clothing in getClothes()){
-        //endre disse variablene til resistance
         val warmth: Int = clothing.warmth
         val windspeed: Int = clothing.windproof
         val watermilimeter: Int = clothing.waterproof
-        //endre metoden til å sjekke for plagg først og sorter basert på det ,ikke varme! aka flere if loops
-        //if(clothing.type == "jacket"){ }
-        //if(clothing.type == "sweater" || clothing.type == "tshirt"){ }
-        //if(clothing.type == "pants" || clothing.type == "shorts"){ }
         if(warmth == outerReqMin.warmth
             && windspeed >= outerReqMin.windproof
             && (watermilimeter == outerReqMin.waterproof || watermilimeter == outerReqMin.waterproof+1)
@@ -77,7 +73,6 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
                 tempList.set(0,clothing)
                 continue
         }
-        //fiks slik at den kan velge bukser og bare anbefale varmere underlag!
         if(warmth == outerReqPants.warmth
             && windspeed >= outerReqPants.windproof
             && (watermilimeter == outerReqPants.waterproof || watermilimeter == outerReqPants.waterproof+2)
@@ -101,10 +96,7 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
     }
     return tempList
 }
-//lag en egen metode for innerlag også trym!
-//test alt dette i intellij
 fun chooseReqsOuter(temp: Double, wind: Double, water: Double?): MinRequirementsClothes{
-    //maks og mintemp for å være med å avgjøre
     var warmth = when(temp) {
         in 16.0..30.0 ->  1
         in 10.0..15.9->  2
@@ -139,7 +131,7 @@ fun chooseReqsOuter(temp: Double, wind: Double, water: Double?): MinRequirements
     }
     return MinRequirementsClothes(warmth,waterproof, windproof)
 }
-fun chooseInnerReqs(temp: Double, water: Double?): MinRequirementsClothes{
+fun chooseInnerClothingRequirements(temp: Double, water: Double?): MinRequirementsClothes{
     var warmth = when(temp) {
         in -30.0..-20.0 -> 6
         in -19.9..-10.0 ->  5
@@ -156,7 +148,9 @@ fun chooseInnerReqs(temp: Double, water: Double?): MinRequirementsClothes{
     }
     return MinRequirementsClothes(warmth, 1,1)
 }
-//fiks denne slik at den henter ut riktig data på dato!!!!
+/*
+Returnerer verdier for varme, vind og nedbør for valgt område og dato
+ */
 fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues{
     val dataForDay = when(dayNum){
         0 -> 2
@@ -164,8 +158,6 @@ fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues{
         2 -> 48
         else -> 0
     }
-    //val date = forecastData.properties.timeseries.get(dataForDay).time
-    //println(date)
     val temp: Double = forecastData.properties.timeseries.get(dataForDay).data.instant.details.air_temperature.toDouble()
     val wind: Double = forecastData.properties.timeseries.get(dataForDay).data.instant.details.wind_speed.toDouble()
     var water = 0.0
@@ -175,8 +167,12 @@ fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues{
             water += forecastData.properties.timeseries.get(i).data.next_1_hours.details!!.precipitation_amount.toDouble()
         }
     }
+    //her må vi formatere water
     return WeatherValues(temp, wind, water)
 }
+/*
+Returnerer en string som brukes for å bestemme værikonet for valgt område og dato
+ */
 fun getweatherIcon(forecastData: ForecastData, dayNum: Int): String{
     val dataForDay = when(dayNum){
         0 -> 2

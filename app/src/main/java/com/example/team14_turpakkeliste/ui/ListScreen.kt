@@ -48,12 +48,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @Composable
-//legg inn for å sortere vær her
 fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastData: ForecastData){
     var farevarsel: String? = null
     if (viewModel.getAlertDataForArea()?.first != null){
         farevarsel = "icon_warning_${viewModel.getAlertDataForArea()?.first}_${viewModel.getAlertDataForArea()?.second}"
-        println(farevarsel)
     }
     Column(
         modifier = Modifier

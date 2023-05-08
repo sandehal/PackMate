@@ -70,7 +70,7 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel, isOffline
                 .fillMaxWidth()
                 .background(WhiteYellow)
                 .wrapContentWidth(Alignment.CenterHorizontally),
-                text = "Lagrede pakkelister:",
+                text = "Lagrede pakkelister",
                 fontSize = 30.sp
             )
             if (isOffline){
