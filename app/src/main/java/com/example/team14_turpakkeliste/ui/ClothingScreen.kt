@@ -35,9 +35,15 @@ import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
 
 @Composable
-fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
-    BackHandler {
-        navigate(navController, "ListScreen")
+fun ClothingScreen(navController: NavController, viewModel: TurViewModel, isOffline : Boolean){
+    if(!isOffline){
+        BackHandler {
+            navigate(navController, "ListScreen")
+        }
+    } else{
+        BackHandler {
+            navigate(navController, "SavedScreen")
+        }
     }
     Column(modifier = Modifier
         .fillMaxHeight()
@@ -45,12 +51,25 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         Row(modifier = Modifier.fillMaxWidth()) {
-            IconButton(
-                onClick = {
-                    navigate(navController, "ListScreen")
+            if(!isOffline){
+                IconButton(
+                    onClick = {
+                        navigate(navController, "ListScreen")
+                    }
+                ) {
+                    Icon(Icons.Outlined.ArrowBack, contentDescription = "Back")
+
                 }
-            ) {
-                Icon(Icons.Outlined.ArrowBack, contentDescription = "Back")
+            } else
+            {
+                IconButton(
+                    onClick = {
+                        navigate(navController, "SavedScreen")
+                    }
+                ) {
+                    Icon(Icons.Outlined.ArrowBack, contentDescription = "Back")
+
+                }
 
             }
             Spacer(Modifier.weight(1f))
@@ -99,28 +118,30 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
             }
         }
     }
-    Column(modifier = Modifier
-        .fillMaxSize(),
-        verticalArrangement = Arrangement.Bottom
-    ){
-        //fiks denne tilbake til å gjøre kall på funksjon!
-        val alertInfo = viewModel.getAlertDataForArea()
-        if(alertInfo != null){
-            ExpandableCard(title = "Farevarsel",
-                description = alertInfo.third,
-                img = "icon_warning_${alertInfo.first}_${alertInfo.second}")
+    if(!isOffline){
+        Column(modifier = Modifier
+            .fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom
+        ){
+            //fiks denne tilbake til å gjøre kall på funksjon!
+            val alertInfo = viewModel.getAlertDataForArea()
+            if(alertInfo != null){
+                ExpandableCard(title = "Farevarsel",
+                    description = alertInfo.third,
+                    img = "icon_warning_${alertInfo.first}_${alertInfo.second}")
+            }
+            val info = viewModel.weatherInfo
+            ExpandableCard(title = "Vis været",
+                //legg til riktig info her
+                description = "Det er meldt ${info.temp} grader \n" +
+                        "og vind på ${info.windspeed} m/s \n" +
+                        "Du kan forvente ${info.watermm} mm nedbør i løpet av dagen",
+                //endre denne til å vise riktig dag!!! Se gjennom metode i clothinglist!!!
+                img = viewModel.weatherImg)
+            BottomNavBar(navController)
         }
-        val info = viewModel.weatherInfo
-        ExpandableCard(title = "Vis været",
-            //legg til riktig info her
-            description = "Det er meldt ${info.temp} grader \n" +
-                    "og vind på ${info.windspeed} m/s \n" +
-                    "Du kan forvente ${info.watermm} mm nedbør i løpet av dagen",
-            //endre denne til å vise riktig dag!!! Se gjennom metode i clothinglist!!!
-            img = viewModel.weatherImg)
-        BottomNavBar(navController)
-    }
 
+    }
 }
 @Composable
 fun NonExpandableCard(

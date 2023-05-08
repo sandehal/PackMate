@@ -381,26 +381,25 @@ fun LocalDateTime.toMillis() = this.atZone(ZoneId.systemDefault()).toInstant().t
 fun getNameFromLocation(cordinates: LatLng,viewModel: TurViewModel, context: Context): String {
     var locationName = ""
     var addressList : List<Address>? = null
-    if(cordinates != null) {
-        val geocoder = Geocoder(context)
-        try {
-            //Lønnet seg for større treffsikkerhet å legge til "Norway" hele to ganger.
-            addressList = geocoder.getFromLocation(cordinates.latitude, cordinates.longitude, 1)
-            println("Resultat")
-        } catch (e: IOException) {
-            e.printStackTrace()
-            println("FEIL")
-        }
-        if (addressList!!.isNotEmpty()) {
-            val address = addressList[0]
-            viewModel.currentLatitude = address.latitude
-            viewModel.currentLongitude = address.longitude
+    val geocoder = Geocoder(context)
+    try {
+        //Lønnet seg for større treffsikkerhet å legge til "Norway" hele to ganger.
+        addressList = geocoder.getFromLocation(cordinates.latitude, cordinates.longitude, 1)
+        println("Resultat")
+    } catch (e: IOException) {
+        e.printStackTrace()
+        println("FEIL")
+    }
+    println(addressList)
+    if (addressList != null) {
+        val address = addressList[0]
+        viewModel.currentLatitude = address.latitude
+        viewModel.currentLongitude = address.longitude
 
-            locationName = checkAvailabilityLoc(address)
-            Log.d("Adressenavn", locationName)
-            println(locationName)
-            return locationName
-        }
+        locationName = checkAvailabilityLoc(address)
+        Log.d("Adressenavn", locationName)
+        println(locationName)
+        return locationName
     }
     return locationName
 }

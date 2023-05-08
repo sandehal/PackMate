@@ -49,21 +49,21 @@ fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = vi
     when(val state = viewModel.turUiState){
         is TurpakklisteUiState.Booting -> SplashScreen()
         is TurpakklisteUiState.Error -> ErrorScreen(viewModel)
-        is TurpakklisteUiState.OfflineMode -> SavedScreen(navController, viewModel, true)
+        is TurpakklisteUiState.OfflineMode -> BootScreen(navController, null, null, viewModel, true)
         is TurpakklisteUiState.Loading -> LoadingScreen()
-        is TurpakklisteUiState.Success -> BootScreen(navController,state.alerts,state.forecastData, viewModel)
+        is TurpakklisteUiState.Success -> BootScreen(navController,state.alerts,state.forecastData, viewModel, false)
     }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun BootScreen(navController: NavHostController, alerts:List<Alert>, forecastData: ForecastData, viewModel: TurViewModel){
+fun BootScreen(navController: NavHostController, alerts: List<Alert>?, forecastData: ForecastData?, viewModel: TurViewModel, isOffline: Boolean){
     NavHost(navController = navController, startDestination = "SavedScreen") {
-        composable(Screen.ListScreen.route) { ListScreen(navController, viewModel, forecastData) }
-        composable(Screen.MapScreen.route) { MapsComposeScreen(navController,viewModel, alerts) }
-        composable(Screen.SavedScreen.route) { SavedScreen(navController, viewModel, false) }
+        composable(Screen.ListScreen.route) { ListScreen(navController, viewModel, forecastData!!) }
+        composable(Screen.MapScreen.route) { MapsComposeScreen(navController,viewModel, alerts!!) }
+        composable(Screen.SavedScreen.route) { SavedScreen(navController, viewModel, isOffline) }
         composable(Screen.LoadingScreen.route) { LoadingScreen() }
-        composable(Screen.ClothingScreen.route) { ClothingScreen(navController,viewModel) }
+        composable(Screen.ClothingScreen.route) { ClothingScreen(navController,viewModel, isOffline) }
         composable(Screen.InfoScreen.route) { InfoScreen(navController) }
     }
 }
