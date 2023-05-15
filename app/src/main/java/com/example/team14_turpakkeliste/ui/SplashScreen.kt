@@ -51,7 +51,7 @@ fun SplashScreen() {
         }
 
         Image(
-            painter = painterResource(id = R.drawable.tursekk_1),
+            painter = painterResource(id = R.drawable.ic_launcher_foreground),
             contentDescription = "SplashScreen",
             alignment = Alignment.Center, modifier = Modifier
                 .fillMaxSize()
