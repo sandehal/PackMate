@@ -1,17 +1,25 @@
 package com.example.team14_turpakkeliste
 
 import com.example.team14_turpakkeliste.data.MinRequirementsClothes
-import com.example.team14_turpakkeliste.data.chooseReqsOuter
+import com.example.team14_turpakkeliste.data.chooseOuterClothingRequirements
 import org.junit.Assert
 import org.junit.Test
 
 class ClothingRequirementsTest {
+    /**
+     * tester at algoritmen som bestemmer minimumsverdier ved klær som kan anbefales
+     * til bruker ved visse værverdier, fungerer som den skal. Sender inn
+     */
     @Test
     fun outerRequirement_isCorrect(){
-        Assert.assertEquals(chooseReqsOuter(16.1, 1.1, 0.2), MinRequirementsClothes(1, 1, 2))
+        val chooseClothingRequirementsOuter = chooseOuterClothingRequirements(16.1, 1.1, 0.2)
+        val expectedRequirementsClothes = MinRequirementsClothes(1,2,1)
+        Assert.assertEquals(expectedRequirementsClothes,chooseClothingRequirementsOuter)
     }
     @Test
     fun outerRequirement_isWrong(){
-        Assert.assertNotEquals(chooseReqsOuter(16.1, 1.1, 0.2), MinRequirementsClothes(2, 3, 3))
+        val chooseClothingRequirementsOuter = chooseOuterClothingRequirements(16.1, 1.1, 0.2)
+        val expectedRequirementsClothes = MinRequirementsClothes(2,3,3)
+        Assert.assertNotEquals(expectedRequirementsClothes,chooseClothingRequirementsOuter)
     }
 }

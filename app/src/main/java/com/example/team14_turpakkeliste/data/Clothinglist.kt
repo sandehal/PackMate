@@ -54,8 +54,8 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
     val temp = weatherValues.temp
     val wind = weatherValues.windspeed
     val water = weatherValues.watermm
-    val outerReqMin = chooseReqsOuter(temp, wind, water)
-    val outerReqPants = chooseReqsOuter(temp,wind,water)
+    val outerReqMin = chooseOuterClothingRequirements(temp, wind, water)
+    val outerReqPants = chooseOuterClothingRequirements(temp,wind,water)
     val innerReqMin = chooseInnerClothingRequirements(temp, water)
     if(outerReqPants.warmth > 2){
         outerReqPants.warmth = 2
@@ -96,7 +96,7 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
     }
     return tempList
 }
-fun chooseReqsOuter(temp: Double, wind: Double, water: Double?): MinRequirementsClothes{
+fun chooseOuterClothingRequirements(temp: Double, wind: Double, water: Double?): MinRequirementsClothes{
     var warmth = when(temp) {
         in 16.0..30.0 ->  1
         in 10.0..15.9->  2
@@ -120,7 +120,6 @@ fun chooseReqsOuter(temp: Double, wind: Double, water: Double?): MinRequirements
         in 0.2..0.3 ->  2
         in 0.4..0.8 ->  3
         //det finnes ikke tilstrekkelig data som tilsier at vi kan ha klær osm har vanntetthet 4
-        //Dette må vi da evt "lage" selv ller bare drite i
         //in 0.6..0.8 -> 4
         in 0.9..1.4 ->  5
         in 1.5..50.0->  6

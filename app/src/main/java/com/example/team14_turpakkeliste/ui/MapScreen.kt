@@ -174,7 +174,6 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
                     scope.launch {
                         sheetState.show()
                     }
-
                 } else {
                     clickedLatLng.value = null
                     //potensiell bug er at man ikke fjerner de gamle lat long verdiene fra view.
@@ -183,7 +182,6 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
             },
         )
         {
-
             if (markerState != null) {
                 Marker(state = markerState, onClick = markerClick)
 
@@ -243,6 +241,7 @@ fun getLocationCompose(location: String, viewModel: TurViewModel, context: Conte
 fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: NavController, turViewModel: TurViewModel){
     turViewModel.getForecast(turViewModel.alerts)
     val tekstLocation = turViewModel.checkIntitialized()
+    turViewModel.getForecast(alerts = turViewModel.alerts)
     if (sheetState.isVisible){
         ModalBottomSheet(
             sheetState = sheetState,
