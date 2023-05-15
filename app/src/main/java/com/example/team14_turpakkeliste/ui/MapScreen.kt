@@ -266,7 +266,12 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
                     contentDescription = "Kart"
                 )
                 Text(
-                    text = " Valgt lokasjon - ${tekstLocation} ",
+                    text = " Valgt lokasjon -",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 28.sp
+                )
+                Text(
+                    text = " ${tekstLocation} ",
                     fontWeight = FontWeight.Bold,
                     fontSize = 28.sp
                 )
@@ -362,6 +367,7 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
             //DatePickerScreen()
             Spacer(modifier = Modifier.height(20.dp))
             MakeListButton(navController)
+            Spacer(modifier = Modifier.height(20.dp))
         }
 
 
