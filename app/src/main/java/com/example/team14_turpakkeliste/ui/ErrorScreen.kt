@@ -55,7 +55,7 @@ fun ErrorScreen(viewModel: TurViewModel){
             Text( modifier = Modifier
                 .fillMaxWidth()
                 .background(WhiteYellow),
-                text = "Kan ikke legge til nye pakklister uten internettforbindelse!\nDumrian...",
+                text = "Kan ikke legge til nye pakklister uten internettforbindelse!",
                 fontSize = 20.sp
 
             )
