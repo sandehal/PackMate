@@ -29,7 +29,7 @@ class Datasource {
         }
         return client.body()
     }
-    suspend fun getMetAlerts(): String {
+    private suspend fun getMetAlerts(): String {
         val client = client.get("https://gw-uio.intark.uh-it.no/in2000/weatherapi/metalerts/1.1?lang=no"){
             headers{
                 append("X-Gravitee-API-Key","f1163555-9b8d-49bd-b24f-49e1c756b215")
@@ -38,7 +38,7 @@ class Datasource {
         return client.bodyAsText()
     }
 
-    suspend fun getCurrentAlerts(link: String): String{
+    private suspend fun getCurrentAlerts(link: String): String{
         val client = client.get(link){
             headers{
                 append("X-Gravitee-API-Key","f1163555-9b8d-49bd-b24f-49e1c756b215")

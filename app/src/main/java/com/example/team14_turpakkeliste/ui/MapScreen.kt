@@ -271,7 +271,7 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
                     fontSize = 28.sp
                 )
                 Text(
-                    text = " ${tekstLocation} ",
+                    text = " $tekstLocation ",
                     fontWeight = FontWeight.Bold,
                     fontSize = 28.sp
                 )
@@ -298,7 +298,7 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
                 var enabled3 by remember {
                     mutableStateOf(true)
                 }
-                Row() {
+                Row {
                     Button(colors = ButtonDefaults.buttonColors(
                         containerColor = Color.LightGray,
                         contentColor = Color.Black,

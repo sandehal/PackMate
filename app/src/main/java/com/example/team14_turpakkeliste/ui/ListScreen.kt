@@ -140,7 +140,7 @@ fun SaveButton(viewModel: TurViewModel, forecastData: ForecastData){
                         2 -> 40
                         else -> 0
                     }
-                    val date = forecastData.properties.timeseries.get(dataForDay).time
+                    val date = forecastData.properties.timeseries[dataForDay].time
                     val weather = getWeather(forecastData, i)
                     val img = getweatherIcon(forecastData, i)
                     val tempList = WeatherInfo(date, viewModel.location, i, weather.temp, weather.windspeed,weather.watermm, img)

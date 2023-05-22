@@ -11,7 +11,7 @@ import androidx.room.Query
 
 @Entity(tableName = "WeatherInfo")
 data class WeatherInfo(
-    @PrimaryKey() val date: String,
+    @PrimaryKey val date: String,
     @ColumnInfo(name = "location") val location: String?,
     @ColumnInfo(name = "daynumber") val daynumber: Int?,
     @ColumnInfo(name = "temperature") val temperature: Double?,

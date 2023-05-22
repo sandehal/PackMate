@@ -60,7 +60,7 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
     if(outerReqPants.warmth > 2){
         outerReqPants.warmth = 2
     }
-    val tempList: MutableList<Clothing> = MutableList(2){ getClothes().get(getClothes().size-1) }
+    val tempList: MutableList<Clothing> = MutableList(2){ getClothes()[getClothes().size-1] }
     for(clothing in getClothes()){
         val warmth: Int = clothing.warmth
         val windspeed: Int = clothing.windproof
@@ -70,7 +70,7 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
             && (watermilimeter == outerReqMin.waterproof || watermilimeter == outerReqMin.waterproof+1)
             && clothing.type == "jacket"
             && clothing.layer == layer){
-                tempList.set(0,clothing)
+            tempList[0] = clothing
                 continue
         }
         if(warmth == outerReqPants.warmth
@@ -78,19 +78,19 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
             && (watermilimeter == outerReqPants.waterproof || watermilimeter == outerReqPants.waterproof+2)
             && (clothing.type == "pants" || clothing.type == "shorts")
             && clothing.layer == layer){
-                tempList.set(1,clothing)
+            tempList[1] = clothing
                 continue
         }
         if(warmth == innerReqMin.warmth
             && (clothing.type == "sweater" || clothing.type == "tshirt")
             && clothing.layer == layer){
-            tempList.set(0,clothing)
+            tempList[0] = clothing
             continue
         }
         if(warmth == innerReqMin.warmth
             && (clothing.type == "pants" || clothing.type == "boxer")
             && clothing.layer == layer){
-                tempList.set(1,clothing)
+            tempList[1] = clothing
             continue
         }
     }
@@ -157,13 +157,13 @@ fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues{
         2 -> 48
         else -> 0
     }
-    val temp: Double = forecastData.properties.timeseries.get(dataForDay).data.instant.details.air_temperature.toDouble()
-    val wind: Double = forecastData.properties.timeseries.get(dataForDay).data.instant.details.wind_speed.toDouble()
+    val temp: Double = forecastData.properties.timeseries[dataForDay].data.instant.details.air_temperature.toDouble()
+    val wind: Double = forecastData.properties.timeseries[dataForDay].data.instant.details.wind_speed.toDouble()
     var water = 0.0
     //her kunne vi tatt avgjørelsen å ha maxprecipitation fordi denne metoden er så av og på :/ kan kræsje når det er ny time osv
     for(i in dataForDay..dataForDay+2){
-        forecastData.properties.timeseries.get(i).data.next_1_hours.details?.precipitation_amount?.let {
-            water += forecastData.properties.timeseries.get(i).data.next_1_hours.details!!.precipitation_amount.toDouble()
+        forecastData.properties.timeseries[i].data.next_1_hours.details?.precipitation_amount?.let {
+            water += forecastData.properties.timeseries[i].data.next_1_hours.details!!.precipitation_amount.toDouble()
         }
     }
     //her må vi formatere water
@@ -179,5 +179,5 @@ fun getweatherIcon(forecastData: ForecastData, dayNum: Int): String{
         2 -> 48
         else -> 0
     }
-    return forecastData.properties.timeseries.get(dataForDay).data.next_1_hours.summary.symbol_code
+    return forecastData.properties.timeseries[dataForDay].data.next_1_hours.summary.symbol_code
 }

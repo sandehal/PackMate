@@ -36,12 +36,11 @@ class TurViewModel: ViewModel() {
     }
 
     fun checkIntitialized(): String{
-            if(this::location.isInitialized){
-                return location
-            }
-            else{
-                return "${currentLatitude}, ${currentLongitude}"
-            }
+        return if(this::location.isInitialized){
+            location
+        } else{
+            "${currentLatitude}, $currentLongitude"
+        }
     }
 
     fun updateDays(days: Int){
@@ -86,6 +85,7 @@ class TurViewModel: ViewModel() {
                     alertdescription = alert.description.toString()
                     break
                 }
+                //warningen som dukker opp her stemmer ikke. AlertColor != "red" kan blir false.
                 if(alertColor != "red" && awarenesslevel == "orange"){
                     alertColor = "orange"
                     alertType = awarenesstype.toString()
@@ -98,9 +98,10 @@ class TurViewModel: ViewModel() {
                 }
             }
         }
-        if (alertColor == "green"){return null}
-        else {
-            return Triple(alertType, alertColor, alertdescription)
+        return if (alertColor == "green"){
+            null
+        } else {
+            Triple(alertType, alertColor, alertdescription)
         }
     }
 
