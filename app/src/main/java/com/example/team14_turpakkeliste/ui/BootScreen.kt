@@ -10,8 +10,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -25,7 +23,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -36,7 +36,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
-import com.example.team14_turpakkeliste.data.Alert
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
@@ -45,14 +44,14 @@ fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = vi
     when(val state = viewModel.turUiState){
         is TurpakklisteUiState.Booting -> SplashScreen()
         is TurpakklisteUiState.Error -> ErrorScreen(viewModel)
-        is TurpakklisteUiState.OfflineMode -> BootScreen(navController, null, null, viewModel, true)
+        is TurpakklisteUiState.OfflineMode -> BootScreen(navController, null, viewModel, true)
         is TurpakklisteUiState.Loading -> LoadingScreen()
-        is TurpakklisteUiState.Success -> BootScreen(navController,state.alerts,state.forecastData, viewModel, false)
+        is TurpakklisteUiState.Success -> BootScreen(navController,state.forecastData, viewModel, false)
     }
 }
 
 @Composable
-fun BootScreen(navController: NavHostController, alerts: List<Alert>?, forecastData: ForecastData?, viewModel: TurViewModel, isOffline: Boolean){
+fun BootScreen(navController: NavHostController, forecastData: ForecastData?, viewModel: TurViewModel, isOffline: Boolean){
     NavHost(navController = navController, startDestination = "SavedScreen") {
         composable(Screen.ListScreen.route) { ListScreen(navController, viewModel, forecastData!!) }
         composable(Screen.MapScreen.route) { MapsComposeScreen(navController,viewModel) }
@@ -126,9 +125,10 @@ fun BottomNavBar(navController: NavController){
         val currentDestination = navBackStackEntry?.destination
         items.forEachIndexed { _, item ->
             NavigationBarItem(
-                icon = { Icon(item.icon, contentDescription = item.route) },
-                label = { Text(text = item.description, color = Color.White) },
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
+                icon = { Icon(item.icon, contentDescription = item.route,
+                    tint = if (currentDestination?.hierarchy?.any { it.route == item.route } == true) Color.Black else Color.White) },
+                label = { Text(text = item.description, color = Color.White, fontSize = 14.sp, fontWeight = Bold) },
                 onClick = { if (currentDestination?.hierarchy?.any { it.route == item.route} == true) {
                     //Do nothing
                 } else {
@@ -150,31 +150,7 @@ fun BottomNavBar(navController: NavController){
     }
 }
 
-@Composable
-fun MakeListButton(navController: NavController){
-    ExtendedFloatingActionButton(
-        containerColor = ForestGreen,
-        contentColor = Color.White,
-        icon = { Icon(Icons.Filled.KeyboardArrowRight, contentDescription = null) },
-        text = { Text("Motta pakkeliste for valgt lokasjon. ") },
-        onClick = {  navController.navigate("ListScreen")
-        {
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-            }
 
-            // Avoid multiple copies of the same destination when
-            // reselecting the same item
-            launchSingleTop = true
-            // Restore state when reselecting a previously selected item
-            restoreState = true
-        }
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 10.dp, end = 10.dp)
-    )
-}
 fun navigate(navController: NavController, route: String) {
     navController.navigate(route)
     {

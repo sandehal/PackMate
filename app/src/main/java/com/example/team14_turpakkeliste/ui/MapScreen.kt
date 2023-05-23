@@ -11,6 +11,7 @@ import com.google.android.gms.maps.model.LatLng
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
@@ -18,8 +19,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.getLocationCompose
@@ -96,7 +99,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
                 value = location.value,
 
                 onValueChange = { location.value = it},
-                placeholder = { Text(text = "Søk på område, eller trykk på kartet") },
+                placeholder = { Text(text = "Søk på område, eller trykk på kartet", fontSize = 14.sp, fontWeight = Bold) },
                 modifier = Modifier
                     .padding()
                     .fillMaxWidth(0.8f)
@@ -130,7 +133,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
                     .fillMaxWidth()
             )
             {
-                Text("Søk")
+                Text(text = "Søk", fontSize = 14.sp, fontWeight = Bold)
             }
         }
     }
@@ -229,12 +232,12 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
                 )
                 Text(
                     text = " $tekstLocation ",
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = Bold,
                     fontSize = 28.sp
                 )
                 Text(
                     text = "Hvor mange dager vil du på tur?",
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = Bold,
                     fontSize = 20.sp
                 )
                 var days by remember { mutableStateOf(0) }
@@ -263,7 +266,7 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
                         },
                         enabled = enabled1
                     ) {
-                        Text("1 dag")
+                        Text("1 dag", fontWeight = Bold)
                     }
                     Spacer(modifier = Modifier.width(5.dp))
                     Button(
@@ -282,7 +285,7 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
                         enabled = enabled2
 
                     ) {
-                        Text("2 dager")
+                        Text("2 dager", fontWeight = Bold)
                     }
                     Spacer(modifier = Modifier.width(5.dp))
                     Button(
@@ -299,7 +302,7 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
                         },
                         enabled = enabled3
                     ) {
-                        Text("3 dager")
+                        Text("3 dager", fontWeight = Bold)
                     }
                     Spacer(modifier = Modifier.width(5.dp))
                 }
@@ -322,9 +325,34 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
         }
 
 
-        }
     }
+}
 
+@Composable
+fun MakeListButton(navController: NavController){
+    ExtendedFloatingActionButton(
+        containerColor = ForestGreen,
+        contentColor = Color.White,
+        icon = { Icon(Icons.Filled.KeyboardArrowRight, contentDescription = null) },
+        text = { Text("Motta pakkeliste for valgt lokasjon. ", fontSize = 16.sp, fontWeight = Bold) },
+        onClick = {  navController.navigate("ListScreen")
+        {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+
+            // Avoid multiple copies of the same destination when
+            // reselecting the same item
+            launchSingleTop = true
+            // Restore state when reselecting a previously selected item
+            restoreState = true
+        }
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 10.dp, end = 10.dp)
+    )
+}
 
 
 

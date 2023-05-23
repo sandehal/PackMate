@@ -24,9 +24,11 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
@@ -64,7 +66,7 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel, isOffl
 
             }
         }
-        Text(text = "Ytterlag", fontSize = MaterialTheme.typography.titleMedium.fontSize)
+        Text(text = "Ytterlag", fontSize = 18.sp, fontWeight = Bold)
         Spacer(modifier = Modifier.height(10.dp))
         LazyRow(
             modifier = Modifier.fillMaxWidth()
@@ -82,7 +84,7 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel, isOffl
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = "Innerlag", fontSize = MaterialTheme.typography.titleMedium.fontSize)
+        Text(text = "Innerlag", fontSize = 18.sp, fontWeight = Bold)
         Spacer(modifier = Modifier.height(10.dp))
         LazyRow(
             modifier = Modifier.fillMaxWidth()
@@ -166,11 +168,11 @@ fun NonExpandableCard(
 @Composable
 fun ExpandableCard(
     title: String,
-    titleFontSize: TextUnit = MaterialTheme.typography.titleMedium.fontSize,
-    titleFontWeight: FontWeight = FontWeight.Bold,
+    titleFontSize: TextUnit = 18.sp,
+    titleFontWeight: FontWeight = Bold,
     description: String,
     descriptionFontSize: TextUnit = MaterialTheme.typography.bodyMedium.fontSize,
-    descriptionFontWeight: FontWeight = FontWeight.Normal,
+    descriptionFontWeight: FontWeight = Bold,
     descriptionMaxLines: Int = 4,
     padding: Dp = 12.dp,
     img: String

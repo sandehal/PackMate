@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -98,7 +99,7 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel, isOffline
                                 .padding(20.dp),
                             containerColor = ForestGreen,
                             contentColor = Color.White,
-                            content = {Text("${s.location}, dag: ${s.daynumber?.plus(1)}")},
+                            content = {Text(fontSize = 14.sp, fontWeight = Bold, text ="${s.location}, dag: ${s.daynumber?.plus(1)}")},
                             onClick = {
                                 viewModel.outerLayerList = sortClothing( "outer",  WeatherValues(s.temperature!!,s.windspeed!!, s.watermilimeter))
                                 viewModel.innerLayerList = sortClothing( "inner",  WeatherValues(s.temperature, s.windspeed, s.watermilimeter))
@@ -175,6 +176,6 @@ fun DeleteButton(navController: NavController){
         modifier = Modifier.fillMaxWidth()
     ) {
         Icon(Icons.Filled.Delete, contentDescription = "Slett alle", tint = Color.White)
-        Text("Slett alle", color = Color.White)
+        Text("Slett alle", color = Color.White, fontSize = 14.sp, fontWeight = Bold)
     }
 }

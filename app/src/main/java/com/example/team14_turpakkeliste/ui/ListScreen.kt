@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -98,7 +99,7 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastDa
                     .padding(5.dp)
                     .clip(RoundedCornerShape(10.dp)),
             ){
-            Text(text = "Dag ${i+1}")
+            Text(text = "Dag ${i+1}", fontSize = 20.sp, fontWeight = Bold)
             if (farevarsel != null){
                 val image = getImg(desc = farevarsel)
                 Image(painter = image, contentDescription = "Hazard warning")
@@ -152,6 +153,6 @@ fun SaveButton(viewModel: TurViewModel, forecastData: ForecastData){
         modifier = Modifier.fillMaxWidth()
     ) {
         Icon(Icons.Filled.Favorite, contentDescription = "Save list")
-        Text("   Save list")
+        Text("   Save list", fontSize = 14.sp, fontWeight = Bold)
     }
 }
