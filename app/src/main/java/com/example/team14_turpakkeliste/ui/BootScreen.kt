@@ -117,9 +117,7 @@ fun BottomNavBar(navController: NavController){
 
 
     NavigationBar(
-        containerColor = ForestGreen,
-        modifier = Modifier
-            .border(BorderStroke(2.dp, Color.Black))
+        containerColor = ForestGreen
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
