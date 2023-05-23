@@ -26,6 +26,7 @@ import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
+
 @Composable
 fun SplashScreen() {
     Box(
