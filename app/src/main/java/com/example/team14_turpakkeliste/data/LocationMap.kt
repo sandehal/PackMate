@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION", "DEPRECATION")
+
 package com.example.team14_turpakkeliste.data
 
 import android.content.Context
@@ -58,8 +60,8 @@ fun checkAvailabilityLoc(address: Address): String{
 
 fun getLocationCompose(location: String, viewModel: TurViewModel, context: Context): LatLng? {
     viewModel.location = location
-    var latLng : LatLng?
-    latLng = null
+    val latLng : LatLng?
+
     var addressList : List<Address>? = null
     Log.d("Location",
         location
@@ -85,5 +87,5 @@ fun getLocationCompose(location: String, viewModel: TurViewModel, context: Conte
 
         return latLng
     }
-    return latLng
+    return null
 }

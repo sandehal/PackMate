@@ -39,9 +39,9 @@ data class TimeSeries(
 
 data class Data(
     val instant: Instant,
-    val next_12_hours: Next_12_hours,
-    val next_1_hours: Next_1_hours,
-    val next_6_hours: Next_6_hours
+    val next_12_hours: Next12Hours,
+    val next_1_hours: Next1Hours,
+    val next_6_hours: Next6Hours
 )
 
 data class Instant(
@@ -58,7 +58,7 @@ data class Details(
     val wind_speed: Number
 )
 
-data class Next_12_hours(
+data class Next12Hours(
     val summary: Summary,
     val details: Details?
 )
@@ -67,12 +67,12 @@ data class Summary(
     val symbol_code: String
 )
 
-data class Next_1_hours(
+data class Next1Hours(
     val summary: Summary,
     val details: Details?
 )
 
-data class Next_6_hours(
+data class Next6Hours(
     val summary: Summary,
     val details: Details?
 )
