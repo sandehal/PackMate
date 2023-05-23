@@ -7,44 +7,44 @@ fun getClothes(): List<Clothing>{
     return listOf(
         //klær inspirert av stat-system fra ulvang på ullklær andre klær hentet fra Norrøna
         //ytterlagjakker
-        Clothing("Shell", "jacket","outer", 1, 6, 6, "goretexjacket"),
-        Clothing("LightShell", "jacket", "outer", 1, 5, 6, "lightgoretexjacket"),
-        Clothing("Down", "jacket", "outer", 5,3,5, "downjacket"),
-        Clothing("Cotton", "jacket", "outer", 2, 2,5,"cottonjacket"),
-        Clothing("Primaloft", "jacket", "outer",3, 3,5, "primaloft"),
-        Clothing("Softshell", "jacket", "outer", 1, 2, 4, "windjacket"),
-        Clothing("HeavyDown", "jacket", "outer", 6, 3, 6, "heavydown"),
-        Clothing("Alpha100", "jacket", "outer", 3,2,4, "alphajacket"),
-        Clothing("ShellDown", "jacket", "outer", 6,6,6, "shelldownaparka"),
-        Clothing("MediumDown", "jacket", "outer", 4,3,6, "mediumdown"),
+        Clothing("Goretex", "jakke","outer", 1, 6, 6, "goretexjacket"),
+        Clothing("LightShell", "jakke", "outer", 1, 5, 6, "lightgoretexjacket"),
+        Clothing("Dun", "jakke", "outer", 5,3,5, "downjacket"),
+        Clothing("Bomull", "jakke", "outer", 2, 2,5,"cottonjacket"),
+        Clothing("Primaloft", "jakke", "outer",3, 3,5, "primaloft"),
+        Clothing("Softshell", "jakke", "outer", 1, 2, 4, "windjacket"),
+        Clothing("Varm Dun", "jakke", "outer", 6, 3, 6, "heavydown"),
+        Clothing("Fleece", "jakke", "outer", 3,2,4, "alphajacket"),
+        Clothing("ShellDun", "jakke", "outer", 6,6,6, "shelldownaparka"),
+        Clothing("MediumDun", "jakke", "outer", 4,3,6, "mediumdown"),
         //ytterlag bukser
-        Clothing("Shell", "pants", "outer", 1,6, 6,"goretexpants"),
-        Clothing("LightShell", "pants", "outer", 1, 5, 6, "lightgoretexpants"),
-        Clothing("Softshell", "pants", "outer", 2,3,5, "cottonpants"),
-        Clothing("Softshell", "pants", "outer", 2, 4, 5, "heavypants"),
-        Clothing("Softshell", "pants", "outer", 1, 3, 4, "trekkingpants"),
+        Clothing("Shell", "bukse", "outer", 1,6, 6,"goretexpants"),
+        Clothing("Lett Shell", "bukse", "outer", 1, 5, 6, "lightgoretexpants"),
+        Clothing("Softshell", "bukse", "outer", 2,3,5, "cottonpants"),
+        Clothing("Softshell", "bukse", "outer", 2, 4, 5, "heavypants"),
+        Clothing("Softshell", "bukse", "outer", 1, 3, 4, "trekkingpants"),
         Clothing("Softshell", "shorts", "outer", 1, 2, 4, "flexshorts"),
         //jakker uten vanntetthet
-        Clothing("thermalFleece", "jacket", "outer", 5,1,4,"thermalfleece"),
-        Clothing("thinFleece", "jacket", "outer", 2,1,3, "thinfleece"),
-        Clothing("heavyWool", "jacket", "outer", 6, 1, 6, "heavywool"),
-        Clothing("thinnestFleece", "jacket", "outer", 3,1,1, "thinnestfleece"),
-        Clothing("mediumFleece", "jacket", "outer", 4, 1, 3, "mediumfleece"),
-        Clothing("Wool", "jacket", "outer", 4, 1, 4, "wooljacket"),
+        Clothing("Tykk Fleece", "jakke", "outer", 5,1,4,"thermalfleece"),
+        Clothing("Tynn Fleece", "jakke", "outer", 2,1,3, "thinfleece"),
+        Clothing("Tykk Ull", "jakke", "outer", 6, 1, 6, "heavywool"),
+        Clothing("Svært tynn Fleece", "jakke", "outer", 3,1,1, "thinnestfleece"),
+        Clothing("Medium tykk Fleece", "jakke", "outer", 4, 1, 3, "mediumfleece"),
+        Clothing("Ull", "jakke", "outer", 4, 1, 4, "wooljacket"),
         //innerlag
-        Clothing("Wool", "sweater", "inner" ,6, 1,1, "expeditionsweater"),
-        Clothing("Wool", "pants", "inner", 6,1,1, "expeditionpants"),
-        Clothing("Wool", "sweater", "inner", 5, 1,1, "warmsweater"),
-        Clothing("Wool", "pants", "inner", 5,1,1, "warmpants"),
-        Clothing("Wool", "sweater", "inner" ,4, 1,1, "thermosweater"),
-        Clothing("Wool", "pants", "inner", 4,1,1, "thermopants"),
+        Clothing("Ull", "genser", "inner" ,6, 1,1, "expeditionsweater"),
+        Clothing("Ull", "bukse", "inner", 6,1,1, "expeditionpants"),
+        Clothing("Ull", "genser", "inner", 5, 1,1, "warmsweater"),
+        Clothing("Ull", "bukse", "inner", 5,1,1, "warmpants"),
+        Clothing("Ull", "genser", "inner" ,4, 1,1, "thermosweater"),
+        Clothing("Ull", "bukse", "inner", 4,1,1, "thermopants"),
         //se gjennom imagenavn
-        Clothing("Wool", "sweater", "inner", 3,1,1,"mediumwoolsweater"),
-        Clothing("Wool", "pants", "inner", 3, 1, 1, "mediumwoolpants"),
-        Clothing("LightWool", "sweater", "inner", 2,1,1,"lightwoolsweater"),
+        Clothing("Ull", "genser", "inner", 3,1,1,"mediumwoolsweater"),
+        Clothing("Ull", "bukse", "inner", 3, 1, 1, "mediumwoolpants"),
+        Clothing("Sommerull", "genser", "inner", 2,1,1,"lightwoolsweater"),
         //Clothing("LightWool", "pants", "inner", 2,1,1,"lightwoolpants"),
-        Clothing("LightWool", "tshirt", "inner", 1, 1,1, "sommerull"),
-        Clothing("Lightwool", "boxer", "inner", 1,1,1, "ullboxer"),
+        Clothing("Sommerull", "tskjorte", "inner", 1, 1,1, "sommerull"),
+        Clothing("ull", "boxer", "inner", 1,1,1, "ullboxer"),
 
         Clothing("Kan ikke anbefale noe her", "none", "none", 0, 0 ,0, "none")
     )
@@ -68,7 +68,7 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
         if(warmth == outerReqMin.warmth
             && windspeed >= outerReqMin.windproof
             && (watermilimeter == outerReqMin.waterproof || watermilimeter == outerReqMin.waterproof+1)
-            && clothing.type == "jacket"
+            && clothing.type == "jakke"
             && clothing.layer == layer){
             tempList[0] = clothing
                 continue
@@ -76,19 +76,19 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
         if(warmth == outerReqPants.warmth
             && windspeed >= outerReqPants.windproof
             && (watermilimeter == outerReqPants.waterproof || watermilimeter == outerReqPants.waterproof+2)
-            && (clothing.type == "pants" || clothing.type == "shorts")
+            && (clothing.type == "bukse" || clothing.type == "shorts")
             && clothing.layer == layer){
             tempList[1] = clothing
                 continue
         }
         if(warmth == innerReqMin.warmth
-            && (clothing.type == "sweater" || clothing.type == "tshirt")
+            && (clothing.type == "genser" || clothing.type == "tskjorte")
             && clothing.layer == layer){
             tempList[0] = clothing
             continue
         }
         if(warmth == innerReqMin.warmth
-            && (clothing.type == "pants" || clothing.type == "boxer")
+            && (clothing.type == "bukse" || clothing.type == "boxer")
             && clothing.layer == layer){
             tempList[1] = clothing
             continue
@@ -96,8 +96,8 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
     }
     return tempList
 }
-fun chooseOuterClothingRequirements(temp: Double, wind: Double, water: Double?): MinRequirementsClothes{
-    var warmth = when(temp) {
+fun chooseOuterClothingRequirements(temperature: Double, wind: Double, water: Double?): MinRequirementsClothes{
+    var warmth = when(temperature) {
         in 16.0..30.0 ->  1
         in 10.0..15.9->  2
         in 0.0..9.9->  3
@@ -130,8 +130,8 @@ fun chooseOuterClothingRequirements(temp: Double, wind: Double, water: Double?):
     }
     return MinRequirementsClothes(warmth,waterproof, windproof)
 }
-fun chooseInnerClothingRequirements(temp: Double, water: Double?): MinRequirementsClothes{
-    var warmth = when(temp) {
+fun chooseInnerClothingRequirements(temperature: Double, water: Double?): MinRequirementsClothes{
+    var warmth = when(temperature) {
         in -30.0..-20.0 -> 6
         in -19.9..-10.0 ->  5
         in -9.9..-0.1 ->  4
@@ -141,7 +141,7 @@ fun chooseInnerClothingRequirements(temp: Double, water: Double?): MinRequiremen
         else -> {0}
     }
     if (water != null) {
-        if(water >= 0.9 && temp <= 4){
+        if(water >= 0.9 && warmth <= 4){
             warmth += 2
         }
     }
