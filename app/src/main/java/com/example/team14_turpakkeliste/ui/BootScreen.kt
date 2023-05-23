@@ -44,7 +44,7 @@ fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = vi
     when(val state = viewModel.turUiState){
         is TurpakklisteUiState.Booting -> SplashScreen()
         is TurpakklisteUiState.Error -> ErrorScreen(viewModel)
-        is TurpakklisteUiState.OfflineMode -> BootScreen(navController, null, viewModel, true)
+        is TurpakklisteUiState.OfflineMode -> BootScreen(navController,  null, viewModel, true)
         is TurpakklisteUiState.Loading -> LoadingScreen()
         is TurpakklisteUiState.Success -> BootScreen(navController,state.forecastData, viewModel, false)
     }

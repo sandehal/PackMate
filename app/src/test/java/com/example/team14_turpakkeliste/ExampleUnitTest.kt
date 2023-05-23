@@ -1,5 +1,6 @@
 package com.example.team14_turpakkeliste
 
+import com.example.team14_turpakkeliste.data.pinpointLocation
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -9,9 +10,26 @@ import org.junit.Assert.*
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
+class PolygonTest {
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun testPinpointLocationInsidePolygon() {
+        val currentLatitude = 76.0
+        val currentLongitude = -2.0
+        val polygon = "75.0,-10.0 77.5,-10.0 77.5,0.0 75.0,0.0 75.0,-10.0"
+
+        val result = pinpointLocation(currentLatitude, currentLongitude, polygon)
+
+        assertEquals(true, result)
+    }
+
+    @Test
+    fun testPinpointLocationOutsidePolygon() {
+        val currentLatitude = 10.0
+        val currentLongitude = 10.0
+        val polygon = "75.0,-10.0 77.5,-10.0 77.5,0.0 75.0,0.0 75.0,-10.0"
+
+        val result = pinpointLocation(currentLatitude, currentLongitude, polygon)
+
+        assertEquals(false, result)
     }
 }
