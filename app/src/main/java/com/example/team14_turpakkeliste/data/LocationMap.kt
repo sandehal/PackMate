@@ -41,17 +41,17 @@ fun getNameFromLocation(cordinates: LatLng, viewModel: TurViewModel, context: Co
 fun checkAvailabilityLoc(address: Address): String{
 
     if(address.subLocality != null){
-        return address.subLocality.toString().replace("municipality", "kommune");
+        return address.subLocality.toString().replace("municipality", "kommune")
     }
     else if(address.subAdminArea!=null){
-        return address.subAdminArea.toString().replace("municipality", "kommune");
+        return address.subAdminArea.toString().replace("municipality", "kommune")
     }
     else if(address.locality!=null){
-        return address.locality.toString().replace("municipality", "kommune");
+        return address.locality.toString().replace("municipality", "kommune")
     }
     else if(address.adminArea!=null){
 
-        return address.adminArea.toString().replace("municipality", "kommune");
+        return address.adminArea.toString().replace("municipality", "kommune")
     }
     else{
         return address.countryName.toString()
