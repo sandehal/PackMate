@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.team14_turpakkeliste.data.*
 import com.example.team14_turpakkeliste.ui.TurpakklisteUiState
 import io.ktor.client.plugins.*
@@ -14,6 +15,7 @@ import kotlinx.serialization.SerializationException
 
 
 class TurViewModel: ViewModel() {
+    var isOffline : Boolean = false
     var prevScreen : String = "SavedScreen"
     var error : String? = null
     //kan vi endre dette til Oslo?
@@ -114,12 +116,15 @@ class TurViewModel: ViewModel() {
                 TurpakklisteUiState.Success(alertList, forecast)
             } catch (ex: ResponseException) {
                 error = ex.toString()
+                isOffline = true
                 TurpakklisteUiState.OfflineMode
             } catch (ex: SerializationException) {
                 error = ex.toString()
+                isOffline = true
                 TurpakklisteUiState.OfflineMode
             } catch(e:Throwable){
                 error = e.toString()
+                isOffline = true
                 TurpakklisteUiState.OfflineMode
             }
         }

@@ -44,20 +44,20 @@ fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = vi
     when(val state = viewModel.turUiState){
         is TurpakklisteUiState.Booting -> SplashScreen()
         is TurpakklisteUiState.Error -> ErrorScreen(viewModel)
-        is TurpakklisteUiState.OfflineMode -> BootScreen(navController,  null, viewModel, true)
+        is TurpakklisteUiState.OfflineMode -> BootScreen(navController,  null, viewModel)
         is TurpakklisteUiState.Loading -> LoadingScreen()
-        is TurpakklisteUiState.Success -> BootScreen(navController,state.forecastData, viewModel, false)
+        is TurpakklisteUiState.Success -> BootScreen(navController,state.forecastData, viewModel)
     }
 }
 
 @Composable
-fun BootScreen(navController: NavHostController, forecastData: ForecastData?, viewModel: TurViewModel, isOffline: Boolean){
+fun BootScreen(navController: NavHostController, forecastData: ForecastData?, viewModel: TurViewModel){
     NavHost(navController = navController, startDestination = "SavedScreen") {
         composable(Screen.ListScreen.route) { ListScreen(navController, viewModel, forecastData!!) }
         composable(Screen.MapScreen.route) { MapsComposeScreen(navController,viewModel) }
-        composable(Screen.SavedScreen.route) { SavedScreen(navController, viewModel, isOffline) }
+        composable(Screen.SavedScreen.route) { SavedScreen(navController, viewModel) }
         composable(Screen.LoadingScreen.route) { LoadingScreen() }
-        composable(Screen.ClothingScreen.route) { ClothingScreen(navController,viewModel, isOffline, viewModel.prevScreen) }
+        composable(Screen.ClothingScreen.route) { ClothingScreen(navController,viewModel) }
         composable(Screen.InfoScreen.route) { InfoScreen(navController) }
     }
 }

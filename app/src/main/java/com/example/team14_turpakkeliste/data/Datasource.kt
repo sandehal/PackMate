@@ -19,7 +19,7 @@ class Datasource {
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) { gson() }
         expectSuccess = true
-
+    
     }
     suspend fun getForecastData(newlat: Double, newlon: Double): ForecastData {
         val client = client.get("https://gw-uio.intark.uh-it.no/in2000/weatherapi/locationforecast/2.0/compact?lat=${newlat}&lon=${newlon}"){

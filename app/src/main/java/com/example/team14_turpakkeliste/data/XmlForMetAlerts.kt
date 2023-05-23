@@ -151,9 +151,9 @@ class XmlCurrentAlert {
         var instruction: String? = null
         var domain: String? = null
         var eventAwarenessName: String? = null
-        var awareness_level: String? = null
+        var awarenessLevel: String? = null
         var awarenessSeriousness: String? = null
-        var awareness_type: String? = null
+        var awarenessType: String? = null
         var areaPolygon: String? = null
         var eventCode: String? = null
         val parameters: MutableList<Pair<String?, String?>> = mutableListOf()
@@ -181,9 +181,9 @@ class XmlCurrentAlert {
         for (p in parameters) {
             when (p.first) {
                 "eventAwarenessName" -> eventAwarenessName = p.second
-                "awareness_level" -> awareness_level = p.second
+                "awareness_level" -> awarenessLevel = p.second
                 "awarenessSeriousness" -> awarenessSeriousness = p.second
-                "awareness_type" -> awareness_type = p.second
+                "awareness_type" -> awarenessType = p.second
                 "geographicDomain" -> domain = p.second
             }
         }
@@ -196,9 +196,9 @@ class XmlCurrentAlert {
             description,
             instruction,
             eventAwarenessName,
-            awareness_level,
+            awarenessLevel,
             awarenessSeriousness,
-            awareness_type,
+            awarenessType,
             domain,
             areaPolygon,
             eventCode
@@ -227,7 +227,6 @@ class XmlCurrentAlert {
     @Throws(XmlPullParserException::class, IOException::class)
     private fun readEventCode(parser: XmlPullParser): String? {
         parser.require(XmlPullParser.START_TAG, ns, "eventCode")
-        var valueName: String? = null
         var value: String? = null
 
         while (parser.next() != XmlPullParser.END_TAG) {
@@ -235,7 +234,7 @@ class XmlCurrentAlert {
                 continue
             }
             when (parser.name) {
-                "valueName" -> valueName = readText(parser)
+                "valueName" -> readText(parser)
                 "value" -> value = readText(parser)
                 else -> skip(parser)
             }

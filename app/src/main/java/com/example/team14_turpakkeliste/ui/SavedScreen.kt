@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun SavedScreen(navController: NavController, viewModel: TurViewModel, isOffline: Boolean) {
+fun SavedScreen(navController: NavController, viewModel: TurViewModel) {
     val context = LocalContext.current
     val appDB = AppDatabase.getDatabase(context)
     val saved = appDB.UserDao().getAll()
@@ -74,7 +74,7 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel, isOffline
                 text = "Lagrede pakkelister",
                 fontSize = 30.sp
             )
-            if (isOffline){
+            if (viewModel.isOffline){
                 Text( modifier = Modifier
                     .fillMaxWidth()
                     .background(WhiteYellow)
@@ -123,7 +123,7 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel, isOffline
                     }
                 }
             }
-            if (isOffline){
+            if (viewModel.isOffline){
                 scope.launch {
                     snackbarHostState.showSnackbar(
                         "Internett ikke tilgjenglig: "+ viewModel.error
@@ -135,7 +135,7 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel, isOffline
                 .fillMaxSize(),
                 verticalArrangement = Arrangement.Bottom
             ){
-            if (saved.isEmpty() && !isOffline){
+            if (saved.isEmpty() && !viewModel.isOffline){
                 Text(modifier = Modifier
                     .wrapContentWidth(Alignment.CenterHorizontally)
                     .padding(20.dp),
@@ -143,7 +143,7 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel, isOffline
                         fontSize = 18.sp
                     )
                 }
-            if (!isOffline){
+            if (!viewModel.isOffline){
                 BottomNavBar(navController)
             }
             }
@@ -153,7 +153,7 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel, isOffline
 @Composable
 fun SavedPreview() {
     Team14TurPakkeListeTheme {
-        SavedScreen(rememberNavController(), viewModel = TurViewModel(), isOffline = false)
+        SavedScreen(rememberNavController(), viewModel = TurViewModel())
     }
 }
 
