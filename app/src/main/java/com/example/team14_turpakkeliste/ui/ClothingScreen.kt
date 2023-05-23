@@ -34,6 +34,7 @@ import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.*
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
+import kotlin.math.roundToLong
 
 
 @Composable
