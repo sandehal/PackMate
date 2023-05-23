@@ -90,7 +90,7 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
             modifier = Modifier.fillMaxWidth()
         ) {
             items(viewModel.innerLayerList) { innerList ->
-                val description = "Plagg: ${innerList.image} \n" +
+                val description = "Plagg: ${innerList.material}${innerList.type} \n" +
                         "Varme: ${innerList.warmth}\n" +
                         "Vindtetthet: ${innerList.windproof} \n" +
                         "Vanntetthet: ${innerList.waterproof}"
@@ -293,6 +293,7 @@ fun getImg(desc: String): Painter{
         "mediumwoolpants" -> painterResource(id = R.drawable.ravbukse)
         "shelldownparka" -> painterResource(id = R.drawable.goretextdownparka)
         "mediumdown" -> painterResource(id = R.drawable.mediumwarmdown)
+        "ullboxer" -> painterResource(id = R.drawable.ullboxer)
         //legg inn ullboxer
         //farevarsel
         "icon_warning_flood_yellow" -> painterResource(id = R.drawable.icon_warning_flood_yellow)
