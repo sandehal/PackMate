@@ -4,9 +4,8 @@ package com.example.team14_turpakkeliste.data
 fun pinpointLocation(currentLatitude: Double,currentLongitude: Double, polygon : String): Boolean{
 
     val polygonAsArrayString = polygon.split(" ", ",")
-    println(polygonAsArrayString)
+
     val polygonAsArray = polygonAsArrayString.map { it.toDouble() }.toTypedArray()
-    //minste og største verdi for polygonet.
     var polygonMinValueX: Double = polygonAsArray[0]
     var polygonMaxValueX: Double = polygonAsArray[0]
     var polygonMinValueY: Double = polygonAsArray[1]
