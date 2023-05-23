@@ -1,9 +1,7 @@
 package com.example.team14_turpakkeliste.ui
 
 import com.example.team14_turpakkeliste.data.ForecastData
-import android.os.Build
 import android.view.animation.OvershootInterpolator
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
@@ -39,7 +37,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.Alert
-import com.example.team14_turpakkeliste.ui.*
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
