@@ -112,6 +112,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
 
     //Calendar open source
-
+    // Test rules and transitive dependencies:
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_version")
+    // Needed for createAndroidComposeRule, but not createComposeRule:
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
     implementation "com.maxkeppeler.sheets-compose-dialogs:calendar:1.0.2"
 }
