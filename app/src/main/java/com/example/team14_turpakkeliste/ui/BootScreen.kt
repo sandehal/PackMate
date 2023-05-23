@@ -36,7 +36,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
-import com.example.team14_turpakkeliste.data.Alert
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
@@ -45,14 +44,14 @@ fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = vi
     when(val state = viewModel.turUiState){
         is TurpakklisteUiState.Booting -> SplashScreen()
         is TurpakklisteUiState.Error -> ErrorScreen(viewModel)
-        is TurpakklisteUiState.OfflineMode -> BootScreen(navController, null, null, viewModel, true)
+        is TurpakklisteUiState.OfflineMode -> BootScreen(navController,  null, viewModel, true)
         is TurpakklisteUiState.Loading -> LoadingScreen()
-        is TurpakklisteUiState.Success -> BootScreen(navController,state.alerts,state.forecastData, viewModel, false)
+        is TurpakklisteUiState.Success -> BootScreen(navController,state.forecastData, viewModel, false)
     }
 }
 
 @Composable
-fun BootScreen(navController: NavHostController, alerts: List<Alert>?, forecastData: ForecastData?, viewModel: TurViewModel, isOffline: Boolean){
+fun BootScreen(navController: NavHostController, forecastData: ForecastData?, viewModel: TurViewModel, isOffline: Boolean){
     NavHost(navController = navController, startDestination = "SavedScreen") {
         composable(Screen.ListScreen.route) { ListScreen(navController, viewModel, forecastData!!) }
         composable(Screen.MapScreen.route) { MapsComposeScreen(navController,viewModel) }
