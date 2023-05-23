@@ -158,6 +158,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
                     //String.format("%.2f",latLng.latitude).toDouble()
                     viewModel.currentLongitude =  latLng.longitude
 
+
                     viewModel.location = getNameFromLocation(clickedLatLng.value!!,viewModel, context )
 
                     //String.format("%.2f",latLng.longitude).toDouble()

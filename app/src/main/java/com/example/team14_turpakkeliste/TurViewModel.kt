@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.team14_turpakkeliste.data.*
 import com.example.team14_turpakkeliste.ui.TurpakklisteUiState
 import io.ktor.client.plugins.*

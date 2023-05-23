@@ -103,8 +103,8 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastDa
             if (farevarsel != null){
                 val image = getImg(desc = farevarsel)
                 Image(painter = image, contentDescription = "Hazard warning")
+                }
             }
-        }
         }
     }
     Column(

@@ -23,7 +23,7 @@ fun getNameFromLocation(cordinates: LatLng, viewModel: TurViewModel, context: Co
         println("FEIL")
     }
     println(addressList)
-    if (addressList != null) {
+    if (!addressList.isNullOrEmpty()) {
         val address = addressList[0]
         viewModel.currentLatitude = address.latitude
         viewModel.currentLongitude = address.longitude
