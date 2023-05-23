@@ -43,7 +43,6 @@ import com.example.team14_turpakkeliste.ui.*
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = viewModel()){
     when(val state = viewModel.turUiState){
@@ -55,7 +54,6 @@ fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = vi
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BootScreen(navController: NavHostController, alerts: List<Alert>?, forecastData: ForecastData?, viewModel: TurViewModel, isOffline: Boolean){
     NavHost(navController = navController, startDestination = "SavedScreen") {
