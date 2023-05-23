@@ -37,7 +37,7 @@ fun ErrorScreen(viewModel: TurViewModel){
                 .fillMaxWidth()
                 .background(WhiteYellow)
                 .wrapContentWidth(Alignment.CenterHorizontally),
-            text = "Ingen forbindelse:",
+            text = "Det oppsto en feil!",
             fontSize = 30.sp
         )
         Spacer(modifier = Modifier.height(25.dp))
@@ -45,7 +45,7 @@ fun ErrorScreen(viewModel: TurViewModel){
             .fillMaxWidth()
             .background(WhiteYellow)
             .wrapContentWidth(Alignment.CenterHorizontally),
-            text = viewModel.error!!,
+            text = "Feilmelding: ${viewModel.error!!}",
             fontSize = 15.sp
         )
         Spacer(modifier = Modifier.height(100.dp))
@@ -55,7 +55,7 @@ fun ErrorScreen(viewModel: TurViewModel){
             Text( modifier = Modifier
                 .fillMaxWidth()
                 .background(WhiteYellow),
-                text = "Kan ikke legge til nye pakklister uten internettforbindelse!",
+                text = "Der var du uheldig! Start applikasjonen på nytt!",
                 fontSize = 20.sp
 
             )
