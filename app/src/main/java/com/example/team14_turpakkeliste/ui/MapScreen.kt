@@ -1,8 +1,5 @@
 package com.example.team14_turpakkeliste.ui
 
-import android.content.Context
-import android.location.Address
-import android.location.Geocoder
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -27,19 +24,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
-import com.example.team14_turpakkeliste.data.Alert
+import com.example.team14_turpakkeliste.data.getLocationCompose
+import com.example.team14_turpakkeliste.data.getNameFromLocation
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.compose.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.io.IOException
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, alerts: List<Alert>){
+fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
 
     val properties by remember {
         mutableStateOf(MapProperties(mapType = MapType.NORMAL))
@@ -203,37 +200,6 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel, ale
     }
 }
 
-fun getLocationCompose(location: String, viewModel: TurViewModel, context: Context): LatLng? {
-    viewModel.location = location
-    var latLng : LatLng?
-    latLng = null
-    var addressList : List<Address>? = null
-    Log.d("Location",
-        location
-    )
-    val geocoder = Geocoder(context)
-    try {
-        //Lønnet seg for større treffsikkerhet å legge til "Norway" hele to ganger.
-
-        addressList = geocoder.getFromLocationName(location.plus(", Norway"), 1)
-        println("Resultat")
-    } catch (e: IOException) {
-        e.printStackTrace()
-        println("FEIL")
-    }
-
-    if (addressList!!.isNotEmpty()) {
-        val address = addressList[0]
-        viewModel.currentLatitude = address.latitude
-        viewModel.currentLongitude = address.longitude
-        latLng = LatLng(address.latitude,address.longitude)
-        Log.d("adressekord",
-            "${viewModel.currentLatitude}, ${viewModel.currentLongitude}")
-
-        return latLng
-    }
-    return latLng
-}
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -266,23 +232,12 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
                     contentDescription = "Kart"
                 )
                 Text(
-                    text = " Valgt lokasjon -",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 28.sp
-                )
-                Text(
                     text = " $tekstLocation ",
                     fontWeight = FontWeight.Bold,
                     fontSize = 28.sp
                 )
                 Text(
-                    text = "Hvor mange dager ",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
-                )
-
-                Text(
-                    text = " skal du på tur? Maks 3 dager ",
+                    text = "Hvor mange dager vil du på tur?",
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp
                 )
@@ -373,53 +328,7 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
 
         }
     }
-fun getNameFromLocation(cordinates: LatLng,viewModel: TurViewModel, context: Context): String {
-    var locationName = ""
-    var addressList : List<Address>? = null
-    val geocoder = Geocoder(context)
-    try {
-        //Lønnet seg for større treffsikkerhet å legge til "Norway" hele to ganger.
-        addressList = geocoder.getFromLocation(cordinates.latitude, cordinates.longitude, 1)
-        println("Resultat")
-    } catch (e: IOException) {
-        e.printStackTrace()
-        println("FEIL")
-    }
-    println(addressList)
-    if (addressList != null) {
-        val address = addressList[0]
-        viewModel.currentLatitude = address.latitude
-        viewModel.currentLongitude = address.longitude
 
-        locationName = checkAvailabilityLoc(address)
-        Log.d("Adressenavn", locationName)
-        println(locationName)
-        return locationName
-    }
-    return locationName
-}
-
-
-
-fun checkAvailabilityLoc(address: Address): String{
-
-    if(address.subLocality != null){
-        return address.subLocality.toString()
-    }
-    else if(address.subAdminArea!=null){
-        return address.subAdminArea.toString()
-    }
-    else if(address.locality!=null){
-        return address.locality.toString()
-    }
-    else if(address.adminArea!=null){
-
-        return address.adminArea.toString()
-    }
-    else{
-        return address.countryName.toString()
-    }
-}
 
 
 
