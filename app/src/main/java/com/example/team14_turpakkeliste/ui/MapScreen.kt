@@ -205,7 +205,6 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
 fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: NavController, turViewModel: TurViewModel){
     turViewModel.getForecast(turViewModel.alerts)
     val tekstLocation = turViewModel.checkIntitialized()
-    turViewModel.getForecast(alerts = turViewModel.alerts)
     if (sheetState.isVisible){
         ModalBottomSheet(
             sheetState = sheetState,
