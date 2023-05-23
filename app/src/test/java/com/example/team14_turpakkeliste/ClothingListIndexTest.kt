@@ -8,7 +8,7 @@ class ClothingListIndexTest {
     @Test
     fun clothingPiece_isCorrect(){
         val expectedClothingPieceImg = "downjacket"
-        val fetchedClothingPieceImg = getClothes().get(2).image
+        val fetchedClothingPieceImg = getClothes()[2].image
         Assert.assertEquals(expectedClothingPieceImg, fetchedClothingPieceImg)
     }
     @Test

@@ -1,9 +1,7 @@
 package com.example.team14_turpakkeliste
 
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -17,7 +15,6 @@ import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 //The activity needs to be a subclass of ComponentActivity; AppCompatActivity
 //In order for google maps to function, according to the current implementation.
 class MainActivity : AppCompatActivity() {
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
