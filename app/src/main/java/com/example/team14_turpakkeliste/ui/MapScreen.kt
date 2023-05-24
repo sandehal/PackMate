@@ -24,6 +24,7 @@ import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.getLocationCompose
 import com.example.team14_turpakkeliste.data.getNameFromLocation
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
+import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
@@ -188,7 +189,7 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
                 scope.launch{
                     sheetState.hide()
                 }
-            },
+            }, containerColor = WhiteYellow
         )
 
         {
