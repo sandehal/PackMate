@@ -3,26 +3,21 @@ package com.example.team14_turpakkeliste.ui
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavController
-import com.google.android.gms.maps.model.LatLng
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
@@ -30,11 +25,11 @@ import com.example.team14_turpakkeliste.data.getLocationCompose
 import com.example.team14_turpakkeliste.data.getNameFromLocation
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.compose.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -105,10 +100,10 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
             TextField(
                 value = location.value,
                 onValueChange = { location.value = it },
-                placeholder = { Text(text = "Søk på område, eller trykk på kartet", fontSize = 14.sp, fontWeight = FontWeight.Bold) },
+                placeholder = { Text(text = "Søk på område, eller trykk på kartet", fontSize = 14.sp, fontWeight = Bold) },
                 modifier = Modifier
                     .weight(1f)
-                    .height(52.dp)
+                    .height(60.dp)
                     ,
                 singleLine = true,
                 trailingIcon = if (location.value.isNotBlank()) trailingIconView else null,
@@ -133,10 +128,10 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
                 shape = RoundedCornerShape(4.dp),
                 colors =  ButtonDefaults.buttonColors(ForestGreen),
                 modifier = Modifier
-                    .height(52.dp)
+                    .height(60.dp)
                     .width(80.dp)
             ) {
-                Text(text = "Søk", fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                Text(text = "Søk", fontSize = 14.sp, fontWeight = Bold)
             }
         }
 
