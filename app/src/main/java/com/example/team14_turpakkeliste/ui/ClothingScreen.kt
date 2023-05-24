@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
@@ -34,6 +35,7 @@ import androidx.navigation.NavController
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.*
+import com.example.team14_turpakkeliste.ui.theme.CardColor
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
 
@@ -152,7 +154,7 @@ fun NonExpandableCard(
 ) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = Color.Yellow,
+            containerColor = CardColor,
         ),
         modifier = Modifier.
                 size(350.dp, 150.dp)
@@ -207,6 +209,9 @@ fun ExpandableCard(
                     easing = LinearOutSlowInEasing
                 )
             ),
+        colors = CardDefaults.cardColors(
+            containerColor = CardColor,
+        ),
 
         onClick = {
             expandedState = !expandedState
