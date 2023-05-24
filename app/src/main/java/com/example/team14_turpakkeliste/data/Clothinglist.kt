@@ -7,6 +7,7 @@ fun getClothes(): List<Clothing>{
     return listOf(
         //klær inspirert av stat-system fra ulvang på ullklær andre klær hentet fra Norrøna
         //ytterlagjakker
+        //hei test
         Clothing("Goretex", "jakke","outer", 1, 6, 6, "goretexjacket"),
         Clothing("LightShell", "jakke", "outer", 1, 5, 6, "lightgoretexjacket"),
         Clothing("Dun", "jakke", "outer", 5,3,5, "downjacket"),
