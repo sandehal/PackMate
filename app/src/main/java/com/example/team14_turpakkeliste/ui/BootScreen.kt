@@ -133,17 +133,14 @@ fun BottomNavBar(navController: NavController){
                     tint = if (currentDestination?.hierarchy?.any { it.route == item.route } == true) Color.Black else Color.White) },
                 label = { Text(text = item.description, color = Color.White, fontSize = 14.sp, fontWeight = Bold) },
                 onClick = { if (currentDestination?.hierarchy?.any { it.route == item.route} == true) {
-                    //Do nothing
+                    //gjør ikke noe
                 } else {
                     navController.navigate(item.route)
                     {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
                         }
-                        // Avoid multiple copies of the same destination when
-                        // reselecting the same item
                         launchSingleTop = true
-                        // Restore state when reselecting a previously selected item
                         restoreState = true
                     }
                 }
@@ -160,10 +157,7 @@ fun navigate(navController: NavController, route: String) {
         popUpTo(navController.graph.findStartDestination().id) {
             saveState = true
         }
-        // Avoid multiple copies of the same destination when
-        // reselecting the same item
         launchSingleTop = true
-        // Restore state when reselecting a previously selected item
         restoreState = true
     }
 }

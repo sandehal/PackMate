@@ -32,8 +32,9 @@ fun getNameFromLocation(cordinates: LatLng, viewModel: TurViewModel, context: Co
         Log.d("Adressenavn", locationName)
         println(locationName)
         return locationName
+    }else{
+        return "Nå er du på bærtur!"
     }
-    return locationName
 }
 
 

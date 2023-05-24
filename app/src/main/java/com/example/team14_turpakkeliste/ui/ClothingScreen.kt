@@ -110,7 +110,6 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
             .fillMaxSize(),
             verticalArrangement = Arrangement.Bottom
         ){
-            //fiks denne tilbake til å gjøre kall på funksjon!
             val alertInfo = viewModel.getAlertDataForArea()
             if(alertInfo != null){
                 ExpandableCard(title = "Farevarsel",
@@ -119,11 +118,9 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
             }
             val info = viewModel.weatherInfo
             ExpandableCard(title = "Vis været",
-                //legg til riktig info her
                 description = "Det er meldt ${info.temp} grader \n" +
                         "og vind på ${info.windspeed} m/s \n" +
                         "Du kan forvente ${info.watermm} mm nedbør i løpet av dagen",
-                //endre denne til å vise riktig dag!!! Se gjennom metode i clothinglist!!!
                 img = viewModel.weatherImg)
             BottomNavBar(navController)
         }
@@ -137,7 +134,6 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
                 description = "Det er meldt ${info.temp} grader \n" +
                         "og vind på ${info.windspeed} m/s \n" +
                         "Du kan forvente ${info.watermm} mm nedbør i løpet av dagen",
-                //endre denne til å vise riktig dag!!! Se gjennom metode i clothinglist!!!
                 img = viewModel.weatherImg)
             BottomNavBar(navController)
         }
@@ -303,7 +299,7 @@ fun getImg(desc: String): Painter{
         "shelldownparka" -> painterResource(id = R.drawable.goretextdownparka)
         "mediumdown" -> painterResource(id = R.drawable.mediumwarmdown)
         "ullboxer" -> painterResource(id = R.drawable.ullboxer)
-        //legg inn ullboxer
+
         //farevarsel
         "icon_warning_flood_yellow" -> painterResource(id = R.drawable.icon_warning_flood_yellow)
         "icon_warning_forest_yellow" -> painterResource(id = R.drawable.icon_warning_forestfire_yellow)
@@ -345,7 +341,6 @@ fun getImg(desc: String): Painter{
         "icon_warning_drivingconditions_orange" -> painterResource(id = R.drawable.icon_warning_drivingconditions_orange)
         "icon_warning_drivingconditions_red" -> painterResource(id = R.drawable.icon_warning_drivingconditions_red)
         "icon_warning_drivingconditions_yellow" -> painterResource(id = R.drawable.icon_warning_drivingconditions_yellow)
-        //husk dette
         "icon_warning_extreme_red" -> painterResource(id = R.drawable.icon_warning_extreme)
         "icon-warning-flood-orange" -> painterResource(id = R.drawable.icon_warning_flood_orange)
 
@@ -353,7 +348,6 @@ fun getImg(desc: String): Painter{
         //værdata
         "clearsky_day" -> painterResource(id = R.drawable.clearsky_day)
         "clearsky_night" -> painterResource(id = R.drawable.clearsky_night)
-        //"clearsky_polartwilight" -> painterResource(id = R.drawable.clear)
         "cloudy" -> painterResource(id = R.drawable.cloudy)
         "fair_day" -> painterResource(id = R.drawable.fair_day)
         "fair_night" -> painterResource(id = R.drawable.fair_night)

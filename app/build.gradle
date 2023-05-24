@@ -56,25 +56,17 @@ dependencies {
 
     implementation 'androidx.core:core-ktx:1.10.1'
 
-    //implementatio 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
-    //Potensiell switche ktx runtime til den over.
 
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.activity:activity-compose:1.7.1'
-    //Folgende dependencies gir ukorrekt warning: Eksempel - "Oppgrader" fra beta til alfa.
+
     //noinspection GradleDependency
     implementation "androidx.compose.ui:ui:$compose_version"
-    //noinspection GradleDependency
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
-    //noinspection GradleDependency
     implementation 'androidx.compose.material3:material3:1.1.0-alpha08'
-    //noinspection GradleDependency
     implementation 'androidx.compose.material3:material3-window-size-class:1.1.0-alpha08'
-    //noinspection GradleDependency
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-    //noinspection GradleDependency
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
-    //noinspection GradleDependency
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -91,15 +83,15 @@ dependencies {
     implementation "io.ktor:ktor-serialization-gson:$ktor_version"
     implementation "io.ktor:ktor-client-cio:$ktor_version"
     implementation "io.ktor:ktor-serialization-kotlinx-xml:$ktor_version"
+
     //Navigation
     def nav_version = "2.5.3"
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
-//    Google maps
+    //Google maps
     implementation 'com.google.maps.android:maps-compose:2.11.4'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
-
 
 
     //Room database libary
@@ -113,11 +105,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
 
     //Calendar open source
-    // Test rules and transitive dependencies:
-    //noinspection GradleDependency
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_version")
-    // Needed for createAndroidComposeRule, but not createComposeRule:
-    //noinspection GradleDependency
     debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
     implementation "com.maxkeppeler.sheets-compose-dialogs:calendar:1.0.2"
 }
