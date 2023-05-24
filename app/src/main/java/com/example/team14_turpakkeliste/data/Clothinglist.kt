@@ -8,7 +8,6 @@ fun getClothes(): List<Clothing>{
     return listOf(
         //klær inspirert av stat-system fra ulvang på ullklær andre klær hentet fra Norrøna
         //ytterlagjakker
-        //hei test
         Clothing("Goretex", "jakke","outer", 1, 6, 6, "goretexjacket"),
         Clothing("LightShell", "jakke", "outer", 1, 5, 6, "lightgoretexjacket"),
         Clothing("Dun", "jakke", "outer", 5,3,5, "downjacket"),
@@ -19,6 +18,7 @@ fun getClothes(): List<Clothing>{
         Clothing("Fleece", "jakke", "outer", 3,2,4, "alphajacket"),
         Clothing("ShellDun", "jakke", "outer", 6,6,6, "shelldownaparka"),
         Clothing("MediumDun", "jakke", "outer", 4,3,6, "mediumdown"),
+
         //ytterlag bukser
         Clothing("Shell", "bukse", "outer", 1,6, 6,"goretexpants"),
         Clothing("Lett Shell", "bukse", "outer", 1, 5, 6, "lightgoretexpants"),
@@ -26,6 +26,7 @@ fun getClothes(): List<Clothing>{
         Clothing("Softshell", "bukse", "outer", 2, 4, 5, "heavypants"),
         Clothing("Softshell", "bukse", "outer", 1, 3, 4, "trekkingpants"),
         Clothing("Softshell", "shorts", "outer", 1, 2, 4, "flexshorts"),
+
         //jakker uten vanntetthet
         Clothing("Tykk Fleece", "jakke", "outer", 5,1,4,"thermalfleece"),
         Clothing("Tynn Fleece", "jakke", "outer", 2,1,3, "thinfleece"),
@@ -33,6 +34,7 @@ fun getClothes(): List<Clothing>{
         Clothing("Svært tynn Fleece", "jakke", "outer", 3,1,1, "thinnestfleece"),
         Clothing("Medium tykk Fleece", "jakke", "outer", 4, 1, 3, "mediumfleece"),
         Clothing("Ull", "jakke", "outer", 4, 1, 4, "wooljacket"),
+
         //innerlag
         Clothing("Ull", "genser", "inner" ,6, 1,1, "expeditionsweater"),
         Clothing("Ull", "bukse", "inner", 6,1,1, "expeditionpants"),
@@ -40,11 +42,9 @@ fun getClothes(): List<Clothing>{
         Clothing("Ull", "bukse", "inner", 5,1,1, "warmpants"),
         Clothing("Ull", "genser", "inner" ,4, 1,1, "thermosweater"),
         Clothing("Ull", "bukse", "inner", 4,1,1, "thermopants"),
-        //se gjennom imagenavn
         Clothing("Ull", "genser", "inner", 3,1,1,"mediumwoolsweater"),
         Clothing("Ull", "bukse", "inner", 3, 1, 1, "mediumwoolpants"),
         Clothing("Sommerull", "genser", "inner", 2,1,1,"lightwoolsweater"),
-        //Clothing("LightWool", "pants", "inner", 2,1,1,"lightwoolpants"),
         Clothing("Sommerull", "tskjorte", "inner", 1, 1,1, "sommerull"),
         Clothing("ull", "boxer", "inner", 1,1,1, "ullboxer"),
 
@@ -52,7 +52,6 @@ fun getClothes(): List<Clothing>{
     )
 }
 fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
-    //endre disse til bedre navn
     val temp = weatherValues.temp
     val wind = weatherValues.windspeed
     val water = weatherValues.watermm
@@ -122,7 +121,6 @@ fun chooseOuterClothingRequirements(temperature: Double, wind: Double, water: Do
         in 0.2..0.3 ->  2
         in 0.4..0.8 ->  3
         //det finnes ikke tilstrekkelig data som tilsier at vi kan ha klær osm har vanntetthet 4
-        //in 0.6..0.8 -> 4
         in 0.9..1.4 ->  5
         in 1.5..50.0->  6
         else -> {0}
@@ -162,15 +160,14 @@ fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues{
     val temp: Double = forecastData.properties.timeseries[dataForDay].data.instant.details.air_temperature.toDouble()
     val wind: Double = forecastData.properties.timeseries[dataForDay].data.instant.details.wind_speed.toDouble()
     var water = 0.0
-    //her kunne vi tatt avgjørelsen å ha maxprecipitation fordi denne metoden er så av og på :/ kan kræsje når det er ny time osv
     for(i in dataForDay..dataForDay+2){
         forecastData.properties.timeseries[i].data.next_1_hours.details?.precipitation_amount?.let {
             water += forecastData.properties.timeseries[i].data.next_1_hours.details!!.precipitation_amount.toDouble()
         }
     }
-    //her må vi formatere water
     return WeatherValues(temp, wind, water)
 }
+
 /*
 Returnerer en string som brukes for å bestemme værikonet for valgt område og dato
  */

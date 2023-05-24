@@ -65,7 +65,7 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel) {
                 .fillMaxSize()
                 .background(WhiteYellow)
                 .wrapContentWidth(Alignment.CenterHorizontally)
-                .padding(20.dp)
+                .padding(5.dp)
         ) {
             Text( modifier = Modifier
                 .fillMaxWidth()
@@ -112,10 +112,7 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel) {
                                     saveState = true
                                 }
 
-                                // Avoid multiple copies of the same destination when
-                                // reselecting the same item
                                 launchSingleTop = true
-                                // Restore state when reselecting a previously selected item
                                 restoreState = true
                             }
                             }

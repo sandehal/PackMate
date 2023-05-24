@@ -40,6 +40,7 @@ fun ErrorScreen(viewModel: TurViewModel){
             text = "Det oppsto en feil!",
             fontSize = 30.sp
         )
+
         Spacer(modifier = Modifier.height(25.dp))
         Text( modifier = Modifier
             .fillMaxWidth()
@@ -48,6 +49,7 @@ fun ErrorScreen(viewModel: TurViewModel){
             text = "Feilmelding: ${viewModel.error!!}",
             fontSize = 15.sp
         )
+
         Spacer(modifier = Modifier.height(100.dp))
         Box(modifier = Modifier
             .fillMaxWidth().padding(0.dp),

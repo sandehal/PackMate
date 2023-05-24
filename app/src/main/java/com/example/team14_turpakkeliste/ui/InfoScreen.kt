@@ -40,7 +40,6 @@ fun InfoScreen(navController: NavController){
 
             }
         }
-        //test
         Text(modifier = Modifier.padding(start = 30.dp),
             text ="Varmeverdier\n"+
                 "6 = -30.0 -> -20.0 grader\n" +

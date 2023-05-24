@@ -17,10 +17,10 @@ class TurViewModel: ViewModel() {
     var isOffline : Boolean = false
     var prevScreen : String = "SavedScreen"
     var error : String? = null
-    //kan vi endre dette til Oslo?
-    var currentLatitude : Double = 0.0
-    var currentLongitude : Double = 0.0
-    private lateinit var alerts: List<Alert>
+    //satt til Oslo.
+    var currentLatitude : Double = 59.9
+    var currentLongitude : Double = 10.7
+    lateinit var alerts: List<Alert>
     var numberOfDays : Int = 0
     var chosenDay: Int = 0
     lateinit var outerLayerList: List<Clothing>
@@ -67,14 +67,13 @@ class TurViewModel: ViewModel() {
             }
         }
     }
-    //se over
+
     fun getAlertDataForArea(): Triple<String, String, String>?{
         var alertColor = "green"
         var alertType = ""
         var alertdescription = ""
         for(alert in alerts){
             if(pinpointLocation(currentLatitude,currentLongitude,alert.areaPolygon!!)){
-                //bruk awerness_type her, split denne på lengde dersom det er går ann
                 val string= alert.awareness_level?.split(";")
                 val awarenesslevel = string?.get(1)?.trim()
                 val typeString = alert.awareness_type?.split(";")
@@ -87,7 +86,7 @@ class TurViewModel: ViewModel() {
                     break
                 }
                 //warningen som dukker opp her stemmer ikke. AlertColor != "red" kan bli false.
-                if(awarenesslevel == "orange"){
+                if(alertColor != "red" && awarenesslevel == "orange"){
                     alertColor = "orange"
                     alertType = awarenesstype.toString()
                     alertdescription = alert.description.toString()

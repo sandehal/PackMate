@@ -21,11 +21,17 @@ data class WeatherInfo(
 )
 @Dao
 interface UserDao {
+
+    //Henter all data
     @Query("SELECT * FROM WeatherInfo")
     fun getAll(): List<WeatherInfo>
+
+    //Legger til elementer
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(data: WeatherInfo)
 
+
+    //sletter alt.
     @Query("DELETE FROM WeatherInfo")
     suspend fun deleteAll()
 

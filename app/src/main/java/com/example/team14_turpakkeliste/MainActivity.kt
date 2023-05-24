@@ -11,15 +11,15 @@ import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.ui.SetStateScreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 
-
-//The activity needs to be a subclass of ComponentActivity; AppCompatActivity
-//In order for google maps to function, according to the current implementation.
+/*
+Main activity må være en subklasse av ComponentActivity; AppComaptActivity
+for at google maps skal fungere.
+ */
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             Team14TurPakkeListeTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

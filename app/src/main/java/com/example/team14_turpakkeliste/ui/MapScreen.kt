@@ -74,7 +74,6 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
         false
     }
     val baseLatLng = LatLng(60.47202399999999, 8.468945999999999)
-    //Hentet fra Sander
     val location = remember { mutableStateOf("") }
     val context = LocalContext.current
 
@@ -200,105 +199,111 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
                 horizontalAlignment = Alignment.CenterHorizontally,
 
                 ) {
-
-                Image(
-                    painter = painterResource(id = R.drawable.mappet_ikon),
-                    contentDescription = "Kart"
-                )
+                if (textLocation != "Nå er du på bærtur!") {
+                    Image(
+                        painter = painterResource(id = R.drawable.mappet_ikon),
+                        contentDescription = "Kart"
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(id = R.drawable.close_up_packmate_1__1_),
+                        contentDescription = "PackBuddy"
+                    )
+                }
                 Text(
                     text = " $textLocation ",
                     fontWeight = Bold,
                     fontSize = 28.sp
                 )
-                Text(
-                    text = "Hvor mange dager vil du på tur?",
-                    fontWeight = Bold,
-                    fontSize = 20.sp
-                )
-                var days by remember { mutableStateOf(0) }
+                if (textLocation != "Nå er du på bærtur!") {
+                    Text(
+                        text = "Hvor mange dager vil du på tur?",
+                        fontWeight = Bold,
+                        fontSize = 20.sp
+                    )
+                    var days by remember { mutableStateOf(0) }
 
-                //vi må kanskje endre en del hvis spacer er forskjellig fra telefon til telefon
-                var enabled1 by remember {
-                    mutableStateOf(false)
-                }
-                var enabled2 by remember {
-                    mutableStateOf(true)
-                }
-                var enabled3 by remember {
-                    mutableStateOf(true)
-                }
-                Row {
-                    Button(colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.LightGray,
-                        contentColor = Color.Black,
-                        disabledContainerColor = ForestGreen,
-                        disabledContentColor = Color.White),
-                        onClick = {
-                            enabled1 = false
-                            enabled2 = true
-                            enabled3 = true
-                            days = 1
-                        },
-                        enabled = enabled1
-                    ) {
-                        Text("1 dag", fontWeight = Bold)
+                    var enabled1 by remember {
+                        mutableStateOf(false)
                     }
-                    Spacer(modifier = Modifier.width(5.dp))
-                    Button(
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.LightGray,
-                            contentColor = Color.Black,
-                            disabledContainerColor = ForestGreen,
-                            disabledContentColor = Color.White),
-                        onClick = {
+                    var enabled2 by remember {
+                        mutableStateOf(true)
+                    }
+                    var enabled3 by remember {
+                        mutableStateOf(true)
+                    }
+                    Row {
+                        Button(
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.LightGray,
+                                contentColor = Color.Black,
+                                disabledContainerColor = ForestGreen,
+                                disabledContentColor = Color.White
+                            ),
+                            onClick = {
+                                enabled1 = false
+                                enabled2 = true
+                                enabled3 = true
+                                days = 1
+                            },
+                            enabled = enabled1
+                        ) {
+                            Text("1 dag", fontWeight = Bold)
+                        }
+                        Spacer(modifier = Modifier.width(5.dp))
+                        Button(
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.LightGray,
+                                contentColor = Color.Black,
+                                disabledContainerColor = ForestGreen,
+                                disabledContentColor = Color.White
+                            ),
+                            onClick = {
 
-                            enabled2 = false
-                            enabled1 = true
-                            enabled3 = true
-                            days = 2
-                        },
-                        enabled = enabled2
+                                enabled2 = false
+                                enabled1 = true
+                                enabled3 = true
+                                days = 2
+                            },
+                            enabled = enabled2
 
-                    ) {
-                        Text("2 dager", fontWeight = Bold)
+                        ) {
+                            Text("2 dager", fontWeight = Bold)
+                        }
+                        Spacer(modifier = Modifier.width(5.dp))
+                        Button(
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.LightGray,
+                                contentColor = Color.Black,
+                                disabledContainerColor = ForestGreen,
+                                disabledContentColor = Color.White
+                            ),
+                            onClick = {
+                                enabled3 = false
+                                enabled1 = true
+                                enabled2 = true
+                                days = 3
+                            },
+                            enabled = enabled3
+                        ) {
+                            Text("3 dager", fontWeight = Bold)
+                        }
+                        Spacer(modifier = Modifier.width(5.dp))
                     }
-                    Spacer(modifier = Modifier.width(5.dp))
-                    Button(
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.LightGray,
-                            contentColor = Color.Black,
-                            disabledContainerColor = ForestGreen,
-                            disabledContentColor = Color.White),
-                        onClick = {
-                            enabled3 = false
-                            enabled1 = true
-                            enabled2 = true
-                            days = 3
-                        },
-                        enabled = enabled3
-                    ) {
-                        Text("3 dager", fontWeight = Bold)
-                    }
-                    Spacer(modifier = Modifier.width(5.dp))
-                }
-                //hvordan fungerer denne? hilsen Trym
-                    if(days > 3){
+                    if (days > 3) {
                         turViewModel.updateDays(2)
-                    }
-                    else if(days < 1){
+                    } else if (days < 1) {
                         turViewModel.updateDays(0)
+                    } else {
+                        turViewModel.updateDays(days - 1)
                     }
-                    else{
-                        turViewModel.updateDays(days -1)
-                    }
-            }
-            //DropdownMenu(turViewModel)
-            //DatePickerScreen()
-            Spacer(modifier = Modifier.height(20.dp))
-            MakeListButton(navController, turViewModel)
-            Spacer(modifier = Modifier.height(20.dp))
-        }
 
+                    Spacer(modifier = Modifier.height(20.dp))
+                    MakeListButton(navController, turViewModel)
+                    Spacer(modifier = Modifier.height(20.dp))
+                }
+            }
+        }
 
     }
 }
@@ -315,11 +320,7 @@ fun MakeListButton(navController: NavController, turViewModel: TurViewModel){
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
             }
-
-            // Avoid multiple copies of the same destination when
-            // reselecting the same item
             launchSingleTop = true
-            // Restore state when reselecting a previously selected item
             restoreState = true
         }
         },

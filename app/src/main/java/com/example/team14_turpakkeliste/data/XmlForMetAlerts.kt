@@ -28,7 +28,6 @@ class XmlForMetAlerts {
             if (parser.eventType != XmlPullParser.START_TAG) {
                 continue
             }
-            // Starts by looking for the entry tag
             when (parser.name) {
                 "item" -> {
                     dataList.add(readEntry(parser))
@@ -82,7 +81,6 @@ class XmlForMetAlerts {
     }
 
 
-    //Henter teksktlig verdi i praser
     @Throws(IOException::class, XmlPullParserException::class)
     private fun readText(parser: XmlPullParser): String {
         var result = ""
@@ -130,7 +128,6 @@ class XmlCurrentAlert {
             if (parser.eventType != XmlPullParser.START_TAG) {
                 continue
             }
-            // Starter med å se etter entry tag
             if (parser.name == "info") {
                 dataList.add(readEntry(parser))
             } else {
@@ -269,7 +266,6 @@ class XmlCurrentAlert {
     }
 
 
-    //Henter teksktlig verdi i praser
     @Throws(IOException::class, XmlPullParserException::class)
     private fun readText(parser: XmlPullParser): String {
         var result = ""

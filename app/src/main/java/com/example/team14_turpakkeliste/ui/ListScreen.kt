@@ -86,10 +86,7 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastDa
                         saveState = true
                     }
 
-                    // Avoid multiple copies of the same destination when
-                    // reselecting the same item
                     launchSingleTop = true
-                    // Restore state when reselecting a previously selected item
                     restoreState = true
                 }
                 },
@@ -131,9 +128,8 @@ fun SaveButton(viewModel: TurViewModel, forecastData: ForecastData){
         onClick = {
             appDB = AppDatabase.getDatabase(context)
             GlobalScope.launch(Dispatchers.IO) {
-                //gå gjennom variabelnavn her og tenk engelsk og riktig
                 //Denne legger bare inn et objekt, og ikke flere for dagene
-                //må da oppdatere databasen til å kunne holde på denne dataen!
+                //må da oppdatere databasen til å kunne holde på denne dataen
                 for(i in 0..viewModel.numberOfDays){
                     val dataForDay = when(i){
                         0 -> 2
