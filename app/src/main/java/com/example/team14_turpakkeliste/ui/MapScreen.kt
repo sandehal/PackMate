@@ -204,8 +204,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: NavController, turViewModel: TurViewModel){
-    turViewModel.getForecast(turViewModel.alerts)
-    val tekstLocation = turViewModel.checkIntitialized()
+    val textLocation = turViewModel.checkIntitialized()
     if (sheetState.isVisible){
         ModalBottomSheet(
             sheetState = sheetState,
@@ -230,7 +229,7 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
                     contentDescription = "Kart"
                 )
                 Text(
-                    text = " $tekstLocation ",
+                    text = " $textLocation ",
                     fontWeight = Bold,
                     fontSize = 28.sp
                 )
@@ -319,7 +318,7 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
             //DropdownMenu(turViewModel)
             //DatePickerScreen()
             Spacer(modifier = Modifier.height(20.dp))
-            MakeListButton(navController)
+            MakeListButton(navController, turViewModel)
             Spacer(modifier = Modifier.height(20.dp))
         }
 
@@ -328,13 +327,13 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
 }
 
 @Composable
-fun MakeListButton(navController: NavController){
+fun MakeListButton(navController: NavController, turViewModel: TurViewModel){
     ExtendedFloatingActionButton(
         containerColor = ForestGreen,
         contentColor = Color.White,
         icon = { Icon(Icons.Filled.KeyboardArrowRight, contentDescription = null) },
         text = { Text("Motta pakkeliste for valgt lokasjon. ", fontSize = 16.sp, fontWeight = Bold) },
-        onClick = {  navController.navigate("ListScreen")
+        onClick = { turViewModel.getForecast(); navController.navigate("ListScreen")
         {
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true

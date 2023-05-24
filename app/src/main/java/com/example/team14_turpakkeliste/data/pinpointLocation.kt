@@ -1,6 +1,9 @@
 package com.example.team14_turpakkeliste.data
 
 
+
+//Finner ut om en gitt lokasjon er innefor, utenfor eller lik området til en gitt Alert.
+//returnerer true eller false.
 fun pinpointLocation(currentLatitude: Double,currentLongitude: Double, polygon : String): Boolean{
 
     val polygonAsArrayString = polygon.split(" ", ",")

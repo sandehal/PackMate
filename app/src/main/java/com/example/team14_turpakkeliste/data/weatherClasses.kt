@@ -7,7 +7,7 @@ data class ForecastData(
 )
 
 data class Geometry(
-    val coordinates: List<Number>, //må kanskje være number
+    val coordinates: List<Number>,
     val type: String
 )
 

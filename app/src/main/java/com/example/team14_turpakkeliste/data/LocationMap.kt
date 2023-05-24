@@ -15,7 +15,7 @@ fun getNameFromLocation(cordinates: LatLng, viewModel: TurViewModel, context: Co
     var addressList : List<Address>? = null
     val geocoder = Geocoder(context)
     try {
-        //Lønnet seg for større treffsikkerhet å legge til "Norway" hele to ganger.
+        //Lønnet seg for større treffsikkerhet å legge til "Norway" to ganger.
         addressList = geocoder.getFromLocation(cordinates.latitude, cordinates.longitude, 1)
         println("Resultat")
     } catch (e: IOException) {
@@ -41,18 +41,36 @@ fun getNameFromLocation(cordinates: LatLng, viewModel: TurViewModel, context: Co
 fun checkAvailabilityLoc(address: Address): String{
 
     if(address.subLocality != null){
-        return address.subLocality.toString().replace("municipality", "kommune")
+        return if (address.subLocality.toString().contains("Municipality")){
+            address.subLocality.toString().replace("Municipality", "kommune")
+
+        }
+        else{
+            address.subLocality.toString().replace("municipality", "kommune")
+        }
     }
     else if(address.subAdminArea!=null){
-        return address.subAdminArea.toString().replace("municipality", "kommune")
-    }
+        return if (address.subAdminArea.toString().contains("Municipality")){
+            address.subAdminArea.toString().replace("Municipality", "kommune")
+
+        }else{
+            address.subAdminArea.toString().replace("municipality", "kommune")
+        }    }
     else if(address.locality!=null){
-        return address.locality.toString().replace("municipality", "kommune")
-    }
+        return if (address.locality.toString().contains("Municipality")){
+            address.locality.toString().replace("Municipality", "kommune")
+
+        }else{
+            address.locality.toString().replace("municipality", "kommune")
+        }    }
     else if(address.adminArea!=null){
 
-        return address.adminArea.toString().replace("municipality", "kommune")
-    }
+        return if (address.adminArea.toString().contains("Municipality")){
+            address.adminArea.toString().replace("Municipality", "kommune")
+
+        }else{
+            address.adminArea.toString().replace("municipality", "kommune")
+        }    }
     else{
         return address.countryName.toString()
     }
@@ -68,7 +86,7 @@ fun getLocationCompose(location: String, viewModel: TurViewModel, context: Conte
     )
     val geocoder = Geocoder(context)
     try {
-        //Lønnet seg for større treffsikkerhet å legge til "Norway" hele to ganger.
+        //Lønnet seg for større treffsikkerhet å legge til "Norway" to ganger.
 
         addressList = geocoder.getFromLocationName(location.plus(", Norway"), 1)
         println("Resultat")

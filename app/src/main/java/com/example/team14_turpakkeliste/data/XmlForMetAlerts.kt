@@ -7,6 +7,7 @@ import android.util.Xml
 import java.io.InputStream
 
 private val ns: String? = null
+
 class XmlForMetAlerts {
     @Throws(XmlPullParserException::class, IOException::class)
     fun parse(inputStream: InputStream): List<MetAlertsMain> {
@@ -81,7 +82,7 @@ class XmlForMetAlerts {
     }
 
 
-    // For the tags title and summary, extracts their text values.
+    //Henter teksktlig verdi i praser
     @Throws(IOException::class, XmlPullParserException::class)
     private fun readText(parser: XmlPullParser): String {
         var result = ""
@@ -129,7 +130,7 @@ class XmlCurrentAlert {
             if (parser.eventType != XmlPullParser.START_TAG) {
                 continue
             }
-            // Starts by looking for the entry tag
+            // Starter med å se etter entry tag
             if (parser.name == "info") {
                 dataList.add(readEntry(parser))
             } else {
@@ -268,7 +269,7 @@ class XmlCurrentAlert {
     }
 
 
-    // For the tags title and summary, extracts their text values.
+    //Henter teksktlig verdi i praser
     @Throws(IOException::class, XmlPullParserException::class)
     private fun readText(parser: XmlPullParser): String {
         var result = ""

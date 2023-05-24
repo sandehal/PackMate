@@ -49,7 +49,7 @@ class TurViewModel: ViewModel() {
         numberOfDays = days
 
     }
-    fun getForecast(alerts:List<Alert>){
+    fun getForecast(){
         viewModelScope.launch {
 
             turUiState = try {

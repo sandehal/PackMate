@@ -10,12 +10,6 @@ import java.io.InputStream
 
 class Datasource {
 
-    //https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=60.12&lon=9.58
-    //"https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}lon=${lon}"
-
-    //https://gw-uio.intark.uh-it.no/in2000/weatherapi/locationforecast/2.0/compact?lat=60.12&lon=9.58
-
-    //endre til proxy
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) { gson() }
         expectSuccess = true
@@ -29,6 +23,8 @@ class Datasource {
         }
         return client.body()
     }
+
+    //Henter MetAlerts-APIet som inneholder Alert API-er.
     private suspend fun getMetAlerts(): String {
         val client = client.get("https://gw-uio.intark.uh-it.no/in2000/weatherapi/metalerts/1.1?lang=no"){
             headers{
@@ -38,6 +34,7 @@ class Datasource {
         return client.bodyAsText()
     }
 
+    //Finner gjeldene Alert med link og returnerer client sitt innhold.
     private suspend fun getCurrentAlerts(link: String): String{
         val client = client.get(link){
             headers{
@@ -46,6 +43,9 @@ class Datasource {
         }
         return client.bodyAsText()
     }
+
+    //Gjør kall på getMetAlerts og getCurrentAlerts
+    //Finner Alerts som er relevant for oss og returner dem i en liste.
     suspend fun getAllAlerts(): List<Alert>{
         val response = getMetAlerts()
         val inputStream : InputStream = response.byteInputStream()
