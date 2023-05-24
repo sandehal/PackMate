@@ -113,8 +113,10 @@ dependencies {
 
     //Calendar open source
     // Test rules and transitive dependencies:
+    //noinspection GradleDependency
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_version")
     // Needed for createAndroidComposeRule, but not createComposeRule:
+    //noinspection GradleDependency
     debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
     implementation "com.maxkeppeler.sheets-compose-dialogs:calendar:1.0.2"
 }
