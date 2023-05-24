@@ -73,7 +73,7 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastDa
                 containerColor = ForestGreen,
                 contentColor = Color.White),
             shape = RectangleShape,
-                //send med beskjed her om for å sortere klær som skal til clothingscreen henter ut infor om riktig dag
+                //send med beskjed her om for å sortere klær som skal til clothingscreen henter ut in for om riktig dag
                 onClick = { viewModel.chosenDay = i
                     viewModel.outerLayerList = sortClothing( "outer", getWeather(forecastData, i))
                     viewModel.innerLayerList = sortClothing( "inner", getWeather(forecastData, i))
@@ -153,6 +153,6 @@ fun SaveButton(viewModel: TurViewModel, forecastData: ForecastData){
         modifier = Modifier.fillMaxWidth()
     ) {
         Icon(Icons.Filled.Favorite, contentDescription = "Save list")
-        Text("   Save list", fontSize = 14.sp, fontWeight = Bold)
+        Text("   Lagre listen", fontSize = 14.sp, fontWeight = Bold)
     }
 }

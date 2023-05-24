@@ -139,7 +139,7 @@ fun SavedScreen(navController: NavController, viewModel: TurViewModel) {
                 Text(modifier = Modifier
                     .wrapContentWidth(Alignment.CenterHorizontally)
                     .padding(20.dp),
-                        text = "Klikk på Map for å lage en ny pakkeliste!",
+                        text = "Klikk på Kart for å lage en ny pakkeliste!",
                         fontSize = 18.sp
                     )
                 }

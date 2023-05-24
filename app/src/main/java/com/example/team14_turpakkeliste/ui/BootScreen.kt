@@ -97,9 +97,9 @@ fun LoadingScreen(){
 
 }
 sealed class Screen(val route: String, val icon: ImageVector, val description : String) {
-    object MapScreen : Screen("MapScreen", Icons.Default.Search, "Map")
+    object MapScreen : Screen("MapScreen", Icons.Default.Search, "Kart")
     object ListScreen : Screen("ListScreen", Icons.Default.Home, "List")
-    object SavedScreen : Screen("SavedScreen", Icons.Default.Star, "Saved")
+    object SavedScreen : Screen("SavedScreen", Icons.Default.Star, "Lagret")
     object ClothingScreen : Screen("ClothingScreen", Icons.Default.Favorite, "Clothing")
     object LoadingScreen : Screen("LoadingScreen", Icons.Default.Refresh, "Loading")
     object InfoScreen : Screen("InfoScreen", Icons.Default.Info, "Info")
