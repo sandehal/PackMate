@@ -3,6 +3,7 @@ package com.example.team14_turpakkeliste.ui
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -18,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,6 +34,8 @@ import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.compose.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -92,25 +96,27 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
         }
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        Row {
+    Column(Modifier.fillMaxSize()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+
+        ) {
             TextField(
                 value = location.value,
-
-                onValueChange = { location.value = it},
-                placeholder = { Text(text = "Søk på område, eller trykk på kartet", fontSize = 14.sp, fontWeight = Bold) },
+                onValueChange = { location.value = it },
+                placeholder = { Text(text = "Søk på område, eller trykk på kartet", fontSize = 14.sp, fontWeight = FontWeight.Bold) },
                 modifier = Modifier
-                    .padding()
-                    .fillMaxWidth(0.8f)
-                    .fillMaxHeight(0.08f),
+                    .weight(1f)
+                    .height(52.dp)
+                    ,
                 singleLine = true,
                 trailingIcon = if (location.value.isNotBlank()) trailingIconView else null,
             )
-            // on below line adding a button.
             Button(
                 onClick = {
                     val locCords = getLocationCompose(location.value, viewModel, context)
-                    if(markerState == null) {
+                    if (markerState == null) {
                         if (location.value != "") {
                             if (locCords != null && locCords != baseLatLng) {
                                 clickedLatLng.value = locCords
@@ -124,80 +130,55 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
                         clickedLatLng.value = null
                     }
                 },
-                shape = RectangleShape,
-                colors = ButtonDefaults.buttonColors(ForestGreen),
-                // on below line adding a modifier for our button.
+                shape = RoundedCornerShape(4.dp),
+                colors =  ButtonDefaults.buttonColors(ForestGreen),
                 modifier = Modifier
-                    .fillMaxHeight(0.08f)
-                    .fillMaxWidth()
-            )
-            {
-                Text(text = "Søk", fontSize = 14.sp, fontWeight = Bold)
+                    .height(52.dp)
+                    .width(80.dp)
+            ) {
+                Text(text = "Søk", fontSize = 14.sp, fontWeight = FontWeight.Bold)
             }
         }
-    }
 
-    Box(
-        Modifier
-            .fillMaxSize()
-            .clip(shape = RoundedCornerShape(size = 50.dp))
-            .padding(bottom = 70.dp, top = 60.dp)
-    ) {
-
-        GoogleMap(
-            modifier = Modifier.matchParentSize(),
-            properties = properties,
-            cameraPositionState = cameraPositionState,
-            onMapClick = { latLng ->
-
-                if (markerState == null) {
-
-                    clickedLatLng.value = latLng
-
-                    viewModel.currentLatitude = latLng.latitude
-                    //String.format("%.2f",latLng.latitude).toDouble()
-                    viewModel.currentLongitude =  latLng.longitude
-
-
-                    viewModel.location = getNameFromLocation(clickedLatLng.value!!,viewModel, context )
-
-                    //String.format("%.2f",latLng.longitude).toDouble()
-
-                    Log.d(
-                        "Oppdatert",
-                        "${viewModel.currentLatitude}, ${viewModel.currentLongitude}"
-                    )
-                    cameraPositionState.position = CameraPosition.fromLatLngZoom(LatLng(viewModel.currentLatitude, viewModel.currentLongitude), 9f)
-                    scope.launch {
-                        sheetState.show()
+        Box(modifier = Modifier.weight(1f)) {
+            GoogleMap(
+                modifier = Modifier.fillMaxSize(),
+                properties = properties,
+                cameraPositionState = cameraPositionState,
+                onMapClick = { latLng ->
+                    if (markerState == null) {
+                        clickedLatLng.value = latLng
+                        viewModel.currentLatitude = latLng.latitude
+                        viewModel.currentLongitude = latLng.longitude
+                        viewModel.location = getNameFromLocation(clickedLatLng.value!!, viewModel, context)
+                        cameraPositionState.position = CameraPosition.fromLatLngZoom(LatLng(viewModel.currentLatitude, viewModel.currentLongitude), 9f)
+                        scope.launch {
+                            sheetState.show()
+                        }
+                    } else {
+                        clickedLatLng.value = null
                     }
-                } else {
-                    clickedLatLng.value = null
-                    //potensiell bug er at man ikke fjerner de gamle lat long verdiene fra view.
-                    //Men de oppdateres for hver gang man plasserer en ny.
+                },
+            ) {
+                if (markerState != null) {
+                    Marker(state = markerState, onClick = markerClick)
                 }
-            },
-        )
-        {
-            if (markerState != null) {
-                Marker(state = markerState, onClick = markerClick)
-
             }
         }
 
         BottomSheet(
             sheetState = sheetState,
             scope = scope,
-            navController = navController, turViewModel = viewModel
+            navController = navController,
+            turViewModel = viewModel
         )
+
+            BottomNavBar(navController)
+
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Bottom) {
-        BottomNavBar(navController)
-    }
+
+
 }
 
 
