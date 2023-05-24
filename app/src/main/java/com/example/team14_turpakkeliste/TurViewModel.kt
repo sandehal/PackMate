@@ -20,7 +20,7 @@ class TurViewModel: ViewModel() {
     //kan vi endre dette til Oslo?
     var currentLatitude : Double = 0.0
     var currentLongitude : Double = 0.0
-    lateinit var alerts: List<Alert>
+    private lateinit var alerts: List<Alert>
     var numberOfDays : Int = 0
     var chosenDay: Int = 0
     lateinit var outerLayerList: List<Clothing>
@@ -87,7 +87,7 @@ class TurViewModel: ViewModel() {
                     break
                 }
                 //warningen som dukker opp her stemmer ikke. AlertColor != "red" kan bli false.
-                if(alertColor != "red" && awarenesslevel == "orange"){
+                if(awarenesslevel == "orange"){
                     alertColor = "orange"
                     alertType = awarenesstype.toString()
                     alertdescription = alert.description.toString()
