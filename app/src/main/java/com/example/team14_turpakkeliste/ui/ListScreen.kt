@@ -48,6 +48,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+
+/**
+ * Funksjonen setter opp en screen med  pakkeliste for antall dager brukeren har valgt.
+ * */
 @Composable
 fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastData: ForecastData){
     var farevarsel: String? = null
@@ -121,6 +125,10 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastDa
 }
 
 private lateinit var appDB : AppDatabase
+
+/**
+ * Funksjonen lager en button som gir deg mulighet til å lagre pakkelisten ved å trykke på den.
+ * */
 @OptIn(DelicateCoroutinesApi::class)
 @Composable
 fun SaveButton(viewModel: TurViewModel, forecastData: ForecastData){

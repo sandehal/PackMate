@@ -9,6 +9,10 @@ import com.example.team14_turpakkeliste.TurViewModel
 import com.google.android.gms.maps.model.LatLng
 import java.io.IOException
 
+
+/**
+ * Funksjonen returnerer stedsnavn basert på koordinater den får inn som parametre.
+ * */
 fun getNameFromLocation(cordinates: LatLng, viewModel: TurViewModel, context: Context): String {
     val locationName: String
     var addressList : List<Address>? = null
@@ -36,7 +40,9 @@ fun getNameFromLocation(cordinates: LatLng, viewModel: TurViewModel, context: Co
 }
 
 
-
+/**
+ * Funksjonen returner den mest nøyaktige addressen basert på address-objektet den får som parameter.
+ * */
 fun checkAvailabilityLoc(address: Address): String{
 
     if(address.subLocality != null){
@@ -75,6 +81,9 @@ fun checkAvailabilityLoc(address: Address): String{
     }
 }
 
+/**
+ * Funksjonen returnerer latitude and longitude basert på lokasjonen den får som parameter
+ * */
 fun getLocationCompose(location: String, viewModel: TurViewModel, context: Context): LatLng? {
     viewModel.location = location
     val latLng : LatLng?

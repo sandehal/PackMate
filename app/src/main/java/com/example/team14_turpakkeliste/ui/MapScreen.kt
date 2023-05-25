@@ -1,6 +1,5 @@
 package com.example.team14_turpakkeliste.ui
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,6 +31,10 @@ import com.google.maps.android.compose.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+
+/**
+ * Funksjonen setter opp en kart som du kan klikke, bottomNavbar og et søkefelt.
+ * */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
@@ -174,6 +177,9 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
 }
 
 
+/**
+ * Funksjonen initialiserer en bottom sheet hvor du kan velge antall dager og motta pakkeliste.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: NavController, turViewModel: TurViewModel){
@@ -304,6 +310,10 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
 
     }
 }
+
+/**
+ * Funksjonen er en button som gir deg en pakkeliste når du trykker på den.
+ * */
 
 @Composable
 fun MakeListButton(navController: NavController, turViewModel: TurViewModel){

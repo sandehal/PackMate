@@ -5,6 +5,10 @@ import com.example.team14_turpakkeliste.data.sortClothing
 import org.junit.Assert
 import org.junit.Test
 
+/**
+ * Tester om det finnes et ytterplagg for ulike vær-scenarioer. Eks ekstremt lave temperaturer,
+ * høy varme. Ekstremt regnvær, vindvær og i lett regn i med høytemperatur
+ * */
 class ExistingClothesForWeatherValuesTest {
 
     @Test

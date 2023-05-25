@@ -4,10 +4,14 @@ import com.example.team14_turpakkeliste.data.getClothes
 import org.junit.Assert
 import org.junit.Test
 
+
+/**
+ * Testene sjekker om getClothes returnerer korrekt klesplagg
+ * */
 class ClothingListIndexTest {
-    /*
-        her kan vi evt teste sorter clothes og vise at det ikke forandrer seg
-     */
+
+
+
     @Test
     fun clothingPiece_isCorrect(){
         val expectedClothingPieceImg = "downjacket"
