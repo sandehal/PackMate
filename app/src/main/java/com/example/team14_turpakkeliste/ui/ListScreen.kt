@@ -135,8 +135,7 @@ fun SaveButton(viewModel: TurViewModel, forecastData: ForecastData){
         onClick = {
             appDB = AppDatabase.getDatabase(context)
             GlobalScope.launch(Dispatchers.IO) {
-                //Denne legger bare inn et objekt, og ikke flere for dagene
-                //må da oppdatere databasen til å kunne holde på denne dataen
+
                 for(i in 0..viewModel.numberOfDays){
                     val dataForDay = when(i){
                         0 -> 2

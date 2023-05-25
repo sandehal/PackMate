@@ -1,8 +1,7 @@
 package com.example.team14_turpakkeliste.data
 
-/*
-Returnerer en liste med klesobjekter som kan manipuleres med algoritme for å sortere
- */
+
+
 
 fun getClothes(): List<Clothing>{
     return listOf(
