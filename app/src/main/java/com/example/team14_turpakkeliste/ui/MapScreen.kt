@@ -32,7 +32,6 @@ import com.google.maps.android.compose.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
@@ -74,6 +73,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
         false
     }
     val baseLatLng = LatLng(60.47202399999999, 8.468945999999999)
+    //Hentet fra Sander
     val location = remember { mutableStateOf("") }
     val context = LocalContext.current
 
@@ -164,8 +164,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
         BottomSheet(
             sheetState = sheetState,
             scope = scope,
-            navController = navController,
-            turViewModel = viewModel
+            navController = navController, turViewModel = viewModel
         )
 
             BottomNavBar(navController)

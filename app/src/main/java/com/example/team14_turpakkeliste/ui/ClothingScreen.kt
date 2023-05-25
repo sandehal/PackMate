@@ -150,8 +150,8 @@ fun NonExpandableCard(
         colors = CardDefaults.cardColors(
             containerColor = CardColor,
         ),
-        modifier = Modifier.
-                size(350.dp, 150.dp)
+        modifier = Modifier
+            .size(350.dp, 150.dp)
     ) {
         Column(
             modifier = Modifier
