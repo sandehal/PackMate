@@ -15,6 +15,9 @@ class Datasource {
         expectSuccess = true
     
     }
+
+    /**Henter forecast data gitt latitude and longitude
+     */
     suspend fun getForecastData(newlat: Double, newlon: Double): ForecastData {
         val client = client.get("https://gw-uio.intark.uh-it.no/in2000/weatherapi/locationforecast/2.0/compact?lat=${newlat}&lon=${newlon}"){
             headers{
@@ -25,6 +28,8 @@ class Datasource {
     }
 
     //Henter MetAlerts-APIet som inneholder Alert API-er.
+    /**Kaller på metAlerts-APIet som returnerer en string med masse alerts.
+     * */
     private suspend fun getMetAlerts(): String {
         val client = client.get("https://gw-uio.intark.uh-it.no/in2000/weatherapi/metalerts/1.1?lang=no"){
             headers{
@@ -46,6 +51,8 @@ class Datasource {
 
     //Gjør kall på getMetAlerts og getCurrentAlerts
     //Finner Alerts som er relevant for oss og returner dem i en liste.
+    /**Finner alerts i narge med domain Land.
+     * */
     suspend fun getAllAlerts(): List<Alert>{
         val response = getMetAlerts()
         val inputStream : InputStream = response.byteInputStream()

@@ -60,13 +60,11 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
 
     val markerState = clickedLatLng.value?.let { rememberMarkerState(position = it) }
 
-    //Relatert til bottomSheet
+
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
     val markerClick: (Marker) -> Boolean = {
-        if (markerState != null) {
-            Log.d("pos", "${markerState.position.latitude}, ${markerState.position.longitude} ")
-        }
+
         scope.launch {
             sheetState.show()
         }

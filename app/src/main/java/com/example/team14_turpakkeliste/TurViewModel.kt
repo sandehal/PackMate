@@ -12,12 +12,12 @@ import io.ktor.client.plugins.*
 import kotlinx.coroutines.launch
 import kotlinx.serialization.SerializationException
 
-
+//satt til Oslo. Ta med i Kommentar
 class TurViewModel: ViewModel() {
     var isOffline : Boolean = false
     var prevScreen : String = "SavedScreen"
     var error : String? = null
-    //satt til Oslo.
+
     var currentLatitude : Double = 59.9
     var currentLongitude : Double = 10.7
     lateinit var alerts: List<Alert>

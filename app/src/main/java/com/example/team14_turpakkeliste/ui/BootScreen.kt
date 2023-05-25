@@ -100,12 +100,12 @@ fun LoadingScreen(){
     }
 
 }
-sealed class Screen(val route: String, val icon: ImageVector, val description : String) {
+sealed class Screen(val route: String, val icon: ImageVector, val description: String) {
     object MapScreen : Screen("MapScreen", Icons.Default.Search, "Kart")
     object ListScreen : Screen("ListScreen", Icons.Default.Home, "List")
-    object SavedScreen : Screen("SavedScreen", Icons.Default.Star, "Lagret")
-    object ClothingScreen : Screen("ClothingScreen", Icons.Default.Favorite, "Clothing")
-    object LoadingScreen : Screen("LoadingScreen", Icons.Default.Refresh, "Loading")
+    object SavedScreen : Screen("SavedScreen", Icons.Default.Star,"Lagret")
+    object ClothingScreen : Screen("ClothingScreen", Icons.Default.Favorite, "Lagret")
+    object LoadingScreen : Screen("LoadingScreen", Icons.Default.Refresh,"Clothing")
     object InfoScreen : Screen("InfoScreen", Icons.Default.Info, "Info")
 }
 
@@ -131,7 +131,7 @@ fun BottomNavBar(navController: NavController){
                     tint = if (currentDestination?.hierarchy?.any { it.route == item.route } == true) Color.Black else Color.White) },
                 label = { Text(text = item.description, color = Color.White, fontSize = 14.sp, fontWeight = Bold) },
                 onClick = { if (currentDestination?.hierarchy?.any { it.route == item.route} == true) {
-                    //gjør ikke noe
+                    //onclick gjør ingentinger.
                 } else {
                     navController.navigate(item.route)
                     {

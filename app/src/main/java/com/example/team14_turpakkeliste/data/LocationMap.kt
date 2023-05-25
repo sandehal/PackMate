@@ -5,35 +5,33 @@ package com.example.team14_turpakkeliste.data
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
-import android.util.Log
 import com.example.team14_turpakkeliste.TurViewModel
 import com.google.android.gms.maps.model.LatLng
 import java.io.IOException
 
 fun getNameFromLocation(cordinates: LatLng, viewModel: TurViewModel, context: Context): String {
-    var locationName = ""
+    val locationName: String
     var addressList : List<Address>? = null
     val geocoder = Geocoder(context)
     try {
-        //Lønnet seg for større treffsikkerhet å legge til "Norway" to ganger.
+
         addressList = geocoder.getFromLocation(cordinates.latitude, cordinates.longitude, 1)
-        println("Resultat")
+
     } catch (e: IOException) {
         e.printStackTrace()
-        println("FEIL")
+
     }
-    println(addressList)
-    if (!addressList.isNullOrEmpty()) {
+
+    return if (!addressList.isNullOrEmpty()) {
         val address = addressList[0]
         viewModel.currentLatitude = address.latitude
         viewModel.currentLongitude = address.longitude
 
         locationName = checkAvailabilityLoc(address)
-        Log.d("Adressenavn", locationName)
-        println(locationName)
-        return locationName
+
+        locationName
     }else{
-        return "Nå er du på bærtur!"
+        "Nå er du på bærtur!"
     }
 }
 
@@ -82,18 +80,16 @@ fun getLocationCompose(location: String, viewModel: TurViewModel, context: Conte
     val latLng : LatLng?
 
     var addressList : List<Address>? = null
-    Log.d("Location",
-        location
-    )
+
     val geocoder = Geocoder(context)
     try {
-        //Lønnet seg for større treffsikkerhet å legge til "Norway" to ganger.
+
 
         addressList = geocoder.getFromLocationName(location.plus(", Norway"), 1)
-        println("Resultat")
+
     } catch (e: IOException) {
         e.printStackTrace()
-        println("FEIL")
+
     }
 
     if (addressList!!.isNotEmpty()) {
@@ -101,8 +97,9 @@ fun getLocationCompose(location: String, viewModel: TurViewModel, context: Conte
         viewModel.currentLatitude = address.latitude
         viewModel.currentLongitude = address.longitude
         latLng = LatLng(address.latitude,address.longitude)
-        Log.d("adressekord",
-            "${viewModel.currentLatitude}, ${viewModel.currentLongitude}")
+
+
+
 
         return latLng
     }
