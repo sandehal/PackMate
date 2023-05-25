@@ -40,7 +40,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-
+/**
+ * Funksjonen setter opp en screen som viser lagrede pakkeliserter i databasen
+ * */
 @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SavedScreen(navController: NavController, viewModel: TurViewModel) {
@@ -155,6 +157,11 @@ fun SavedPreview() {
 }
 
 private lateinit var appDB : AppDatabase
+
+
+/**
+ *Denne funksjonen oppretter en knapp som kan brukes til å slette alle pakkelistene i databasen.
+ * */
 @OptIn(DelicateCoroutinesApi::class)
 @Composable
 fun DeleteButton(navController: NavController){
