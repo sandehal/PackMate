@@ -41,7 +41,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 /**
- * Funksjonen setter opp en screen som viser lagrede pakkeliserter i databasen
+ * Funksjonen setter opp en screen som viser lagrede pakkelister i databasen
  * */
 @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
