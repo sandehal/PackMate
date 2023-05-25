@@ -2,11 +2,11 @@ package com.example.team14_turpakkeliste.data
 
 
 
-
+/**
+ * Returnerer Liste med klesobjekter
+ * */
 fun getClothes(): List<Clothing>{
     return listOf(
-        //klær inspirert av stat-system fra ulvang på ullklær andre klær hentet fra Norrøna
-        //ytterlagjakker
         //ytterlag jakker
         Clothing("Goretex", "jakke","outer", 1, 6, 6, "goretexjacket"),
         Clothing("LightShell", "jakke", "outer", 1, 5, 6, "lightgoretexjacket"),
@@ -27,7 +27,7 @@ fun getClothes(): List<Clothing>{
         Clothing("Softshell", "bukse", "outer", 1, 3, 4, "trekkingpants"),
         Clothing("Softshell", "shorts", "outer", 1, 2, 4, "flexshorts"),
 
-        //jakker uten vanntetthet
+        //ikke-vanntette jakker
         Clothing("Tykk Fleece", "jakke", "outer", 5,1,4,"thermalfleece"),
         Clothing("Tynn Fleece", "jakke", "outer", 2,1,3, "thinfleece"),
         Clothing("Tykk Ull", "jakke", "outer", 6, 1, 6, "heavywool"),
@@ -51,6 +51,15 @@ fun getClothes(): List<Clothing>{
         Clothing("Kan ikke anbefale noe her", "plagg", "none", 0, 0 ,0, "none")
     )
 }
+/**
+ * Algoritmen som står for å returnere liste med to plagg. Denne gjør dette basert på lag og værverdier
+ *
+ * Den gjør kall på choose(Outer/Inner)ClothingRequirements og bruker verdiene returnert som minimumsverdier for plaggenes
+ * egenskaper/resistensverdier.
+ * For bukser, settes minimumsverdien for varme som 2 ettersom dette er det dataen tilbyr.
+ * For hvert plagg i lista bli det sjekket om plagget når de nødevendige minimumsverdiene. Dersom plagget
+ * har de nøvendige verdiene settes det inn i lista.
+ * */
 fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
     //endre disse til bedre navn
     val temp = weatherValues.temp
@@ -98,6 +107,12 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
     }
     return tempList
 }
+/**
+ * Bestemmer minimumsverdier for klær som kan være aktuelle å anbefale basert på temperatur, vind og vann.
+ *
+ * Ved tilfeller der det er nødvendig med helt vanntette plagg over -5 grader celsius vil dette trumfe
+ * varme-nødvendigheten og vanntetthet settes høyere.
+ * */
 fun chooseOuterClothingRequirements(temperature: Double, wind: Double, water: Double?): MinRequirementsClothes{
     var warmth = when(temperature) {
         in 16.0..30.0 ->  1
@@ -131,6 +146,12 @@ fun chooseOuterClothingRequirements(temperature: Double, wind: Double, water: Do
     }
     return MinRequirementsClothes(warmth,waterproof, windproof)
 }
+/**
+ * Bestemmer minimumsverdier for klær som kan være aktuelle å anbefale basert på temperatur og vannmengde.
+ *
+ * Dersom det er over -5 grader celsius og nødvendig med 100% vanntett ytterplagg vil varmebehovet
+ * for innerlag økes.
+ * */
 fun chooseInnerClothingRequirements(temperature: Double, water: Double?): MinRequirementsClothes{
     var warmth = when(temperature) {
         in -30.0..-20.0 -> 6
@@ -148,8 +169,8 @@ fun chooseInnerClothingRequirements(temperature: Double, water: Double?): MinReq
     }
     return MinRequirementsClothes(warmth, 1,1)
 }
-/*
-Returnerer verdier for varme, vind og nedbør for valgt område og dato
+/**
+ * Returnerer verdier for varme, vind og nedbør for valgt område og dato
  */
 fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues{
     val dataForDay = when(dayNum){
@@ -169,8 +190,8 @@ fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues{
     return WeatherValues(temp, wind, water)
 }
 
-/*
-Returnerer en string som brukes for å bestemme værikonet for valgt område og dato
+/**
+ * Returnerer en string som brukes for å bestemme værikonet for valgt område og dato
  */
 fun getweatherIcon(forecastData: ForecastData, dayNum: Int): String{
     val dataForDay = when(dayNum){
