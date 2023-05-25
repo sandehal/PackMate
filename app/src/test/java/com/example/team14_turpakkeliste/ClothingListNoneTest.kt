@@ -9,10 +9,6 @@ import org.junit.Test
  * noneValidClothingPiece_isCorrect() tester algoritmen som anbefaler klær med værverdier der det
  * ikke finnes aktuelle plagg å anbefale bruker enten ved for lave temperaturer
  * eller vindverdier som tilsvarer orkan.
- *
- * validClothingPiece_isCorret() tester at for det finnes klær vi kan anbefale til
- * bruker tross kulde og sterk vind. Ettersom vi har satt en begrensning på temperaturer lavere enn
- * -30.0 grader celsius
  **/
 class ClothingListNoneTest {
 
@@ -21,6 +17,6 @@ class ClothingListNoneTest {
         val inputWeatherValues =  WeatherValues(-40.0, 2.5, 0.0)
         val sortedClothes = sortClothing("outer", inputWeatherValues)
         val expectedClothing = "none"
-        Assert.assertEquals(expectedClothing, sortedClothes.get(0).type)
+        Assert.assertEquals(expectedClothing, sortedClothes[0].type)
     }
 }

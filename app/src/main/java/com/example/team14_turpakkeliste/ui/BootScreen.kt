@@ -71,7 +71,7 @@ fun BootScreen(navController: NavHostController, forecastData: ForecastData?, vi
 }
 
 /**
- * Funksjonen tar opp en loading-screen n*/
+ * Funksjonen initialiserer LoadingScreen som er en innlastningsskjerm*/
 @Composable
 fun LoadingScreen(){
 

@@ -100,7 +100,7 @@ class TurViewModel: ViewModel() {
                     break
                 }
                 //warningen som dukker opp her stemmer ikke. AlertColor != "red" kan bli false.
-                if(alertColor != "red" && awarenesslevel == "orange"){
+                if(awarenesslevel == "orange"){
                     alertColor = "orange"
                     alertType = awarenesstype.toString()
                     alertdescription = alert.description.toString()

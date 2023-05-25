@@ -28,9 +28,8 @@ import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
 
 /**
- * Funksjoner
+ * Funksjonen initierer en splash animation av logoet til appen.
  * */
-
 @Composable
 fun SplashScreen() {
     Box(

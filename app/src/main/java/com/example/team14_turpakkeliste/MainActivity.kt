@@ -11,10 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.ui.SetStateScreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 
-/*
-Main activity må være en subklasse av ComponentActivity; AppComaptActivity
-for at google maps skal fungere.
- */
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
