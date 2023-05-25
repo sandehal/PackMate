@@ -12,7 +12,8 @@ import io.ktor.client.plugins.*
 import kotlinx.coroutines.launch
 import kotlinx.serialization.SerializationException
 
-//satt til Oslo. Ta med i Kommentar
+
+
 class TurViewModel: ViewModel() {
     var isOffline : Boolean = false
     var prevScreen : String = "SavedScreen"
@@ -36,6 +37,9 @@ class TurViewModel: ViewModel() {
         getData()
     }
 
+    /**
+     * Funksjonen sjekker om location variabelen er initialiser. Hvis ikke returnerer den koordinater.
+     * */
     fun checkIntitialized(): String{
         return if(this::location.isInitialized){
             location
@@ -44,11 +48,18 @@ class TurViewModel: ViewModel() {
         }
     }
 
+    /**
+     * Funksjonen oppdaterer antall dager til det som er valgt i bottom sheeten.
+     * */
     fun updateDays(days: Int){
 
         numberOfDays = days
 
     }
+
+    /**
+     * Funksjonen gjør et api-kall mot locationForecast og setter data inn i UiState.
+     * */
     fun getForecast(){
         viewModelScope.launch {
 
@@ -68,6 +79,9 @@ class TurViewModel: ViewModel() {
         }
     }
 
+    /**
+     * Funksjonen returnerer en triple med beskrivelse av alerten.
+     * */
     fun getAlertDataForArea(): Triple<String, String, String>?{
         var alertColor = "green"
         var alertType = ""
@@ -105,6 +119,9 @@ class TurViewModel: ViewModel() {
         }
     }
 
+    /**
+     * Funksjonen setter data fra API inn i viewMode og oppdaterer UIstaten.
+     * */
     private fun getData() {
         viewModelScope.launch {
             turUiState = try {

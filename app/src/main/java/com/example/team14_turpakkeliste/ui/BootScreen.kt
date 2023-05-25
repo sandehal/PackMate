@@ -40,6 +40,10 @@ import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
+
+/**
+ * Basert på UI-staten sender funksjonen brukeren til riktig skjerm
+ * */
 @Composable
 fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = viewModel()){
     when(val state = viewModel.turUiState){
@@ -51,6 +55,9 @@ fun SetStateScreen(navController: NavHostController,viewModel: TurViewModel = vi
     }
 }
 
+/**
+ * Funksjonen holder styr på de ulike skjermene og setter startdestinasjon.
+ * */
 @Composable
 fun BootScreen(navController: NavHostController, forecastData: ForecastData?, viewModel: TurViewModel){
     NavHost(navController = navController, startDestination = "SavedScreen") {
@@ -63,8 +70,8 @@ fun BootScreen(navController: NavHostController, forecastData: ForecastData?, vi
     }
 }
 
-
-
+/**
+ * Funksjonen tar opp en loading-screen n*/
 @Composable
 fun LoadingScreen(){
 
@@ -106,10 +113,11 @@ sealed class Screen(val route: String, val icon: ImageVector, val description: S
     object SavedScreen : Screen("SavedScreen", Icons.Default.Star,"Lagret")
     object ClothingScreen : Screen("ClothingScreen", Icons.Default.Favorite, "Lagret")
     object LoadingScreen : Screen("LoadingScreen", Icons.Default.Refresh,"Clothing")
-    object InfoScreen : Screen("InfoScreen", Icons.Default.Info, "Info")
+    object InfoScreen : Screen("InfoScreen", Icons.Default.Info, "info")
 }
 
-@Composable
+/**Funksjonen lager en bottomNavBar som lar bruker navigere til SavedScreen og MapScreen
+ * */@Composable
 fun BottomNavBar(navController: NavController){
     val items = listOf(
         Screen.MapScreen,
@@ -149,6 +157,9 @@ fun BottomNavBar(navController: NavController){
 }
 
 
+/**
+ * Hjelplefunksjon som navigerer brukeren til en ny skjerm.
+ */
 fun navigate(navController: NavController, route: String) {
     navController.navigate(route)
     {

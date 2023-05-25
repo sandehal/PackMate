@@ -19,6 +19,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
+
+/**
+ * Funksjonen lager en screen som beskriver hva varmeverdier, vindverdier og nedbørsverdier betyr.
+ * */
 @Composable
 fun InfoScreen(navController: NavController){
     BackHandler {

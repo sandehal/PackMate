@@ -27,6 +27,10 @@ import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
 
+/**
+ * Funksjoner
+ * */
+
 @Composable
 fun SplashScreen() {
     Box(

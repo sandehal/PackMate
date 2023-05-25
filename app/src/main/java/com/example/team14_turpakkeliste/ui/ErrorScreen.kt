@@ -21,7 +21,8 @@ import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 
-
+/**Funksjonan setter opp en errorScreen når det har dukket opp feil i appen
+ * */
 @Composable
 fun ErrorScreen(viewModel: TurViewModel){
 

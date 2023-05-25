@@ -5,7 +5,9 @@ import org.junit.Test
 
 import org.junit.Assert.*
 
-
+/**
+ * Testene sjekker om et punkt er inne i polygonet eller ikke. pinppointLocation brukes for metAlerts
+ * */
 class PolygonTest {
     @Test
     fun testPinpointLocationInsidePolygon() {

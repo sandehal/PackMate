@@ -5,11 +5,12 @@ import com.example.team14_turpakkeliste.data.chooseOuterClothingRequirements
 import org.junit.Assert
 import org.junit.Test
 
+/**
+ * tester at algoritmen som bestemmer minimumsverdier ved klær som kan anbefales
+ * til bruker ved visse værverdier, fungerer som den skal
+ */
 class ClothingRequirementsTest {
-    /**
-     * tester at algoritmen som bestemmer minimumsverdier ved klær som kan anbefales
-     * til bruker ved visse værverdier, fungerer som den skal. Sender inn
-     */
+
     @Test
     fun outerRequirement_isCorrect(){
         val chooseClothingRequirementsOuter = chooseOuterClothingRequirements(16.1, 1.1, 0.2)

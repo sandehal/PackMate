@@ -8,6 +8,10 @@ import java.io.InputStream
 
 private val ns: String? = null
 
+
+/**Parser MetAlerts kallet som returnerer mange url-er
+ */
+
 class XmlForMetAlerts {
     @Throws(XmlPullParserException::class, IOException::class)
     fun parse(inputStream: InputStream): List<MetAlertsMain> {
@@ -108,6 +112,8 @@ class XmlForMetAlerts {
 }
 
 
+/**Parser metAlert kall med farevarsler.
+ * */
 class XmlCurrentAlert {
     @Throws(XmlPullParserException::class, IOException::class)
     fun parse(inputStream: InputStream): List<Alert> {
