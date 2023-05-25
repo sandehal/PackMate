@@ -1,6 +1,12 @@
+@file:Suppress("DEPRECATION", "DEPRECATION")
+
 package com.example.team14_turpakkeliste
 
 
+
+import android.content.Context
+import android.location.Address
+import android.location.Geocoder
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,10 +14,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.team14_turpakkeliste.data.*
 import com.example.team14_turpakkeliste.ui.TurpakklisteUiState
+import com.google.android.gms.maps.model.LatLng
 import io.ktor.client.plugins.*
 import kotlinx.coroutines.launch
 import kotlinx.serialization.SerializationException
-
+import java.io.IOException
 
 
 class TurViewModel: ViewModel() {
@@ -144,4 +151,114 @@ class TurViewModel: ViewModel() {
             }
         }
     }
+
+
+    /**
+     * Funksjonen setter location til stedsnavn basert på koordinater den får inn som parametre.
+     * */
+     fun getNameFromLocation(cordinates: LatLng, context: Context){
+
+        var addressList : List<Address>? = null
+        val geocoder = Geocoder(context)
+
+        viewModelScope.launch {
+
+            try {
+
+                addressList = geocoder.getFromLocation(cordinates.latitude, cordinates.longitude, 1)
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+
+            }
+
+             if (!addressList.isNullOrEmpty()) {
+                val address = addressList!![0]
+                currentLatitude = address.latitude
+                currentLongitude = address.longitude
+
+                location = checkAvailabilityLoc(address)
+
+
+            } else {
+               location = "Nå er du på bærtur!"
+            }
+        }
+
+    }
+
+    /**
+     * Funksjonen setter viewmodel sin latitude and longitude basert på lokasjonen den får som parameter
+     * */
+    fun getLocationCompose(location1: String, context: Context) {
+        location = location1
+
+
+        var addressList : List<Address>? = null
+
+        viewModelScope.launch {
+            val geocoder = Geocoder(context)
+            try {
+
+
+                addressList = geocoder.getFromLocationName(location.plus(", Norway"), 1)
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+
+            }
+
+            if (addressList!!.isNotEmpty()) {
+                val address = addressList!![0]
+                currentLatitude = address.latitude
+                currentLongitude = address.longitude
+
+
+            }
+        }
+
+    }
+
+
+    /**
+     * Funksjonen returner den mest nøyaktige addressen basert på address-objektet den får som parameter.
+     * */
+    private fun checkAvailabilityLoc(address: Address): String{
+
+        if(address.subLocality != null){
+            return if (address.subLocality.toString().contains("Municipality")){
+                address.subLocality.toString().replace("Municipality", "kommune")
+
+            }
+            else{
+                address.subLocality.toString().replace("municipality", "kommune")
+            }
+        }
+        else if(address.subAdminArea!=null){
+            return if (address.subAdminArea.toString().contains("Municipality")){
+                address.subAdminArea.toString().replace("Municipality", "kommune")
+
+            }else{
+                address.subAdminArea.toString().replace("municipality", "kommune")
+            }    }
+        else if(address.locality!=null){
+            return if (address.locality.toString().contains("Municipality")){
+                address.locality.toString().replace("Municipality", "kommune")
+
+            }else{
+                address.locality.toString().replace("municipality", "kommune")
+            }    }
+        else if(address.adminArea!=null){
+
+            return if (address.adminArea.toString().contains("Municipality")){
+                address.adminArea.toString().replace("Municipality", "kommune")
+
+            }else{
+                address.adminArea.toString().replace("municipality", "kommune")
+            }    }
+        else{
+            return address.countryName.toString()
+        }
+    }
+
 }

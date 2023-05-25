@@ -48,7 +48,7 @@ fun getClothes(): List<Clothing>{
         Clothing("Sommerull", "tskjorte", "inner", 1, 1,1, "sommerull"),
         Clothing("ull", "boxer", "inner", 1,1,1, "ullboxer"),
 
-        Clothing("Kan ikke anbefale noe her", "plagg", "none", 0, 0 ,0, "none")
+        Clothing("Kan ikke anbefale noe ", "plagg", "none", 0, 0 ,0, "none")
     )
 }
 /**

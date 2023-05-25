@@ -20,8 +20,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
-import com.example.team14_turpakkeliste.data.getLocationCompose
-import com.example.team14_turpakkeliste.data.getNameFromLocation
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 import com.google.android.gms.maps.model.CameraPosition
@@ -111,7 +109,8 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
             )
             Button(
                 onClick = {
-                    val locCords = getLocationCompose(location.value, viewModel, context)
+                    viewModel.getLocationCompose(location.value, context)
+                    val locCords = LatLng(viewModel.currentLatitude,viewModel.currentLongitude)
                     if (markerState == null) {
                         if (location.value != "") {
                             if (locCords != null && locCords != baseLatLng) {
@@ -144,9 +143,8 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
                 onMapClick = { latLng ->
                     if (markerState == null) {
                         clickedLatLng.value = latLng
-                        viewModel.currentLatitude = latLng.latitude
-                        viewModel.currentLongitude = latLng.longitude
-                        viewModel.location = getNameFromLocation(clickedLatLng.value!!, viewModel, context)
+
+                         viewModel.getNameFromLocation(clickedLatLng.value!!, context)
                         cameraPositionState.position = CameraPosition.fromLatLngZoom(LatLng(viewModel.currentLatitude, viewModel.currentLongitude), 9f)
                         scope.launch {
                             sheetState.show()
