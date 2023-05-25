@@ -24,13 +24,13 @@ import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.getLocationCompose
 import com.example.team14_turpakkeliste.data.getNameFromLocation
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
+import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.compose.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,19 +60,18 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
 
     val markerState = clickedLatLng.value?.let { rememberMarkerState(position = it) }
 
-    //Relatert til bottomSheet
+
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
     val markerClick: (Marker) -> Boolean = {
-        if (markerState != null) {
-            Log.d("pos", "${markerState.position.latitude}, ${markerState.position.longitude} ")
-        }
+
         scope.launch {
             sheetState.show()
         }
         false
     }
     val baseLatLng = LatLng(60.47202399999999, 8.468945999999999)
+    //Hentet fra Sander
     val location = remember { mutableStateOf("") }
     val context = LocalContext.current
 
@@ -163,8 +162,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
         BottomSheet(
             sheetState = sheetState,
             scope = scope,
-            navController = navController,
-            turViewModel = viewModel
+            navController = navController, turViewModel = viewModel
         )
 
             BottomNavBar(navController)
@@ -187,7 +185,7 @@ fun BottomSheet(sheetState: SheetState, scope : CoroutineScope, navController: N
                 scope.launch{
                     sheetState.hide()
                 }
-            },
+            }, containerColor = WhiteYellow
         )
 
         {

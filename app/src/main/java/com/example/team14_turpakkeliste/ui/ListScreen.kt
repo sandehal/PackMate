@@ -4,7 +4,7 @@ import com.example.team14_turpakkeliste.data.ForecastData
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -65,52 +65,59 @@ fun ListScreen(navController: NavController, viewModel: TurViewModel, forecastDa
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentWidth(Alignment.CenterHorizontally)
-                .padding(20.dp)
+                .padding(10.dp)
         )
-        for(i in 0..viewModel.numberOfDays)
-        { Button(
-            colors = ButtonDefaults.buttonColors(
-                containerColor = ForestGreen,
-                contentColor = Color.White),
-            shape = RectangleShape,
-                //send med beskjed her om for å sortere klær som skal til clothingscreen henter ut in for om riktig dag
-                onClick = { viewModel.chosenDay = i
-                    viewModel.outerLayerList = sortClothing( "outer", getWeather(forecastData, i))
-                    viewModel.innerLayerList = sortClothing( "inner", getWeather(forecastData, i))
-                    viewModel.weatherInfo = getWeather(forecastData, i)
-                    viewModel.weatherImg = getweatherIcon(forecastData, i)
-                    viewModel.prevScreen = "ListScreen"
-                    navController.navigate("ClothingScreen")
-                {
-                    popUpTo(navController.graph.findStartDestination().id) {
-                        saveState = true
-                    }
+        Column(
+            modifier = Modifier.weight(1f)
+        ) {
+            for (i in 0..viewModel.numberOfDays) {
+                Button(
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = ForestGreen,
+                        contentColor = Color.White
+                    ),
+                    shape = RectangleShape,
+                    //send med beskjed her om for å sortere klær som skal til clothingscreen henter ut in for om riktig dag
+                    onClick = {
+                        viewModel.chosenDay = i
+                        viewModel.outerLayerList =
+                            sortClothing("outer", getWeather(forecastData, i))
+                        viewModel.innerLayerList =
+                            sortClothing("inner", getWeather(forecastData, i))
+                        viewModel.weatherInfo = getWeather(forecastData, i)
+                        viewModel.weatherImg = getweatherIcon(forecastData, i)
+                        viewModel.prevScreen = "ListScreen"
+                        navController.navigate("ClothingScreen")
+                        {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
 
-                    launchSingleTop = true
-                    restoreState = true
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(150.dp)
+                        .padding(5.dp)
+                        .clip(RoundedCornerShape(10.dp))
+
+                ) {
+                    Text(text = "Dag ${i + 1}", fontSize = 20.sp, fontWeight = Bold)
+                    if (farevarsel != null) {
+                        val image = getImg(desc = farevarsel)
+                        Image(painter = image, contentDescription = "Hazard warning")
+                    }
                 }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(170.dp)
-                    .padding(5.dp)
-                    .clip(RoundedCornerShape(10.dp)),
-            ){
-            Text(text = "Dag ${i+1}", fontSize = 20.sp, fontWeight = Bold)
-            if (farevarsel != null){
-                val image = getImg(desc = farevarsel)
-                Image(painter = image, contentDescription = "Hazard warning")
-                }
+
             }
         }
-    }
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Bottom) {
         SaveButton(viewModel = viewModel, forecastData = forecastData )
         BottomNavBar(navController)
+
     }
+
 }
 
 private lateinit var appDB : AppDatabase
@@ -128,8 +135,9 @@ fun SaveButton(viewModel: TurViewModel, forecastData: ForecastData){
         onClick = {
             appDB = AppDatabase.getDatabase(context)
             GlobalScope.launch(Dispatchers.IO) {
+                //gå gjennom variabelnavn her og tenk engelsk og riktig
                 //Denne legger bare inn et objekt, og ikke flere for dagene
-                //må da oppdatere databasen til å kunne holde på denne dataen
+                //må da oppdatere databasen til å kunne holde på denne dataen!
                 for(i in 0..viewModel.numberOfDays){
                     val dataForDay = when(i){
                         0 -> 2

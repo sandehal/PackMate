@@ -1,13 +1,13 @@
 package com.example.team14_turpakkeliste.data
 
-/*
-Returnerer en liste med klesobjekter som kan manipuleres med algoritme for å sortere
- */
+
+
 
 fun getClothes(): List<Clothing>{
     return listOf(
         //klær inspirert av stat-system fra ulvang på ullklær andre klær hentet fra Norrøna
         //ytterlagjakker
+        //ytterlag jakker
         Clothing("Goretex", "jakke","outer", 1, 6, 6, "goretexjacket"),
         Clothing("LightShell", "jakke", "outer", 1, 5, 6, "lightgoretexjacket"),
         Clothing("Dun", "jakke", "outer", 5,3,5, "downjacket"),
@@ -48,10 +48,11 @@ fun getClothes(): List<Clothing>{
         Clothing("Sommerull", "tskjorte", "inner", 1, 1,1, "sommerull"),
         Clothing("ull", "boxer", "inner", 1,1,1, "ullboxer"),
 
-        Clothing("Kan ikke anbefale noe her", "none", "none", 0, 0 ,0, "none")
+        Clothing("Kan ikke anbefale noe her", "plagg", "none", 0, 0 ,0, "none")
     )
 }
 fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
+    //endre disse til bedre navn
     val temp = weatherValues.temp
     val wind = weatherValues.windspeed
     val water = weatherValues.watermm

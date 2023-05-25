@@ -120,7 +120,7 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
             ExpandableCard(title = "Vis været",
                 description = "Det er meldt ${info.temp} grader \n" +
                         "og vind på ${info.windspeed} m/s \n" +
-                        "Du kan forvente ${info.watermm} mm nedbør i løpet av dagen",
+                        "Du kan forvente ${String.format("%.1f", info.watermm)} mm nedbør i løpet av dagen",
                 img = viewModel.weatherImg)
             BottomNavBar(navController)
         }
@@ -133,7 +133,7 @@ fun ClothingScreen(navController: NavController, viewModel: TurViewModel){
             ExpandableCard(title = "Vis været",
                 description = "Det er meldt ${info.temp} grader \n" +
                         "og vind på ${info.windspeed} m/s \n" +
-                        "Du kan forvente ${info.watermm} mm nedbør i løpet av dagen",
+                        "Du kan forvente ${String.format("%.1f", info.watermm)} mm nedbør i løpet av dagen",
                 img = viewModel.weatherImg)
             BottomNavBar(navController)
         }
@@ -152,8 +152,8 @@ fun NonExpandableCard(
         colors = CardDefaults.cardColors(
             containerColor = CardColor,
         ),
-        modifier = Modifier.
-                size(350.dp, 150.dp)
+        modifier = Modifier
+            .size(350.dp, 150.dp)
     ) {
         Column(
             modifier = Modifier
