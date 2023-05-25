@@ -1,13 +1,11 @@
 package com.example.team14_turpakkeliste.data
 
-/*
-Returnerer en liste med klesobjekter som kan manipuleres med algoritme for å sortere
- */
-
+/**
+ * Returnerer en liste med klesobjekter
+ * */
 fun getClothes(): List<Clothing>{
     return listOf(
-        //klær inspirert av stat-system fra ulvang på ullklær andre klær hentet fra Norrøna
-        //ytterlagjakker
+
         //ytterlag jakker
         Clothing("Goretex", "jakke","outer", 1, 6, 6, "goretexjacket"),
         Clothing("LightShell", "jakke", "outer", 1, 5, 6, "lightgoretexjacket"),
@@ -52,8 +50,16 @@ fun getClothes(): List<Clothing>{
         Clothing("Kan ikke anbefale noe her", "plagg", "none", 0, 0 ,0, "none")
     )
 }
+/**
+ * Algoritme som velger ut to plagg, der et er plagg for overkroppen, og et for beina.
+ * Den returnerer en liste med to plagg. Dersom det ikke er noen klær lagret
+ * i kles-listen vil den gi beskjed om at det ikke kan anbefle et plagg for tilstandene
+ *
+ * ALgoritmen tar imot lag og værverdier. Disse sendes inn i algoritmen chooseClothingRequirements
+ * for å bestemme de laveste godtatte verdiene for klær som kan anbefales. Videre så går
+ * algoritmen gjennom hele lista med klær og velger ut et passende antrekk
+ * */
 fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
-    //endre disse til bedre navn
     val temp = weatherValues.temp
     val wind = weatherValues.windspeed
     val water = weatherValues.watermm
@@ -99,6 +105,10 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
     }
     return tempList
 }
+/**
+ * Velger minimumskrav for ytterlags-klær basert på temperatur, vind og nedbør
+ * Returnerer denne verdien til slutt
+ */
 fun chooseOuterClothingRequirements(temperature: Double, wind: Double, water: Double?): MinRequirementsClothes{
     var warmth = when(temperature) {
         in 16.0..30.0 ->  1
@@ -132,6 +142,10 @@ fun chooseOuterClothingRequirements(temperature: Double, wind: Double, water: Do
     }
     return MinRequirementsClothes(warmth,waterproof, windproof)
 }
+/**
+ * Velger minimumskrav for ytterlags-klær basert på temperatur
+ * Returnerer denne verdien til slutt
+ */
 fun chooseInnerClothingRequirements(temperature: Double, water: Double?): MinRequirementsClothes{
     var warmth = when(temperature) {
         in -30.0..-20.0 -> 6
@@ -149,8 +163,8 @@ fun chooseInnerClothingRequirements(temperature: Double, water: Double?): MinReq
     }
     return MinRequirementsClothes(warmth, 1,1)
 }
-/*
-Returnerer verdier for varme, vind og nedbør for valgt område og dato
+/**
+ * Returnerer verdier for varme, vind og nedbør for valgt område og dato
  */
 fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues{
     val dataForDay = when(dayNum){
@@ -170,8 +184,8 @@ fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues{
     return WeatherValues(temp, wind, water)
 }
 
-/*
-Returnerer en string som brukes for å bestemme værikonet for valgt område og dato
+/**
+ * Returnerer en string som brukes for å bestemme værikonet for valgt område og dato
  */
 fun getweatherIcon(forecastData: ForecastData, dayNum: Int): String{
     val dataForDay = when(dayNum){
