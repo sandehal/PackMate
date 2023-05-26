@@ -1,4 +1,4 @@
-package com.example.team14_turpakkeliste.ui
+package com.example.team14_turpakkeliste.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,8 +18,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.team14_turpakkeliste.R
-import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
+import com.example.team14_turpakkeliste.ui.viewModel.TurViewModel
 
 /**Funksjonan setter opp en errorScreen når det har dukket opp feil i appen
  * */

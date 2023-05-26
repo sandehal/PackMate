@@ -1,4 +1,4 @@
-package com.example.team14_turpakkeliste.ui
+package com.example.team14_turpakkeliste.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -19,9 +19,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.team14_turpakkeliste.R
-import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
+import com.example.team14_turpakkeliste.ui.viewModel.TurViewModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
@@ -113,7 +113,7 @@ fun MapsComposeScreen(navController: NavController, viewModel: TurViewModel){
                     val locCords = LatLng(viewModel.currentLatitude,viewModel.currentLongitude)
                     if (markerState == null) {
                         if (location.value != "") {
-                            if (locCords != null && locCords != baseLatLng) {
+                            if (locCords != baseLatLng) {
                                 clickedLatLng.value = locCords
                                 cameraPositionState.position = CameraPosition.fromLatLngZoom(locCords, 9f)
                                 scope.launch {

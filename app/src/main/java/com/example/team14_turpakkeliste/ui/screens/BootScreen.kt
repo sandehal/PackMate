@@ -1,4 +1,4 @@
-package com.example.team14_turpakkeliste.ui
+package com.example.team14_turpakkeliste.ui.screens
 
 import com.example.team14_turpakkeliste.data.ForecastData
 import android.view.animation.OvershootInterpolator
@@ -36,8 +36,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.team14_turpakkeliste.R
-import com.example.team14_turpakkeliste.TurViewModel
-import com.example.team14_turpakkeliste.TurpakklisteUiState
+import com.example.team14_turpakkeliste.ui.viewModel.TurViewModel
+import com.example.team14_turpakkeliste.ui.viewModel.TurpakklisteUiState
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 

@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.team14_turpakkeliste.ui.theme
 
 import android.app.Activity

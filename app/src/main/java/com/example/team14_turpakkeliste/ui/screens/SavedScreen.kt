@@ -1,4 +1,4 @@
-package com.example.team14_turpakkeliste.ui
+package com.example.team14_turpakkeliste.ui.screens
 
 
 import android.annotation.SuppressLint
@@ -29,12 +29,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.EntityClass.AppDatabase
-import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.WeatherValues
 import com.example.team14_turpakkeliste.data.sortClothing
+import com.example.team14_turpakkeliste.ui.screens.BottomNavBar
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
+import com.example.team14_turpakkeliste.ui.viewModel.TurViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

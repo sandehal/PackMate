@@ -1,4 +1,4 @@
-package com.example.team14_turpakkeliste.ui
+package com.example.team14_turpakkeliste.ui.screens
 
 import com.example.team14_turpakkeliste.data.ForecastData
 import android.content.Context
@@ -36,13 +36,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.team14_turpakkeliste.EntityClass.AppDatabase
 import com.example.team14_turpakkeliste.EntityClass.WeatherInfo
-import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.getweatherIcon
 import com.example.team14_turpakkeliste.data.sortClothing
 import com.example.team14_turpakkeliste.data.getWeather
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 import com.example.team14_turpakkeliste.ui.theme.Yellow
+import com.example.team14_turpakkeliste.ui.viewModel.TurViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

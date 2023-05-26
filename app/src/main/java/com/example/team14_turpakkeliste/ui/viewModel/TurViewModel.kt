@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION", "DEPRECATION")
 
-package com.example.team14_turpakkeliste
+package com.example.team14_turpakkeliste.ui.viewModel
 
 
 
@@ -27,7 +27,7 @@ class TurViewModel: ViewModel() {
 
     var currentLatitude : Double = 59.9
     var currentLongitude : Double = 10.7
-    lateinit var alerts: List<Alert>
+    private lateinit var alerts: List<Alert>
     var numberOfDays : Int = 0
     var chosenDay: Int = 0
     lateinit var outerLayerList: List<Clothing>

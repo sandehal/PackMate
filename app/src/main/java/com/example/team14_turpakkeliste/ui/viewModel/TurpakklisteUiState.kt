@@ -1,4 +1,4 @@
-package com.example.team14_turpakkeliste
+package com.example.team14_turpakkeliste.ui.viewModel
 
 import com.example.team14_turpakkeliste.data.ForecastData
 import com.example.team14_turpakkeliste.data.Alert

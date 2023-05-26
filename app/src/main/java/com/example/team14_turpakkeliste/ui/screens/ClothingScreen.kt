@@ -1,4 +1,4 @@
-package com.example.team14_turpakkeliste.ui
+package com.example.team14_turpakkeliste.ui.screens
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.lazy.items
@@ -33,10 +33,10 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.team14_turpakkeliste.R
-import com.example.team14_turpakkeliste.TurViewModel
 import com.example.team14_turpakkeliste.data.*
 import com.example.team14_turpakkeliste.ui.theme.CardColor
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
+import com.example.team14_turpakkeliste.ui.viewModel.TurViewModel
 
 
 @Composable

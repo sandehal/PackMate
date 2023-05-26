@@ -1,4 +1,4 @@
-package com.example.team14_turpakkeliste.ui
+package com.example.team14_turpakkeliste.ui.screens
 
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.tween
