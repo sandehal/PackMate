@@ -21,7 +21,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.team14_turpakkeliste.BuildConfig
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
@@ -73,14 +72,7 @@ fun SplashScreen() {
                 .padding(top = 20.dp)
         )
 
-        Text(
-            text = "Version - ${BuildConfig.VERSION_NAME}",
-            textAlign = TextAlign.Center,
-            fontSize = 30.sp,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(16.dp)
-        )
+
     }
 }
 

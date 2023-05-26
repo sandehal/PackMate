@@ -37,6 +37,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.team14_turpakkeliste.R
 import com.example.team14_turpakkeliste.TurViewModel
+import com.example.team14_turpakkeliste.TurpakklisteUiState
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow
 

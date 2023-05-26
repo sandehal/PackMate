@@ -13,7 +13,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.team14_turpakkeliste.data.*
-import com.example.team14_turpakkeliste.ui.TurpakklisteUiState
 import com.google.android.gms.maps.model.LatLng
 import io.ktor.client.plugins.*
 import kotlinx.coroutines.launch
