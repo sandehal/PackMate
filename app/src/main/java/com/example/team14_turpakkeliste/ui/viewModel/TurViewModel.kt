@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.SerializationException
 import java.io.IOException
 
-
 class TurViewModel: ViewModel() {
     var isOffline : Boolean = false
     var prevScreen : String = "SavedScreen"
@@ -168,7 +167,8 @@ class TurViewModel: ViewModel() {
 
             } catch (e: IOException) {
                 e.printStackTrace()
-
+                error = e.toString()
+                turUiState = TurpakklisteUiState.Error
             }
 
              if (!addressList.isNullOrEmpty()) {
@@ -179,9 +179,12 @@ class TurViewModel: ViewModel() {
                 location = checkAvailabilityLoc(address)
 
 
-            } else {
-               location = "Nå er du på bærtur!"
-            }
+            } else if (addressList == null) {
+                error = "Får ikke tak i data."
+                turUiState = TurpakklisteUiState.Error
+            } else{
+                 location = "Nå er du på bærtur!"
+             }
         }
 
     }
@@ -199,20 +202,28 @@ class TurViewModel: ViewModel() {
             val geocoder = Geocoder(context)
             try {
 
-
                 addressList = geocoder.getFromLocationName(location.plus(", Norway"), 1)
 
             } catch (e: IOException) {
                 e.printStackTrace()
+                error = e.toString()
+                turUiState = TurpakklisteUiState.Error
 
             }
 
-            if (addressList!!.isNotEmpty()) {
+
+            if (addressList != null && addressList!!.isNotEmpty()) {
                 val address = addressList!![0]
                 currentLatitude = address.latitude
                 currentLongitude = address.longitude
 
 
+            } else if(addressList == null){
+                error = "Får ikke tak i data."
+                turUiState = TurpakklisteUiState.Error
+            }
+            else{
+                location = "Nå er du på bærtur!"
             }
         }
 

@@ -31,7 +31,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.team14_turpakkeliste.EntityClass.AppDatabase
 import com.example.team14_turpakkeliste.data.WeatherValues
 import com.example.team14_turpakkeliste.data.sortClothing
-import com.example.team14_turpakkeliste.ui.screens.BottomNavBar
 import com.example.team14_turpakkeliste.ui.theme.ForestGreen
 import com.example.team14_turpakkeliste.ui.theme.Team14TurPakkeListeTheme
 import com.example.team14_turpakkeliste.ui.theme.WhiteYellow

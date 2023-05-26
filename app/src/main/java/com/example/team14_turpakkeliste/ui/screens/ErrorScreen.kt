@@ -48,7 +48,7 @@ fun ErrorScreen(viewModel: TurViewModel){
             .background(WhiteYellow)
             .wrapContentWidth(Alignment.CenterHorizontally),
             text = "Feilmelding: ${viewModel.error!!}",
-            fontSize = 15.sp
+            fontSize = 18.sp
         )
 
         Spacer(modifier = Modifier.height(100.dp))
