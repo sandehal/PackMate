@@ -1,5 +1,9 @@
 package com.example.team14_turpakkeliste.data
 
+import com.example.team14_turpakkeliste.data.models.Clothing
+import com.example.team14_turpakkeliste.data.models.ForecastData
+import com.example.team14_turpakkeliste.data.models.MinRequirementsClothes
+import com.example.team14_turpakkeliste.data.models.WeatherValues
 
 
 /**
@@ -113,7 +117,7 @@ fun sortClothing(layer: String, weatherValues: WeatherValues): List<Clothing>{
  * Ved tilfeller der det er nødvendig med helt vanntette plagg over -5 grader celsius vil dette trumfe
  * varme-nødvendigheten og vanntetthet settes høyere.
  * */
-fun chooseOuterClothingRequirements(temperature: Double, wind: Double, water: Double?): MinRequirementsClothes{
+fun chooseOuterClothingRequirements(temperature: Double, wind: Double, water: Double?): MinRequirementsClothes {
     var warmth = when(temperature) {
         in 16.0..30.0 ->  1
         in 10.0..15.9->  2
@@ -152,7 +156,7 @@ fun chooseOuterClothingRequirements(temperature: Double, wind: Double, water: Do
  * Dersom det er over -5 grader celsius og nødvendig med 100% vanntett ytterplagg vil varmebehovet
  * for innerlag økes.
  * */
-fun chooseInnerClothingRequirements(temperature: Double, water: Double?): MinRequirementsClothes{
+fun chooseInnerClothingRequirements(temperature: Double, water: Double?): MinRequirementsClothes {
     var warmth = when(temperature) {
         in -30.0..-20.0 -> 6
         in -19.9..-10.0 ->  5
@@ -172,7 +176,7 @@ fun chooseInnerClothingRequirements(temperature: Double, water: Double?): MinReq
 /**
  * Returnerer verdier for varme, vind og nedbør for valgt område og dato
  */
-fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues{
+fun getWeather(forecastData: ForecastData, dayNum: Int): WeatherValues {
     val dataForDay = when(dayNum){
         0 -> 2
         1 -> 26

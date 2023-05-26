@@ -1,6 +1,6 @@
 package com.example.team14_turpakkeliste.ui.screens
 
-import com.example.team14_turpakkeliste.data.ForecastData
+import com.example.team14_turpakkeliste.data.models.ForecastData
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

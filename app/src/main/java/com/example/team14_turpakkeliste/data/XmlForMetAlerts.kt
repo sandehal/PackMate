@@ -4,6 +4,8 @@ import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 import android.util.Xml
+import com.example.team14_turpakkeliste.data.models.Alert
+import com.example.team14_turpakkeliste.data.models.MetAlertsMain
 import java.io.InputStream
 
 private val ns: String? = null

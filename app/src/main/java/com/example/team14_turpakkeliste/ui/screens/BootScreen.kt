@@ -1,6 +1,6 @@
 package com.example.team14_turpakkeliste.ui.screens
 
-import com.example.team14_turpakkeliste.data.ForecastData
+import com.example.team14_turpakkeliste.data.models.ForecastData
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween

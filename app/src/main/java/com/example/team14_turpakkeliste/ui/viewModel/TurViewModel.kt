@@ -13,6 +13,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.team14_turpakkeliste.data.*
+import com.example.team14_turpakkeliste.data.models.Alert
+import com.example.team14_turpakkeliste.data.models.Clothing
+import com.example.team14_turpakkeliste.data.models.WeatherValues
 import com.google.android.gms.maps.model.LatLng
 import io.ktor.client.plugins.*
 import kotlinx.coroutines.launch

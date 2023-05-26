@@ -1,7 +1,7 @@
 package com.example.team14_turpakkeliste.ui.viewModel
 
-import com.example.team14_turpakkeliste.data.ForecastData
-import com.example.team14_turpakkeliste.data.Alert
+import com.example.team14_turpakkeliste.data.models.ForecastData
+import com.example.team14_turpakkeliste.data.models.Alert
 
 sealed interface TurpakklisteUiState {
     data class Success(val alerts: List<Alert>, var forecastData: ForecastData) :

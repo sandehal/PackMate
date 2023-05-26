@@ -1,4 +1,4 @@
-package com.example.team14_turpakkeliste.data
+package com.example.team14_turpakkeliste.data.models
 
 
 data class Clothing(val material: String, val type: String, val layer: String, val warmth: Int, val waterproof: Int, val windproof: Int, val image: String)

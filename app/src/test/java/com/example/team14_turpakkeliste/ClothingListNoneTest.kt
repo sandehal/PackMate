@@ -1,6 +1,6 @@
 package com.example.team14_turpakkeliste
 
-import com.example.team14_turpakkeliste.data.WeatherValues
+import com.example.team14_turpakkeliste.data.models.WeatherValues
 import com.example.team14_turpakkeliste.data.sortClothing
 import org.junit.Assert
 import org.junit.Test
@@ -16,7 +16,7 @@ class ClothingListNoneTest {
     fun noneValidClothingPiece_isCorrect(){
         val inputWeatherValues =  WeatherValues(-40.0, 2.5, 0.0)
         val sortedClothes = sortClothing("outer", inputWeatherValues)
-        val expectedClothing = "none"
+        val expectedClothing = "plagg"
         Assert.assertEquals(expectedClothing, sortedClothes[0].type)
     }
 }

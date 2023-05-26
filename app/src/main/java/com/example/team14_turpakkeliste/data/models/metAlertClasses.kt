@@ -1,4 +1,4 @@
-package com.example.team14_turpakkeliste.data
+package com.example.team14_turpakkeliste.data.models
 
 data class MetAlertsMain(
     var title: String? = null,

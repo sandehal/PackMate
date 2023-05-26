@@ -1,4 +1,6 @@
 package com.example.team14_turpakkeliste.data
+import com.example.team14_turpakkeliste.data.models.Alert
+import com.example.team14_turpakkeliste.data.models.ForecastData
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
